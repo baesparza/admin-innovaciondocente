@@ -16,7 +16,7 @@ install:
   - npm install -g @angular/cli
 
 script:
-  - ng build --prod --aot
+  - ng build --prod --aot --base-href /admin-innovaciondocente/
 
 deploy:
   provider: pages
