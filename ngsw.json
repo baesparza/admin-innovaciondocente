@@ -1,0 +1,69 @@
+{
+  "configVersion": 1,
+  "index": "/admin-innovaciondocente/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "urls": [
+        "/admin-innovaciondocente/favicon.ico",
+        "/admin-innovaciondocente/index.html",
+        "/admin-innovaciondocente/main.f8f851eb37bafbcde81d.js",
+        "/admin-innovaciondocente/polyfills.7a0e6866a34e280f48e7.js",
+        "/admin-innovaciondocente/runtime.a66f828dca56eeb90e02.js",
+        "/admin-innovaciondocente/styles.73861d10456a830ab402.css"
+      ],
+      "patterns": []
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "urls": [
+        "/admin-innovaciondocente/assets/icons/icon-120x120.png",
+        "/admin-innovaciondocente/assets/icons/icon-144x144.png",
+        "/admin-innovaciondocente/assets/icons/icon-152x152.png",
+        "/admin-innovaciondocente/assets/icons/icon-192x192.png",
+        "/admin-innovaciondocente/assets/icons/icon-384x384.png",
+        "/admin-innovaciondocente/assets/icons/icon-512x512.png",
+        "/admin-innovaciondocente/assets/icons/icon-64x64.png"
+      ],
+      "patterns": []
+    }
+  ],
+  "dataGroups": [],
+  "hashTable": {
+    "/admin-innovaciondocente/assets/icons/icon-120x120.png": "9155aed135697da1f3d8e9329dd98dbcd77ed02b",
+    "/admin-innovaciondocente/assets/icons/icon-144x144.png": "24d407762141f4ac4d11d912a809bba33251269e",
+    "/admin-innovaciondocente/assets/icons/icon-152x152.png": "430abebc356f5678b20e9d9182054084b66deb30",
+    "/admin-innovaciondocente/assets/icons/icon-192x192.png": "de8dc4fa8e3aee3ae82c4fa5b43855a908304afe",
+    "/admin-innovaciondocente/assets/icons/icon-384x384.png": "fa3fc4e08de27ce415524443a2754a478cf1ca2c",
+    "/admin-innovaciondocente/assets/icons/icon-512x512.png": "879533bbbe05e3d5b9d90344e9f8494b2038a144",
+    "/admin-innovaciondocente/assets/icons/icon-64x64.png": "2d4e9a0072910d38fd1f6b9fabfc38a114b85be6",
+    "/admin-innovaciondocente/favicon.ico": "2d4e9a0072910d38fd1f6b9fabfc38a114b85be6",
+    "/admin-innovaciondocente/index.html": "4fb5f84813e0c13955cf6e08f2d75cec6760198d",
+    "/admin-innovaciondocente/main.f8f851eb37bafbcde81d.js": "cce950fe2d6896f35c3fabc42203ea48f409409b",
+    "/admin-innovaciondocente/polyfills.7a0e6866a34e280f48e7.js": "9f0b8341c0a0caec1581da2f255eb5dbb8e12303",
+    "/admin-innovaciondocente/runtime.a66f828dca56eeb90e02.js": "078e320cc6fdaf355836c3b1c52b059cdd33fc7e",
+    "/admin-innovaciondocente/styles.73861d10456a830ab402.css": "8e5f6cc6fe20f982aa11b6c8ef8663ad9bb277a4"
+  },
+  "navigationUrls": [
+    {
+      "positive": true,
+      "regex": "^\\/.*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*\\.[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*\\/.*$"
+    }
+  ]
+}
