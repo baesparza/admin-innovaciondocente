@@ -16,7 +16,6 @@ install:
   - npm install -g @angular/cli
 
 script:
-  - ng test
   - ng build --prod --aot
 
 deploy:
