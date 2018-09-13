@@ -1,4 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
 // firebase imports
@@ -10,7 +10,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 
 @NgModule({
   imports: [
-    BrowserModule,
+    CommonModule,
     AngularFireModule.initializeApp(firebaseConfig, 'admin-innovaciondocente'),
     AngularFirestoreModule,
     AngularFireAuthModule,

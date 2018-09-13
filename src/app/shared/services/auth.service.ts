@@ -14,7 +14,6 @@ export class AuthService {
     public afAuth: AngularFireAuth,
     private router: Router
   ) {
-
     afAuth.authState.subscribe((auth) => {
       this.authState = auth;
       console.log(this.authState);
@@ -63,6 +62,9 @@ export class AuthService {
     this.router.navigate(['/login']);
   }
 
+  /**
+   * TODO: add docs
+   */
   public get currentUserObservable(): any {
     return this.afAuth.authState;
   }
