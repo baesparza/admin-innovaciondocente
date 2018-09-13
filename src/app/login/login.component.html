@@ -1,0 +1,46 @@
+<div class="login">
+  <mat-card class="login-card">
+    <form [formGroup]="authForm">
+      <h1>LogIn</h1>
+
+      <!-- Email -->
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput
+               placeholder="example@email.com"
+               formControlName="email">
+        <mat-icon matSuffix>person</mat-icon>
+        <!-- Errors -->
+        <mat-error *ngIf="email.hasError('email') && email.touched">
+          Please enter a valid email address
+        </mat-error>
+        <mat-error *ngIf="email.hasError('required') && email.touched">
+          Email is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Password -->
+      <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <input matInput
+               formControlName="password"
+               [type]="hide ? 'password' : 'text'">
+        <mat-icon matSuffix
+                  (click)="hide = !hide"
+                  style="cursor:pointer">
+          {{hide ? 'visibility' : 'visibility_off'}}
+        </mat-icon>
+        <mat-error *ngIf="password.hasError('required') && password.touched">
+          Password is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Sign in buttom -->
+      <button mat-raised-button
+              color="primary"
+              [disabled]="authForm.invalid"
+              (click)="signIn()">Sign In</button>
+
+    </form>
+  </mat-card>
+</div>

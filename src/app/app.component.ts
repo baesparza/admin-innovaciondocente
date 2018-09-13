@@ -3,11 +3,9 @@ import { SwUpdate } from '@angular/service-worker';
 
 @Component({
   selector: 'id-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  template: '<router-outlet></router-outlet>'
 })
 export class AppComponent {
-  title = 'admin-innovaciondocente';
 
   constructor(updates: SwUpdate) {
     updates.available.subscribe(event => {
