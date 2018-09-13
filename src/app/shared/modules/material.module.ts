@@ -3,7 +3,6 @@ import { MatIconModule, MatButtonModule, MatToolbarModule, MatMenuModule, MatFor
 
 const modules: any[] = [
   MatButtonModule,
-  MatToolbarModule,
   MatIconModule,
   MatMenuModule,
   MatFormFieldModule,

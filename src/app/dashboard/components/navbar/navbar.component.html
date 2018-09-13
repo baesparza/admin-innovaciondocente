@@ -1,0 +1,52 @@
+<mat-sidenav-container class="sidenav-container">
+  <!-- Sidebar -->
+  <mat-sidenav #drawer
+               class="sidenav"
+               fixedInViewport="true"
+               [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+               [mode]="(isHandset$ | async) ? 'over' : 'side'"
+               [opened]="!(isHandset$ | async)">
+    <mat-nav-list>
+      <h3 mat-subheader>Innovación Docente</h3>
+      <a mat-list-item>Proyectos Actuales</a>
+      <a mat-list-item>Convocatorias</a>
+      <a mat-list-item>Buenas Prácticas</a>
+
+      <h3 mat-subheader>Formación Docente</h3>
+      <a mat-list-item>Programa Formacion</a>
+      <a mat-list-item>Cafe Cientifico</a>
+      <a mat-list-item>Jornadas de Reflexion</a>
+
+      <h3 mat-subheader>Observatorio EduTendencias</h3>
+      <a mat-list-item>Tips</a>
+      <a mat-list-item>Noticias</a>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <!-- Navbar -->
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <button type="button"
+              aria-label="Toggle sidenav"
+              mat-icon-button
+              (click)="drawer.toggle()"
+              *ngIf="isHandset$ | async">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <span>Admin Innovación Docente</span>
+      <span class="spacer"></span>
+      <button mat-icon-button
+              [matMenuTriggerFor]="options">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #options="matMenu">
+        <button mat-menu-item
+                (click)="signOut()">
+          <mat-icon>person</mat-icon>
+          <span>Sign Out</span>
+        </button>
+      </mat-menu>
+    </mat-toolbar>
+    <!-- Main content -->
+  </mat-sidenav-content>
+</mat-sidenav-container>
