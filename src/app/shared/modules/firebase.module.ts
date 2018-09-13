@@ -14,7 +14,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
     AngularFireModule.initializeApp(firebaseConfig, 'admin-innovaciondocente'),
     AngularFirestoreModule,
     AngularFireAuthModule,
-    AngularFireStorageModule,
+    AngularFireStorageModule
   ],
 })
 export class FirebaseModule { }

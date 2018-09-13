@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import { AuthService } from "src/app/shared/services/auth.service";
+
 @Component({
   selector: 'id-dashboard',
   templateUrl: './dashboard.component.html',
@@ -7,9 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor() { }
+  constructor(private auth: AuthService) { }
 
   ngOnInit() {
   }
 
+  signOut() {
+    this.auth.signOut();
+  }
 }

@@ -1,19 +1,20 @@
-<mat-toolbar color="primary">
-  <mat-toolbar-row>
-    <span>Admin Innovación Docente</span>
+  <mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <span>Admin Innovación Docente</span>
 
-    <!-- Options -->
-    <span class="spacer"></span>
-    <button mat-icon-button
-            [matMenuTriggerFor]="menu">
-      <mat-icon>more_vert</mat-icon>
-    </button>
-    <mat-menu #menu="matMenu">
-      <button mat-menu-item>
-        <mat-icon>person</mat-icon>
-        <span>Sign Out</span>
+      <!-- Options -->
+      <span class="spacer"></span>
+      <button mat-icon-button
+              [matMenuTriggerFor]="menu">
+        <mat-icon>more_vert</mat-icon>
       </button>
-    </mat-menu>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item
+                (click)="signOut()">
+          <mat-icon>person</mat-icon>
+          <span>Sign Out</span>
+        </button>
+      </mat-menu>
 
-  </mat-toolbar-row>
-</mat-toolbar>
+    </mat-toolbar-row>
+  </mat-toolbar>
