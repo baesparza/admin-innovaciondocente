@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { SwUpdate } from '@angular/service-worker';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'id-root',
@@ -7,8 +8,11 @@ import { SwUpdate } from '@angular/service-worker';
 })
 export class AppComponent {
 
-  constructor(updates: SwUpdate) {
+  constructor(updates: SwUpdate, public snackBar: MatSnackBar) {
     updates.available.subscribe(event => {
+      this.snackBar.open('Hay una nueva versión, Descargando...', null, {
+        duration: 4000,
+      });
       updates.activateUpdate().then(() => document.location.reload());
     });
   }
