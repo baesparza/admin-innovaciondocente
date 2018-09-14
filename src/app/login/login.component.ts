@@ -24,6 +24,9 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    // TODO: add already login user
+
+    // init form
     this.authForm = this.fb.group({
       email: new FormControl('', [
         Validators.required,
@@ -36,24 +39,29 @@ export class LoginComponent implements OnInit {
   }
 
 
-
+  /**
+   * Sign user in, or show sign in error
+   */
   signIn(): void {
+    if (this.authForm.invalid)
+      return;
     // only valid forms will be submitted
-    if (this.authForm.valid)
-      this.auth.signIn(this.email.value, this.password.value)
-        // if user is valid navigate to home page
-        .then(() => this.router.navigate(['/']))
-        // if error show error messages
-        .catch(e => {
-          if (e.code === 'auth/wrong-password')
-            this.triggerSnackBar('Contraseña Incorrecta');
-          else if (e.code === 'auth/invalid-email')
-            this.triggerSnackBar('Correo Electronico Invalido');
-          else if (e.code === 'auth/user-not-found')
-            this.triggerSnackBar('No se encontro el Usuario');
-          else
-            this.triggerSnackBar(e.code);
-        });
+    this.isLoading = true;
+    this.auth.signIn(this.email.value, this.password.value)
+      // if user is valid navigate to home page
+      .then(() => this.router.navigate(['/']))
+      // if error show error messages
+      .catch(e => {
+        this.isLoading = false;
+        if (e.code === 'auth/wrong-password')
+          this.triggerSnackBar('Contraseña Incorrecta');
+        else if (e.code === 'auth/invalid-email')
+          this.triggerSnackBar('Correo Electronico Invalido');
+        else if (e.code === 'auth/user-not-found')
+          this.triggerSnackBar('No se encontró el usuario');
+        else
+          this.triggerSnackBar(e.code);
+      });
   }
 
   private triggerSnackBar(message: string, action?: string): void {

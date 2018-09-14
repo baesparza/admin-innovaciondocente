@@ -1,27 +1,27 @@
-<div class="container">
+<div class="center full-center">
   <mat-card class="login-card">
     <form [formGroup]="authForm">
-      <h1>LogIn</h1>
+      <h1 class="center">Inicio Sesión</h1>
 
       <!-- Email -->
       <mat-form-field appearance="outline">
-        <mat-label>Email</mat-label>
+        <mat-label>Correo Electrónico</mat-label>
         <input matInput
                placeholder="example@email.com"
                formControlName="email">
         <mat-icon matSuffix>person</mat-icon>
         <!-- Errors -->
         <mat-error *ngIf="email.hasError('email')">
-          Please enter a valid email address
+          Ingrese un Correo Electrónico <strong>valido</strong>
         </mat-error>
         <mat-error *ngIf="email.hasError('required')">
-          Email is <strong>required</strong>
+          Correo Electrónico es <strong>requerido</strong>
         </mat-error>
       </mat-form-field>
 
       <!-- Password -->
       <mat-form-field appearance="outline">
-        <mat-label>Password</mat-label>
+        <mat-label>Contraseña</mat-label>
         <input matInput
                formControlName="password"
                [type]="hide ? 'password' : 'text'">
@@ -31,14 +31,19 @@
           {{hide ? 'visibility' : 'visibility_off'}}
         </mat-icon>
         <mat-error *ngIf="password.hasError('required')">
-          Password is <strong>required</strong>
+          Contraseña es <strong>requerida</strong>
         </mat-error>
       </mat-form-field>
 
-      <!-- Sign in button -->
+      <!-- Sign in button or spinner -->
       <button mat-raised-button
+              *ngIf="!isLoading"
               color="primary"
               (click)="signIn()">Sign In</button>
+      <div class="center"
+           *ngIf="isLoading">
+        <mat-spinner diameter=30></mat-spinner>
+      </div>
 
     </form>
   </mat-card>

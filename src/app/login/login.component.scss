@@ -1,5 +1,10 @@
 .login-card {
-  max-width: 500px;
+  width: 500px;
+  margin: 10px;
+
+  @media (max-width: 576px) {
+    width: 100%;
+  }
 }
 
 mat-form-field {
@@ -7,5 +12,16 @@ mat-form-field {
 }
 
 button {
+  width: 100%;
+}
+
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center
+}
+
+.full-center {
+  height: 100%;
   width: 100%;
 }

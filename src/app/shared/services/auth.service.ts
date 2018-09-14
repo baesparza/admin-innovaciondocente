@@ -8,15 +8,15 @@ import { AngularFireAuth } from "@angular/fire/auth";
 })
 export class AuthService {
 
-  authState: firebase.User = null;
+  user: firebase.User = null;
 
   constructor(
     public afAuth: AngularFireAuth,
     public router: Router
   ) {
     afAuth.authState.subscribe((auth) => {
-      this.authState = auth;
-      console.log(this.authState);
+      this.user = auth;
+      console.log(this.user);
     });
   }
 
@@ -24,21 +24,14 @@ export class AuthService {
    * whether user is authenticated or not
    */
   public isAuthenticated(): boolean {
-    return this.authState !== null;
-  }
-
-  /**
-   * get all user with info
-   */
-  public get currentUser(): firebase.User {
-    return this.isAuthenticated ? this.authState : null;
+    return this.user !== null;
   }
 
   /**
    * get user unique id
    */
-  public get currentUserId(): string {
-    return this.isAuthenticated ? this.authState.uid : '';
+  public get userId(): string {
+    return this.isAuthenticated ? this.user.uid : '';
   }
 
   /**
