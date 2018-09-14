@@ -10,6 +10,7 @@ export class AppComponent {
 
   constructor(updates: SwUpdate, public snackBar: MatSnackBar) {
     updates.available.subscribe(event => {
+      alert('Hay una nueva versión');
       this.snackBar.open('Hay una nueva versión, Descargando...', null, {
         duration: 4000,
       });

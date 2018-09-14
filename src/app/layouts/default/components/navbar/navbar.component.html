@@ -6,6 +6,7 @@
                [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
                [mode]="(isHandset$ | async) ? 'over' : 'side'"
                [opened]="!(isHandset$ | async)">
+    <!-- Navbar routes, defined in component -->
     <mat-nav-list *ngFor="let item of navItems">
       <h3 mat-subheader
           *ngIf="item.name">{{item.name}}</h3>
@@ -38,6 +39,8 @@
     </mat-toolbar>
 
     <!-- Main content -->
-    <router-outlet></router-outlet>
+    <div class="container-fluid">
+      <router-outlet></router-outlet>
+    </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
