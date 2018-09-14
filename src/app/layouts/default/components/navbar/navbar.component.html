@@ -6,16 +6,17 @@
                [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
                [mode]="(isHandset$ | async) ? 'over' : 'side'"
                [opened]="!(isHandset$ | async)">
-    <mat-nav-list>
-      <div *ngFor="let item of navItems">
-        <h3 mat-subheader>{{item.name}}</h3>
-        <a mat-list-item
-           *ngFor="let child of item.children">
-          {{child.name}}
-          <div class="spacer"></div>
-          <mat-icon>keyboard_arrow_right</mat-icon>
-        </a>
-      </div>
+    <!-- Navbar routes, defined in component -->
+    <mat-nav-list *ngFor="let item of navItems">
+      <h3 mat-subheader
+          *ngIf="item.name">{{item.name}}</h3>
+      <a mat-list-item
+         [routerLink]="child.goto"
+         *ngFor="let child of item.children">
+        {{child.name}}
+        <div class="spacer"></div>
+        <mat-icon>keyboard_arrow_right</mat-icon>
+      </a>
     </mat-nav-list>
   </mat-sidenav>
 
@@ -36,6 +37,10 @@
         <mat-icon>more_vert</mat-icon>
       </button>
     </mat-toolbar>
+
     <!-- Main content -->
+    <div class="container-fluid">
+      <router-outlet></router-outlet>
+    </div>
   </mat-sidenav-content>
 </mat-sidenav-container>

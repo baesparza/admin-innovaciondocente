@@ -60,7 +60,7 @@ export class LoginComponent implements OnInit {
     this.isLoading = true;
     this.auth.signIn(this.email.value, this.password.value)
       // if user is valid navigate to home page
-      .then(() => this.router.navigate(['/']))
+      .then(() => this.gotoHome())
       // if error show error messages
       .catch(e => {
         this.isLoading = false;

@@ -9,7 +9,10 @@ import {
   MatCardModule,
   MatSnackBarModule,
   MatProgressSpinnerModule,
-  MatListModule
+  MatListModule,
+  MatPaginatorModule,
+  MatTableModule,
+  MatStepperModule
 } from '@angular/material';
 
 const modules: any[] = [
@@ -22,7 +25,10 @@ const modules: any[] = [
   MatToolbarModule,
   MatSnackBarModule,
   MatProgressSpinnerModule,
-  MatListModule
+  MatListModule,
+  MatPaginatorModule,
+  MatTableModule,
+  MatStepperModule
 ];
 
 @NgModule({

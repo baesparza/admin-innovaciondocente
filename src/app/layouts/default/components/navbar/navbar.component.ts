@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import { MatBottomSheet } from '@angular/material';
 
 import { MenuComponent } from '../menu/menu.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'id-navbar',
@@ -20,6 +21,11 @@ export class NavbarComponent {
 
   navItems: NavItem[] = [
     {
+      children: [
+        { name: 'home', goto: ['/'] },
+      ]
+    },
+    {
       name: 'Innovación Docente',
       children: [
         { name: 'Proyectos Actuales' },
@@ -31,14 +37,14 @@ export class NavbarComponent {
       name: 'Formación Docente',
       children: [
         { name: 'Programa Formacion' },
-        { name: 'Cafe Cientifico' },
+        { name: 'Cafe Cientifico', goto: ['/', 'formacion-docente', 'cafe-cientifico'] },
         { name: 'Jornadas de Reflexion' },
       ]
     },
     {
-      name: 'Observatorio EduTendencias',
+      name: 'Observatorio',
       children: [
-        { name: 'Tips' },
+        { name: 'EduTendencias' },
         { name: 'Noticias' },
       ]
     }
@@ -47,18 +53,19 @@ export class NavbarComponent {
 
   constructor(
     private breakpointObserver: BreakpointObserver,
-    private bottomSheet: MatBottomSheet
+    private bottomSheet: MatBottomSheet,
   ) { }
 
-
-
+  /**
+   * open bottom bar menu
+   */
   openBottomSheet(): void {
     this.bottomSheet.open(MenuComponent);
   }
 }
 
 interface NavItem {
-  name: string,
+  name?: string,
   children: NavChild[]
 }
 
