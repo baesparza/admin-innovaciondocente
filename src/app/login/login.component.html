@@ -11,10 +11,10 @@
                formControlName="email">
         <mat-icon matSuffix>person</mat-icon>
         <!-- Errors -->
-        <mat-error *ngIf="email.hasError('email') && email.touched">
+        <mat-error *ngIf="email.hasError('email')">
           Please enter a valid email address
         </mat-error>
-        <mat-error *ngIf="email.hasError('required') && email.touched">
+        <mat-error *ngIf="email.hasError('required')">
           Email is <strong>required</strong>
         </mat-error>
       </mat-form-field>
@@ -30,15 +30,14 @@
                   style="cursor:pointer">
           {{hide ? 'visibility' : 'visibility_off'}}
         </mat-icon>
-        <mat-error *ngIf="password.hasError('required') && password.touched">
+        <mat-error *ngIf="password.hasError('required')">
           Password is <strong>required</strong>
         </mat-error>
       </mat-form-field>
 
-      <!-- Sign in buttom -->
+      <!-- Sign in button -->
       <button mat-raised-button
               color="primary"
-              [disabled]="authForm.invalid"
               (click)="signIn()">Sign In</button>
 
     </form>

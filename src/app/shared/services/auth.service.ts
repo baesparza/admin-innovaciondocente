@@ -46,12 +46,8 @@ export class AuthService {
    * @param email of user
    * @param password of account
    */
-  public signIn(email: string, password: string): Promise<void> {
-    return this.afAuth.auth.signInWithEmailAndPassword(email, password)
-      .then(() => {
-        this.router.navigate(['/']);
-      })
-      .catch(error => console.log(error));
+  public signIn(email: string, password: string): Promise<firebase.auth.UserCredential> {
+    return this.afAuth.auth.signInWithEmailAndPassword(email, password);
   }
 
   /**
