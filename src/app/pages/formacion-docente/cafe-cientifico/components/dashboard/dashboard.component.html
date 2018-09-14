@@ -1,14 +1,20 @@
 <mat-paginator [length]="100"
                [pageSize]="10"
                [pageSizeOptions]="[5, 10, 25, 100]">
-
 </mat-paginator>
+<div class="button-row">
+
+  <div class="spacer"></div>
+  <button mat-raised-button
+          routerLink="create"
+          color="primary">Primary</button>
+</div>
 <table mat-table
        [dataSource]="dataSource"
        class="mat-elevation-z8 full-width">
 
   <!--- Note that these columns can be defined in any order.
-                        The actual rendered columns are set as a property on the row definition" -->
+  The actual rendered columns are set as a property on the row definition" -->
 
   <!-- Position Column -->
   <ng-container matColumnDef="position">
