@@ -15,6 +15,7 @@ export class LoginComponent implements OnInit {
   authForm: FormGroup;
   hide: boolean = true;
   isLoading: boolean = false;
+  isSignedIn: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -24,7 +25,10 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // TODO: add already login user
+    // get user if already signed in
+    this.auth.currentUserObservable.subscribe(user => {
+      this.isSignedIn = user !== null;
+    });
 
     // init form
     this.authForm = this.fb.group({
@@ -36,6 +40,13 @@ export class LoginComponent implements OnInit {
         Validators.required,
       ]),
     });
+  }
+
+  get email() {
+    return this.authForm.get('email');
+  }
+  get password() {
+    return this.authForm.get('password');
   }
 
 
@@ -64,17 +75,22 @@ export class LoginComponent implements OnInit {
       });
   }
 
+  /**
+   * Template for snackBar
+   * @param message to be show
+   * @param action to be clicked
+   */
   private triggerSnackBar(message: string, action?: string): void {
     this.snackBar.open(message, action, {
       duration: 4000,
     });
   }
 
-  get email() {
-    return this.authForm.get('email');
-  }
-  get password() {
-    return this.authForm.get('password');
+  /**
+   * Navigate user if already signed in
+   */
+  gotoHome(): void {
+    this.router.navigate(['/']);
   }
 
 }

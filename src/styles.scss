@@ -50,13 +50,30 @@ html {
   }
 }
 
-
-
-
 .container-fluid {
   width: 100%;
   padding-right: 15px;
   padding-left: 15px;
   margin-right: auto;
   margin-left: auto;
+}
+
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center
+}
+
+.full-center {
+  height: 100%;
+  width: 100%;
 }
