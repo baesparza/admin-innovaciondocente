@@ -11,12 +11,12 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        loadChildren: './home/home.module#HomeModule',
+        loadChildren: './layouts/default/default.module#DefaultModule',
         canActivate: [AuthGuard]
       },
       {
         path: 'login',
-        loadChildren: './login/login.module#LoginModule',
+        loadChildren: './pages/login/login.module#LoginModule',
       },
     ]
   }, {

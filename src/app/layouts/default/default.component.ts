@@ -4,4 +4,4 @@ import { Component } from '@angular/core';
   selector: 'id-dashboard',
   template: '<id-navbar></id-navbar>'
 })
-export class HomeComponent { }
+export class DefaultComponent { }
