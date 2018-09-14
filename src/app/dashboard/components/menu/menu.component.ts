@@ -6,8 +6,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'id-menu',
-  templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.scss']
+  templateUrl: './menu.component.html'
 })
 export class MenuComponent {
 
