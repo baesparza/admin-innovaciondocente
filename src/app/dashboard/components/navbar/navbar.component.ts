@@ -16,6 +16,33 @@ export class NavbarComponent {
       map(result => result.matches)
     );
 
+  navItems: NavItem[] = [
+    {
+      name: 'Innovación Docente',
+      children: [
+        { name: 'Proyectos Actuales' },
+        { name: 'Convocatorias' },
+        { name: 'Buenas Prácticas' },
+      ]
+    },
+    {
+      name: 'Formación Docente',
+      children: [
+        { name: 'Programa Formacion' },
+        { name: 'Cafe Cientifico' },
+        { name: 'Jornadas de Reflexion' },
+      ]
+    },
+    {
+      name: 'Observatorio EduTendencias',
+      children: [
+        { name: 'Tips' },
+        { name: 'Noticias' },
+      ]
+    }
+
+  ];
+
   constructor(
     private breakpointObserver: BreakpointObserver,
     private auth: AuthService
@@ -27,3 +54,12 @@ export class NavbarComponent {
 }
 
 
+interface NavItem {
+  name: string,
+  children: NavChild[]
+}
+
+interface NavChild {
+  name: string,
+  goto?: any
+}
