@@ -20,6 +20,11 @@ export class NavbarComponent {
 
   navItems: NavItem[] = [
     {
+      children: [
+        { name: 'home', goto: ['/'] },
+      ]
+    },
+    {
       name: 'Innovación Docente',
       children: [
         { name: 'Proyectos Actuales' },
@@ -31,7 +36,7 @@ export class NavbarComponent {
       name: 'Formación Docente',
       children: [
         { name: 'Programa Formacion' },
-        { name: 'Cafe Cientifico' },
+        { name: 'Cafe Cientifico', goto: ['/', 'formacion-docente', 'cafe-cientifico'] },
         { name: 'Jornadas de Reflexion' },
       ]
     },
@@ -58,7 +63,7 @@ export class NavbarComponent {
 }
 
 interface NavItem {
-  name: string,
+  name?: string,
   children: NavChild[]
 }
 

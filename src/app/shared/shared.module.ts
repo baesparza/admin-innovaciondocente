@@ -12,7 +12,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 // shared services
 import { AuthService } from 'src/app/shared/services/auth.service';
-import { AuthGuard } from 'src/app/shared/services/auth-guard.service';
+import { AuthGuard } from './services/auth.guard.service';
 
 const modules: any[] = [
   CommonModule,
