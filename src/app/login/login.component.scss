@@ -1,11 +1,12 @@
 .login-card {
-  max-width: 500px;
+  width: 500px;
+  margin: 10px;
+
+  @media (max-width: 576px) {
+    width: 100%;
+  }
 }
 
 mat-form-field {
   display: block;
-}
-
-button {
-  width: 100%;
 }

@@ -7,19 +7,15 @@
                [mode]="(isHandset$ | async) ? 'over' : 'side'"
                [opened]="!(isHandset$ | async)">
     <mat-nav-list>
-      <h3 mat-subheader>Innovación Docente</h3>
-      <a mat-list-item>Proyectos Actuales</a>
-      <a mat-list-item>Convocatorias</a>
-      <a mat-list-item>Buenas Prácticas</a>
-
-      <h3 mat-subheader>Formación Docente</h3>
-      <a mat-list-item>Programa Formacion</a>
-      <a mat-list-item>Cafe Cientifico</a>
-      <a mat-list-item>Jornadas de Reflexion</a>
-
-      <h3 mat-subheader>Observatorio EduTendencias</h3>
-      <a mat-list-item>Tips</a>
-      <a mat-list-item>Noticias</a>
+      <div *ngFor="let item of navItems">
+        <h3 mat-subheader>{{item.name}}</h3>
+        <a mat-list-item
+           *ngFor="let child of item.children">
+          {{child.name}}
+          <div class="spacer"></div>
+          <mat-icon>keyboard_arrow_right</mat-icon>
+        </a>
+      </div>
     </mat-nav-list>
   </mat-sidenav>
 
