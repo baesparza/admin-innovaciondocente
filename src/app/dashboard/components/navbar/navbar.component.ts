@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
-import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { AuthService } from 'src/app/shared/services/auth.service';
+import { MatBottomSheet } from '@angular/material';
+
+import { MenuComponent } from '../menu/menu.component';
 
 @Component({
   selector: 'id-navbar',
@@ -45,14 +47,15 @@ export class NavbarComponent {
 
   constructor(
     private breakpointObserver: BreakpointObserver,
-    private auth: AuthService
+    private bottomSheet: MatBottomSheet
   ) { }
 
-  signOut() {
-    this.auth.signOut();
+
+
+  openBottomSheet(): void {
+    this.bottomSheet.open(MenuComponent);
   }
 }
-
 
 interface NavItem {
   name: string,
