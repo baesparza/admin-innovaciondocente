@@ -1,49 +1,128 @@
-<button mat-raised-button
-        (click)="isLinear = !isLinear"
-        id="toggle-linear">
-  {{!isLinear ? 'Enable linear mode' : 'Disable linear mode'}}
-</button>
-<mat-vertical-stepper [linear]="isLinear"
+<mat-vertical-stepper [linear]="false"
                       #stepper>
-  <mat-step [stepControl]="firstFormGroup">
-    <form [formGroup]="firstFormGroup">
-      <ng-template matStepLabel>Fill out your name</ng-template>
-      <mat-form-field>
+
+  <!-- first part -->
+  <mat-step [stepControl]="headFormGroup">
+    <form [formGroup]="headFormGroup">
+      <ng-template matStepLabel>Nombre e Imagen</ng-template>
+      <!-- title -->
+      <mat-form-field appearance="outline">
+        <mat-label>Nombre del Encuentro</mat-label>
         <input matInput
-               placeholder="Last name, First name"
-               formControlName="firstCtrl"
-               required>
+               type="text"
+               formControlName="title">
+        <mat-error *ngIf="title.hasError('required')">
+          El nombre es <strong>requerido</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <!-- url img -->
+      <mat-form-field appearance="outline">
+        <mat-label>Link de la Imagen</mat-label>
+        <input matInput
+               type="text"
+               formControlName="img">
+        <mat-icon matSuffix>link</mat-icon>
+        <mat-error *ngIf="img.hasError('required')">
+          La url es <strong>requerida</strong>
+        </mat-error>
       </mat-form-field>
       <div>
-        <button mat-button
-                matStepperNext>Next</button>
+        <button mat-raised-button
+                color="primary"
+                matStepperNext>Siguiente</button>
       </div>
     </form>
   </mat-step>
-  <mat-step [stepControl]="secondFormGroup">
-    <form [formGroup]="secondFormGroup">
-      <ng-template matStepLabel>Fill out your address</ng-template>
-      <mat-form-field>
-        <input matInput
-               placeholder="Address"
-               formControlName="secondCtrl"
-               required>
+
+  <!-- description part-->
+  <mat-step [stepControl]="descriptionFormGroup">
+    <form [formGroup]="descriptionFormGroup">
+      <ng-template matStepLabel>Descripción</ng-template>
+      <!-- description -->
+      <mat-form-field appearance="outline">
+        <textarea matInput
+                  type="text"
+                  formControlName="description"></textarea>
+        <mat-error *ngIf="description.hasError('required')">
+          La descripción es <strong>requerida</strong>
+        </mat-error>
+        <mat-error *ngIf="description.hasError('minlength')">
+          La descripción necesita al menos <strong>{{description.errors.minlength.requiredLength}}
+            caracteres</strong>
+        </mat-error>
       </mat-form-field>
       <div>
         <button mat-button
-                matStepperPrevious>Back</button>
-        <button mat-button
-                matStepperNext>Next</button>
+                matStepperPrevious>Anterior</button>
+        <button mat-raised-button
+                color="primary"
+                matStepperNext>Siguiente</button>
       </div>
     </form>
   </mat-step>
+
+  <!-- guests part-->
+  <mat-step [stepControl]="guestsFormGroup">
+    <form [formGroup]="guestsFormGroup">
+      <ng-template matStepLabel>Invitados</ng-template>
+      <!-- guests -->
+      <div formArrayName="guests">
+        <div *ngFor="let guest of guests.controls; let i=index"
+             [formGroupName]="i">
+          <!-- name -->
+          <mat-form-field appearance="outline">
+            <mat-label>Nombre del Invitado</mat-label>
+            <input matInput
+                   type="text"
+                   formControlName="name">
+
+            <!-- <mat-error *ngIf="title.hasError('required')">
+              El nombre es <strong>requerido</strong>
+            </mat-error> -->
+          </mat-form-field>
+
+          <!-- description -->
+          <mat-form-field appearance="outline">
+            <mat-label>Nombre del Invitado</mat-label>
+            <textarea matInput
+                      type="text"
+                      formControlName="description"></textarea>
+            <!-- <mat-error *ngIf="description.hasError('required')">
+              La descripción es <strong>requerida</strong>
+            </mat-error> -->
+            <!-- <mat-error *ngIf="description.hasError('minlength')">
+              La descripción necesita al menos <strong>{{description.errors.minlength.requiredLength}}
+                caracteres</strong>
+            </mat-error> -->
+          </mat-form-field>
+          <button mat-raised-button
+                  color="warn"
+                  (click)="removeGuest(i)">Eliminar Invitado</button>
+        </div>
+      </div>
+      <div>
+        <button mat-button
+                matStepperPrevious>Anterior</button>
+        <button mat-raised-button
+                color="primary"
+                (click)="addGuest()">Añadir Invitado</button>
+        <button mat-raised-button
+                color="primary"
+                matStepperNext>Siguiente</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <!-- final part -->
   <mat-step>
     <ng-template matStepLabel>Done</ng-template>
     You are now done.
     <div>
       <button mat-button
               matStepperPrevious>Back</button>
-      <button mat-button
+      <button mat-raised-button
+              color="primary"
               (click)="stepper.reset()">Reset</button>
     </div>
   </mat-step>
