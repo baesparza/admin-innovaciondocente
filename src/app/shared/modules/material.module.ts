@@ -28,7 +28,7 @@ const modules: any[] = [
   MatListModule,
   MatPaginatorModule,
   MatTableModule,
-  MatStepperModule
+  MatStepperModule,
 ];
 
 @NgModule({

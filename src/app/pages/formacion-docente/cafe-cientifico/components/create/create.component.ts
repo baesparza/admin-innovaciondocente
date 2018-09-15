@@ -32,18 +32,6 @@ export class CreateComponent implements OnInit {
     });
   }
 
-  get title() {
-    return this.headFormGroup.get('title');
-  }
-  get img() {
-    return this.headFormGroup.get('img');
-  }
-  get description() {
-    return this.descriptionFormGroup.get('description');
-  }
-  get guests() {
-    return this.guestsFormGroup.get('guests') as FormArray;
-  }
 
   addGuest(): void {
     let guestFormGroup: FormGroup = this._formBuilder.group({
@@ -54,7 +42,14 @@ export class CreateComponent implements OnInit {
   }
 
   removeGuest(i: number): void {
-    this.guests.removeAt(i);
+    this.guests.removeAt(-1);
   }
 
+  ////////////getters/////////////
+  get title() { return this.headFormGroup.get('title'); }
+  get img() { return this.headFormGroup.get('img'); }
+  get description() { return this.descriptionFormGroup.get('description'); }
+  get guests() { return this.guestsFormGroup.get('guests') as FormArray; }
+  guestName(i: number) { return this.guests.controls[i].get('name'); }
+  guestDescription(i: number) { return this.guests.controls[i].get('description'); }
 }
