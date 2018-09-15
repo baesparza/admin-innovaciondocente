@@ -13,6 +13,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 // shared services
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { AuthGuard } from './services/auth.guard.service';
+import { FirestoreService } from './services/firestore.service';
 
 const modules: any[] = [
   CommonModule,
@@ -32,6 +33,7 @@ export class SharedModule {
       providers: [
         AuthService,
         AuthGuard,
+        FirestoreService,
       ]
     }
   }

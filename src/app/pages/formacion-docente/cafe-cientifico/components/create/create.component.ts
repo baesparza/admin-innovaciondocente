@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
+import { MatSnackBar } from '@angular/material';
+import { Location } from '@angular/common';
+import { FirestoreService } from 'src/app/shared/services/firestore.service';
+
 
 @Component({
   selector: 'id-create',
@@ -12,7 +16,12 @@ export class CreateComponent implements OnInit {
   descriptionFormGroup: FormGroup;
   guestsFormGroup: FormGroup;
 
-  constructor(private _formBuilder: FormBuilder) { }
+  constructor(
+    private _formBuilder: FormBuilder,
+    public snackBar: MatSnackBar,
+    public _location: Location,
+    public _firestoreService: FirestoreService
+  ) { }
 
   ngOnInit() {
     this.headFormGroup = this._formBuilder.group(
@@ -43,6 +52,35 @@ export class CreateComponent implements OnInit {
 
   removeGuest(i: number): void {
     this.guests.removeAt(-1);
+  }
+
+  async submit() {
+    console.log('saving');
+    // validate forms
+    if (this.headFormGroup.invalid || this.descriptionFormGroup.invalid || this.guestsFormGroup.invalid) {
+      this.snackBar.open('La forma es invalida', null, {
+        duration: 4000,
+      });
+      return;
+    }
+    // push to firebase firestore
+    try {
+      await this._firestoreService.encuentros.add(
+        {
+          ...this.headFormGroup.value,
+          ...this.descriptionFormGroup.value,
+          ... this.guestsFormGroup.value
+        });
+      // show confirmation message and go back
+      this.snackBar.open('Se ha guardado correctamente', null, {
+        duration: 5000,
+      });
+      this._location.back();
+    } catch (err) {
+      this.snackBar.open('Ha ocurrido un error al guardar, vuelve a intentarlo', null, {
+        duration: 4000,
+      });
+    }
   }
 
   ////////////getters/////////////
