@@ -6,9 +6,7 @@ import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument 
   providedIn: 'root'
 })
 export class FirestoreService {
-  constructor(private afstore: AngularFirestore) {
-    console.log('service');
-  }
+  constructor(private afstore: AngularFirestore) { }
 
   get programaFormacion(): AngularFirestoreCollection { return this.afstore.collection('programa-formacion'); }
   get cafeCientifico(): AngularFirestoreDocument { return this.programaFormacion.doc('cafe-cientifico'); }

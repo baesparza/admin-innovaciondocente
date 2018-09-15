@@ -125,20 +125,28 @@
   <!-- final part -->
   <mat-step>
     <ng-template matStepLabel>Finalizar</ng-template>
-    <p>
-      Presiona guardar los cambios, y regresar a la pagina anterior
-    </p>
-    <div>
-      <button mat-button
-              class="margin-btn"
-              matStepperPrevious>Anterior</button>
-      <button mat-button
-              color="warn"
-              class="margin-btn"
-              (click)="stepper.reset()">Reiniciar</button>
-      <button mat-raised-button
-              color="primary"
-              (click)="submit()">Guardar</button>
-    </div>
+    <ng-container *ngIf="isLoading; else elseTemplate"
+                  class="full-width">
+      <div class="center">
+        <mat-spinner diameter=30></mat-spinner>
+      </div>
+    </ng-container>
+    <ng-template #elseTemplate>
+      <p>
+        Presiona guardar para continuar, y regresar a la pagina anterior
+      </p>
+      <div>
+        <button mat-button
+                class="margin-btn"
+                matStepperPrevious>Anterior</button>
+        <button mat-button
+                color="warn"
+                class="margin-btn"
+                (click)="stepper.reset()">Reiniciar</button>
+        <button mat-raised-button
+                color="primary"
+                (click)="submit()">Guardar</button>
+      </div>
+    </ng-template>
   </mat-step>
 </mat-vertical-stepper>

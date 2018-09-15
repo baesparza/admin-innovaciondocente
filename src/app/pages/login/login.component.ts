@@ -18,20 +18,20 @@ export class LoginComponent implements OnInit {
   isSignedIn: boolean = false;
 
   constructor(
-    private fb: FormBuilder,
-    private auth: AuthService,
-    public snackBar: MatSnackBar,
-    public router: Router
+    private _fb: FormBuilder,
+    private _auth: AuthService,
+    private _snackBar: MatSnackBar,
+    private _router: Router
   ) { }
 
   ngOnInit() {
     // get user if already signed in
-    this.auth.currentUserObservable.subscribe(user => {
+    this._auth.currentUserObservable.subscribe(user => {
       this.isSignedIn = user !== null;
     });
 
     // init form
-    this.authForm = this.fb.group({
+    this.authForm = this._fb.group({
       email: new FormControl('', [
         Validators.required,
         Validators.email
@@ -58,7 +58,7 @@ export class LoginComponent implements OnInit {
       return;
     // only valid forms will be submitted
     this.isLoading = true;
-    this.auth.signIn(this.email.value, this.password.value)
+    this._auth.signIn(this.email.value, this.password.value)
       // if user is valid navigate to home page
       .then(() => this.gotoHome())
       // if error show error messages
@@ -81,7 +81,7 @@ export class LoginComponent implements OnInit {
    * @param action to be clicked
    */
   private triggerSnackBar(message: string, action?: string): void {
-    this.snackBar.open(message, action, {
+    this._snackBar.open(message, action, {
       duration: 4000,
     });
   }
@@ -90,7 +90,7 @@ export class LoginComponent implements OnInit {
    * Navigate user if already signed in
    */
   gotoHome(): void {
-    this.router.navigate(['/']);
+    this._router.navigate(['/']);
   }
 
 }
