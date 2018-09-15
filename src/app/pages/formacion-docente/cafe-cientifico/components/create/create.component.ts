@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 
 @Component({
   selector: 'id-create',
@@ -8,19 +8,53 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 })
 export class CreateComponent implements OnInit {
 
-  isLinear = false;
-  firstFormGroup: FormGroup;
-  secondFormGroup: FormGroup;
+  headFormGroup: FormGroup;
+  descriptionFormGroup: FormGroup;
+  guestsFormGroup: FormGroup;
 
   constructor(private _formBuilder: FormBuilder) { }
 
   ngOnInit() {
-    this.firstFormGroup = this._formBuilder.group({
-      firstCtrl: ['', Validators.required]
+    this.headFormGroup = this._formBuilder.group(
+      {
+        title: ['', Validators.required],
+        img: ['', Validators.required],
+      }
+    );
+    this.descriptionFormGroup = this._formBuilder.group({
+      description: ['', [
+        Validators.required,
+        Validators.minLength(20)
+      ]]
     });
-    this.secondFormGroup = this._formBuilder.group({
-      secondCtrl: ['', Validators.required]
+    this.guestsFormGroup = this._formBuilder.group({
+      guests: this._formBuilder.array([])
     });
+  }
+
+  get title() {
+    return this.headFormGroup.get('title');
+  }
+  get img() {
+    return this.headFormGroup.get('img');
+  }
+  get description() {
+    return this.descriptionFormGroup.get('description');
+  }
+  get guests() {
+    return this.guestsFormGroup.get('guests') as FormArray;
+  }
+
+  addGuest(): void {
+    let guestFormGroup: FormGroup = this._formBuilder.group({
+      name: ['', Validators.required],
+      description: ['', Validators.required],
+    });
+    this.guests.push(guestFormGroup);
+  }
+
+  removeGuest(i: number): void {
+    this.guests.removeAt(i);
   }
 
 }
