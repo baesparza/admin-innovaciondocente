@@ -1,7 +1,19 @@
-mat-form-field {
+.block {
   display: block;
 }
 
-textarea {
-  height: 200px;
+.big-text-area {
+  height: 100px;
+}
+
+.small-text-area {
+  height: 70px;
+}
+
+.margin-btn {
+  margin-right: 15px;
+}
+
+.margin-bottom {
+  margin-bottom: 15px;
 }
