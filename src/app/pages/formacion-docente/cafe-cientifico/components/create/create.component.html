@@ -1,4 +1,5 @@
 <mat-vertical-stepper [linear]="true"
+                      class="mat-elevation-z8"
                       #stepper>
   <!-- first part -->
   <mat-step [stepControl]="headFormGroup">
@@ -6,7 +7,7 @@
       <ng-template matStepLabel>Nombre e Imagen</ng-template>
       <!-- title -->
       <mat-form-field appearance="outline"
-                      class="block">
+                      class="full-width">
         <mat-label>Nombre del Encuentro</mat-label>
         <input matInput
                type="text"
@@ -18,7 +19,7 @@
 
       <!-- url img -->
       <mat-form-field appearance="outline"
-                      class="block">
+                      class="full-width">
         <mat-label>Link de la Imagen</mat-label>
         <input matInput
                type="text"
@@ -30,9 +31,11 @@
       </mat-form-field>
 
       <!-- actions -->
-      <button mat-raised-button
-              color="primary"
-              matStepperNext>Siguiente</button>
+      <div class="button-row">
+        <button mat-raised-button
+                color="primary"
+                matStepperNext>Siguiente</button>
+      </div>
     </form>
   </mat-step>
 
@@ -42,7 +45,7 @@
       <ng-template matStepLabel>Descripción</ng-template>
       <!-- description -->
       <mat-form-field appearance="outline"
-                      class="block">
+                      class="full-width">
         <textarea matInput
                   type="text"
                   class="big-text-area"
@@ -57,12 +60,14 @@
       </mat-form-field>
 
       <!-- actions -->
-      <button mat-button
-              matStepperPrevious
-              class="margin-btn">Anterior</button>
-      <button mat-raised-button
-              color="primary"
-              matStepperNext>Siguiente</button>
+      <div class="button-row">
+        <button mat-button
+                matStepperPrevious
+                class="margin-btn">Anterior</button>
+        <button mat-raised-button
+                color="primary"
+                matStepperNext>Siguiente</button>
+      </div>
     </form>
   </mat-step>
 
@@ -76,7 +81,7 @@
              [formGroupName]="i">
           <!-- name -->
           <mat-form-field appearance="outline"
-                          class="block">
+                          class="full-width">
             <mat-label>Nombre del Invitado</mat-label>
             <input matInput
                    type="text"
@@ -89,7 +94,7 @@
 
           <!-- description -->
           <mat-form-field appearance="outline"
-                          class="block">
+                          class="full-width">
             <mat-label>Descripción</mat-label>
             <textarea matInput
                       class=" small-text-area"
@@ -102,7 +107,8 @@
         </div>
       </div>
       <!-- actions -->
-      <div class="full-width margin-bottom">
+      <div class="button-row">
+
         <button mat-button
                 color="warn"
                 class="margin-btn"
@@ -111,7 +117,8 @@
                 color="primary"
                 (click)="addGuest()">Añadir Invitado</button>
       </div>
-      <div class="full-width">
+      <br>
+      <div class="button-row">
         <button mat-button
                 class="margin-btn"
                 matStepperPrevious>Anterior</button>
@@ -135,7 +142,8 @@
       <p>
         Presiona guardar para continuar, y regresar a la pagina anterior
       </p>
-      <div>
+
+      <div class="button-row">
         <button mat-button
                 class="margin-btn"
                 matStepperPrevious>Anterior</button>
