@@ -24,11 +24,10 @@ export class DashboardComponent {
   }
 
   getDate(date) {
-    console.log()
-    var event = new Date(date*1000);
-    console.log(event);
-    var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-
-    return event.toLocaleDateString('es-ES', options);
+    return new Date(date.seconds * 1000) // unix date
+      .toLocaleDateString(
+        'es-ES', // lang
+        { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' } // options
+      );
   }
 }

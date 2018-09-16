@@ -1,4 +1,3 @@
-<pre>{{encuentros|async|json}}</pre>
 <table mat-table
        [dataSource]="encuentros"
        class="mat-elevation-z4 full-width">
@@ -24,7 +23,7 @@
     <th mat-header-cell
         *matHeaderCellDef> Fecha </th>
     <td mat-cell
-        *matCellDef="let element"> {{getDate(element.date.seconds)}} </td>
+        *matCellDef="let element"> {{getDate(element.date)}} </td>
   </ng-container>
 
   <!-- actions Column -->
@@ -33,7 +32,13 @@
         *matHeaderCellDef> Acciones </th>
     <td mat-cell
         *matCellDef="let element">
-      <button>hola</button> </td>
+      <div class="button-row">
+        <button mat-button
+                color="warn">Eliminar</button>
+        <button mat-button
+                color="primary">Editar</button>
+      </div>
+    </td>
   </ng-container>
 
   <tr mat-header-row
@@ -41,3 +46,8 @@
   <tr mat-row
       *matRowDef="let row; columns: columnsToDisplay;"></tr>
 </table>
+
+
+<a mat-button
+   color="primary"
+   routerLink="create">Create</a>

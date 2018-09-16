@@ -7,8 +7,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'id-create',
-  templateUrl: './create.component.html',
-  styleUrls: ['./create.component.scss']
+  templateUrl: './create.component.html'
 })
 export class CreateComponent implements OnInit {
 
