@@ -12,7 +12,8 @@ import {
   MatListModule,
   MatPaginatorModule,
   MatTableModule,
-  MatStepperModule
+  MatStepperModule,
+  MatExpansionModule
 } from '@angular/material';
 
 const modules: any[] = [
@@ -29,6 +30,7 @@ const modules: any[] = [
   MatPaginatorModule,
   MatTableModule,
   MatStepperModule,
+  MatExpansionModule
 ];
 
 @NgModule({
