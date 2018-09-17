@@ -5,6 +5,8 @@ import { Location } from '@angular/common';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { AngularFirestoreCollection, AngularFirestore } from '@angular/fire/firestore';
 import { Encuentro } from '../../interfaces/encuentro.interface';
+import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'id-create',
@@ -16,6 +18,9 @@ export class CreateComponent implements OnInit {
   private descriptionFormGroup: FormGroup;
   private guestsFormGroup: FormGroup;
   private encuentrosCollection: AngularFirestoreCollection<Encuentro>;
+  private encuentroID: string;
+  private encuentro: Observable<Encuentro>;
+
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -23,19 +28,44 @@ export class CreateComponent implements OnInit {
     private _afs: AngularFirestore,
     private _location: Location,
     private _auth: AuthService,
+    private _route: ActivatedRoute
   ) { }
 
   ngOnInit() {
     // ref to firestore collection
     this.encuentrosCollection = this._afs.collection('/programa-formacion/cafe-cientifico/encuentros');
 
-    // init forms
-    this.headFormGroup = this._formBuilder.group(
-      {
-        title: ['', Validators.required],
-        img: ['', Validators.required],
-      }
-    );
+    // get params routes
+    this.encuentroID = this._route.snapshot.queryParams['id'];
+
+    // init forms with empty values, and them fill it up if id is defined
+    this.createForms();
+    if (this.encuentroID !== undefined) {
+      // TODO: remove subscription
+      // get firestore object
+      this.encuentro = this.encuentrosCollection.doc<Encuentro>(this.encuentroID).valueChanges();
+      this.encuentro.subscribe(snap => {
+        // TODO: improve this code
+        // create guests as needed
+        for (let index = 0; index < snap.guests.length; index++)
+          this.addGuest();
+
+        // set values to form
+        this.headFormGroup.setValue({ title: snap.title, img: snap.img });
+        this.descriptionFormGroup.setValue({ description: snap.description });
+        this.guestsFormGroup.setValue({ guests: snap.guests });
+      });
+    }
+  }
+
+  /**
+   * Create form to store individual values
+   */
+  private createForms() {
+    this.headFormGroup = this._formBuilder.group({
+      title: ['', Validators.required],
+      img: ['', Validators.required],
+    });
     this.descriptionFormGroup = this._formBuilder.group({
       description: ['', [
         Validators.required,
