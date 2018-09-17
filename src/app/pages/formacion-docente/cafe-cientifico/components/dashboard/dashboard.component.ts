@@ -10,16 +10,13 @@ import { map } from 'rxjs/operators';
   templateUrl: './dashboard.component.html',
 })
 export class DashboardComponent {
-  columnsToDisplay = ['title', 'author', 'date', 'actions'];
   encuentrosCollection: AngularFirestoreCollection<Encuentro>;
   encuentros: Observable<Encuentro[]>;
-  isLoading: boolean = false;
 
   constructor(
     private afs: AngularFirestore,
     private snackBar: MatSnackBar
-  ) {
-  }
+  ) { }
 
   ngOnInit(): void {
     // subscribe to document changes
