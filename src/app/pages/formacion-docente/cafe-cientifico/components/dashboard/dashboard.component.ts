@@ -17,12 +17,12 @@ export class DashboardComponent {
 
   constructor(
     private afs: AngularFirestore,
-    private snackBar: MatSnackBar,
+    private snackBar: MatSnackBar
   ) {
-    this.afs.firestore.settings({ timestampsInSnapshots: true });
   }
 
   ngOnInit(): void {
+    // subscribe to document changes
     this.encuentrosCollection = this.afs.collection('/programa-formacion/cafe-cientifico/encuentros', ref => ref.orderBy('date'));
     this.encuentros = this.encuentrosCollection.snapshotChanges().pipe(
       map(doc => doc.map(a => {
@@ -33,6 +33,10 @@ export class DashboardComponent {
     );
   }
 
+  /**
+   * date in correct format
+   * @param date timestamp
+   */
   getDate(date) {
     return new Date(date.seconds * 1000) // unix date
       .toLocaleDateString(
@@ -41,6 +45,10 @@ export class DashboardComponent {
       );
   }
 
+  /**
+   * Delete document from firebase
+   * @param id of document to be deleted
+   */
   async delete(id: string) {
     try {
       await this.encuentrosCollection.doc(id).delete();

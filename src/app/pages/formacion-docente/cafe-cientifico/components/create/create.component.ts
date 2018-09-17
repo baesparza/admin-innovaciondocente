@@ -14,7 +14,6 @@ export class CreateComponent implements OnInit {
   headFormGroup: FormGroup;
   descriptionFormGroup: FormGroup;
   guestsFormGroup: FormGroup;
-  isLoading: boolean = false;
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -55,7 +54,7 @@ export class CreateComponent implements OnInit {
     this.guests.removeAt(-1);
   }
 
-  async submit() {
+  submit() {
     // validate forms
     if (this.headFormGroup.invalid || this.descriptionFormGroup.invalid || this.guestsFormGroup.invalid) {
       this.snackBar.open('La forma es invalida', null, {
@@ -64,31 +63,24 @@ export class CreateComponent implements OnInit {
       return;
     }
     // push to firebase firestore
-    this.isLoading = true;
-    try {
-      let guests = this.guestsFormGroup.value.guests;
-      let temp = await this._firestoreService.encuentros.add(
-        {
-          ...this.headFormGroup.value,
-          ...this.descriptionFormGroup.value,
-          date: new Date(),
-          author: this._auth.userId
+    this._firestoreService.encuentros.add(
+      {
+        ...this.headFormGroup.value,
+        ...this.descriptionFormGroup.value,
+        ...this.guestsFormGroup.value,
+        date: new Date(),
+        author: this._auth.userId
+      }).then(snap => {
+        // show confirmation message and go back
+        this.snackBar.open('Se ha guardado correctamente', null, {
+          duration: 5000,
         });
-      // push every guest as a different document
-      for (const index in guests)
-        await this._firestoreService.encuentros.doc(temp.id).collection('guests').doc(index).set({ ...guests[index] });
-
-      // show confirmation message and go back
-      this.snackBar.open('Se ha guardado correctamente', null, {
-        duration: 5000,
+      }).catch(e => {
+        this.snackBar.open('Ocurrido un error al guardar, por favor vuelve a intentarlo', null, {
+          duration: 4000,
+        });
       });
-      this._location.back();
-    } catch (err) {
-      this.isLoading = false;
-      this.snackBar.open('Ha ocurrido un error al guardar, vuelve a intentarlo', null, {
-        duration: 4000,
-      });
-    }
+    this._location.back();
   }
 
   ////////////getters/////////////

@@ -4,5 +4,11 @@ export interface Encuentro {
   description: string,
   img: string,
   title: string
+  guests: Guest[]
+}
+
+export interface Guest {
+  description: string,
+  name: string
 }
 
