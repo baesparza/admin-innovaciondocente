@@ -10,8 +10,8 @@ import { map } from 'rxjs/operators';
   templateUrl: './dashboard.component.html',
 })
 export class DashboardComponent {
-  encuentrosCollection: AngularFirestoreCollection<Encuentro>;
-  encuentros: Observable<Encuentro[]>;
+  public encuentrosCollection: AngularFirestoreCollection<Encuentro>;
+  public encuentros: Observable<Encuentro[]>;
 
   constructor(
     private afs: AngularFirestore,
@@ -20,7 +20,7 @@ export class DashboardComponent {
 
   ngOnInit(): void {
     // subscribe to document changes
-    this.encuentrosCollection = this.afs.collection('/programa-formacion/cafe-cientifico/encuentros', ref => ref.orderBy('date', 'desc'));
+    this.encuentrosCollection = this.afs.collection('/programa-formacion/cafe-cientifico/encuentros', ref => ref.orderBy('edited', 'desc'));
     this.encuentros = this.encuentrosCollection.snapshotChanges().pipe(
       map(doc => doc.map(a => {
         const data = a.payload.doc.data() as Encuentro;
