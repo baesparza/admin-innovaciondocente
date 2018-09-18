@@ -14,11 +14,11 @@ import { Observable } from 'rxjs';
 })
 export class CreateComponent implements OnInit {
 
-  public headFormGroup: FormGroup;
-  public descriptionFormGroup: FormGroup;
-  public guestsFormGroup: FormGroup;
-  public encuentrosCollection: AngularFirestoreCollection<Encuentro>;
-  public encuentroDocument: AngularFirestoreDocument<Encuentro>;
+  public headFormGroup: FormGroup = null;
+  public descriptionFormGroup: FormGroup = null;
+  public guestsFormGroup: FormGroup = null;
+  public encuentrosCollection: AngularFirestoreCollection<Encuentro> = null;
+  public encuentroDocument: AngularFirestoreDocument<Encuentro> = null;
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -41,7 +41,7 @@ export class CreateComponent implements OnInit {
     this.encuentrosCollection = this._afs.collection('/programa-formacion/cafe-cientifico/encuentros');
 
     // fill up forms if id is defined
-    if (encuentroID !== undefined) {
+    if (encuentroID !== null) {
       // TODO: remove subscription
       // get firestore object
       this.encuentroDocument = this.encuentrosCollection.doc(encuentroID);
@@ -125,7 +125,7 @@ export class CreateComponent implements OnInit {
     };
 
     // Save or update on firebase
-    if (this.encuentroDocument !== undefined)
+    if (this.encuentroDocument !== null)
       this.encuentroDocument.update(encuentro)
         // show confirmation message and go back
         .then(snap => this.showMessage('Se ha actualizo correctamente'))
