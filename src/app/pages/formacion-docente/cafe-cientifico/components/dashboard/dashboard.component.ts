@@ -10,8 +10,8 @@ import { map } from 'rxjs/operators';
   templateUrl: './dashboard.component.html',
 })
 export class DashboardComponent {
-  encuentrosCollection: AngularFirestoreCollection<Encuentro>;
-  encuentros: Observable<Encuentro[]>;
+  public encuentrosCollection: AngularFirestoreCollection<Encuentro>;
+  public encuentros: Observable<Encuentro[]>;
 
   constructor(
     private afs: AngularFirestore,

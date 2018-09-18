@@ -6,7 +6,6 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 import { AngularFirestoreCollection, AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Encuentro } from '../../interfaces/encuentro.interface';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'id-create',
@@ -31,7 +30,7 @@ export class CreateComponent implements OnInit {
 
   ngOnInit() {
     // get params routes
-    let encuentroID = this._route.snapshot.queryParams['id'];
+    let encuentroID = this._route.snapshot.queryParams['id'] || null;
 
     // init forms with empty values
     this.buildForms();
