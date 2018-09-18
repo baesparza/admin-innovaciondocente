@@ -14,11 +14,11 @@ import { Observable } from 'rxjs';
 })
 export class CreateComponent implements OnInit {
 
-  private headFormGroup: FormGroup;
-  private descriptionFormGroup: FormGroup;
-  private guestsFormGroup: FormGroup;
-  private encuentrosCollection: AngularFirestoreCollection<Encuentro>;
-  private encuentroDocument: AngularFirestoreDocument<Encuentro>;
+  public headFormGroup: FormGroup;
+  public descriptionFormGroup: FormGroup;
+  public guestsFormGroup: FormGroup;
+  public encuentrosCollection: AngularFirestoreCollection<Encuentro>;
+  public encuentroDocument: AngularFirestoreDocument<Encuentro>;
 
   constructor(
     private _formBuilder: FormBuilder,
