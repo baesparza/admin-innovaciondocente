@@ -1,9 +1,9 @@
-<mat-vertical-stepper [linear]="encuentroDocument === null"
-                      class="mat-elevation-z8"
-                      #stepper>
-  <!-- first part -->
-  <mat-step [stepControl]="headFormGroup">
-    <form [formGroup]="headFormGroup">
+<form [formGroup]="encuentroFormGroup">
+  <mat-vertical-stepper [linear]="encuentroDocument === null"
+                        class="mat-elevation-z8"
+                        #stepper>
+    <!-- first part -->
+    <mat-step [stepControl]="headFormGroup">
       <ng-template matStepLabel>Nombre e Imagen</ng-template>
       <!-- title -->
       <mat-form-field appearance="outline"
@@ -36,12 +36,10 @@
                 color="primary"
                 matStepperNext>Siguiente</button>
       </div>
-    </form>
-  </mat-step>
+    </mat-step>
 
-  <!-- description part-->
-  <mat-step [stepControl]="descriptionFormGroup">
-    <form [formGroup]="descriptionFormGroup">
+    <!-- description part-->
+    <mat-step [stepControl]="descriptionFormGroup">
       <ng-template matStepLabel>Descripción</ng-template>
       <!-- description -->
       <mat-form-field appearance="outline"
@@ -68,12 +66,10 @@
                 color="primary"
                 matStepperNext>Siguiente</button>
       </div>
-    </form>
-  </mat-step>
+    </mat-step>
 
-  <!-- guests part-->
-  <mat-step [stepControl]="guestsFormGroup">
-    <form [formGroup]="guestsFormGroup">
+    <!-- guests part-->
+    <mat-step [stepControl]="guestsFormGroup">
       <ng-template matStepLabel>Invitados</ng-template>
       <!-- guests -->
       <div formArrayName="guests">
@@ -126,23 +122,23 @@
                 color="primary"
                 matStepperNext>Siguiente</button>
       </div>
-    </form>
-  </mat-step>
+    </mat-step>
 
-  <!-- final part -->
-  <mat-step>
-    <ng-template matStepLabel>Finalizar</ng-template>
-    <p>
-      Presiona guardar para continuar, y regresar a la pagina anterior
-    </p>
+    <!-- final part -->
+    <mat-step>
+      <ng-template matStepLabel>Finalizar</ng-template>
+      <p>
+        Presiona guardar para continuar, y regresar a la pagina anterior
+      </p>
 
-    <div class="button-row">
-      <button mat-button
-              class="margin-btn"
-              matStepperPrevious>Anterior</button>
-      <button mat-raised-button
-              color="primary"
-              (click)="submit()">Guardar</button>
-    </div>
-  </mat-step>
-</mat-vertical-stepper>
+      <div class="button-row">
+        <button mat-button
+                class="margin-btn"
+                matStepperPrevious>Anterior</button>
+        <button mat-raised-button
+                color="primary"
+                (click)="submit()">Guardar</button>
+      </div>
+    </mat-step>
+  </mat-vertical-stepper>
+</form>

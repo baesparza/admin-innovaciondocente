@@ -13,9 +13,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class CreateComponent implements OnInit {
 
-  public headFormGroup: FormGroup = null;
-  public descriptionFormGroup: FormGroup = null;
-  public guestsFormGroup: FormGroup = null;
+  public encuentroFormGroup: FormGroup = null;
   public encuentrosCollection: AngularFirestoreCollection<Encuentro> = null;
   public encuentroDocument: AngularFirestoreDocument<Encuentro> = null;
 
@@ -33,7 +31,7 @@ export class CreateComponent implements OnInit {
     let encuentroID = this._route.snapshot.queryParams['id'] || null;
 
     // init forms with empty values
-    this.buildForms();
+    this.buildForm();
 
     /////////firestore reference//////////
     // ref to firestore collection
@@ -57,10 +55,10 @@ export class CreateComponent implements OnInit {
           for (let index = 0; index < snap.guests.length; index++) this.addGuest();
 
           // set values to form
-          this.headFormGroup.controls['title'].setValue(snap.title);
-          this.headFormGroup.controls['img'].setValue(snap.img);
-          this.descriptionFormGroup.controls['description'].setValue(snap.description);
-          this.guestsFormGroup.controls['guests'].setValue(snap.guests);
+          this.encuentroFormGroup.controls['title'].setValue(snap.title);
+          this.encuentroFormGroup.controls['img'].setValue(snap.img);
+          this.encuentroFormGroup.controls['description'].setValue(snap.description);
+          this.encuentroFormGroup.controls['guests'].setValue(snap.guests);
         })
         .catch(e => {
           this.showMessage('Ha ocurrido un error al cargar el encuentro.');
@@ -72,17 +70,11 @@ export class CreateComponent implements OnInit {
   /**
    * Create form to store individual values
    */
-  private buildForms() {
-    this.headFormGroup = this._formBuilder.group({
+  private buildForm() {
+    this.encuentroFormGroup = this._formBuilder.group({
       title: ['', Validators.required],
       img: ['', Validators.required],
-    });
-    this.descriptionFormGroup = this._formBuilder.group({
-      description: ['', [
-        Validators.required, Validators.minLength(20)
-      ]]
-    });
-    this.guestsFormGroup = this._formBuilder.group({
+      description: ['', [Validators.required, Validators.minLength(20)]],
       guests: this._formBuilder.array([])
     });
   }
@@ -110,30 +102,33 @@ export class CreateComponent implements OnInit {
    */
   submit() {
     // validate forms
-    if (this.headFormGroup.invalid || this.descriptionFormGroup.invalid || this.guestsFormGroup.invalid) {
+    if (this.encuentroFormGroup.invalid) {
       this.showMessage('La forma es invalida');
       return;
     }
 
-    let encuentro: Encuentro = {
-      ...this.headFormGroup.value,
-      ...this.descriptionFormGroup.value,
-      ...this.guestsFormGroup.value,
-      date: new Date(),
-      author: this._auth.userId
-    };
-
     // Save or update on firebase
     if (this.encuentroDocument !== null)
-      this.encuentroDocument.update(encuentro)
+      this.encuentroDocument.update({
+        ...this.encuentroFormGroup.value,
+        edited: new Date(),
+        editor: this._auth.userId
+      })
         // show confirmation message and go back
         .then(snap => this.showMessage('Se ha actualizo correctamente'))
         .catch(this.showErrorMessage);
-    else
-      this.encuentrosCollection.add(encuentro)
+    else {
+      let date = new Date();
+      this.encuentrosCollection.add({
+        ...this.encuentroFormGroup.value,
+        created: date,
+        edited: date,
+        creator: this._auth.userId
+      })
         // show confirmation message and go back
         .then(snap => this.showMessage('Se ha guardado correctamente'))
         .catch(this.showErrorMessage);
+    }
     this._location.back();
   }
 
@@ -148,10 +143,10 @@ export class CreateComponent implements OnInit {
   }
 
   ////////////getters/////////////
-  get title() { return this.headFormGroup.get('title'); }
-  get img() { return this.headFormGroup.get('img'); }
-  get description() { return this.descriptionFormGroup.get('description'); }
-  get guests() { return this.guestsFormGroup.get('guests') as FormArray; }
+  get title() { return this.encuentroFormGroup.get('title'); }
+  get img() { return this.encuentroFormGroup.get('img'); }
+  get description() { return this.encuentroFormGroup.get('description'); }
+  get guests() { return this.encuentroFormGroup.get('guests') as FormArray; }
   guestName(i: number) { return this.guests.controls[i].get('name'); }
   guestDescription(i: number) { return this.guests.controls[i].get('description'); }
 }

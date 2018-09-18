@@ -20,7 +20,7 @@ export class DashboardComponent {
 
   ngOnInit(): void {
     // subscribe to document changes
-    this.encuentrosCollection = this.afs.collection('/programa-formacion/cafe-cientifico/encuentros', ref => ref.orderBy('date', 'desc'));
+    this.encuentrosCollection = this.afs.collection('/programa-formacion/cafe-cientifico/encuentros', ref => ref.orderBy('edited', 'desc'));
     this.encuentros = this.encuentrosCollection.snapshotChanges().pipe(
       map(doc => doc.map(a => {
         const data = a.payload.doc.data() as Encuentro;

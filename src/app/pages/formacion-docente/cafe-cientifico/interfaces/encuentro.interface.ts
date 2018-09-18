@@ -1,6 +1,8 @@
 export interface Encuentro {
-  author: string,
-  date: Date,
+  creator: string,
+  created: Date,
+  editor?: string,
+  edited?: Date,
   description: string,
   img: string,
   title: string
