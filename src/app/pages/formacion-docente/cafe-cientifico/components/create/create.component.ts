@@ -20,7 +20,6 @@ export class CreateComponent implements OnInit {
   private encuentrosCollection: AngularFirestoreCollection<Encuentro>;
   private encuentroDocument: AngularFirestoreDocument<Encuentro>;
 
-
   constructor(
     private _formBuilder: FormBuilder,
     private _snackBar: MatSnackBar,
@@ -46,17 +45,27 @@ export class CreateComponent implements OnInit {
       // TODO: remove subscription
       // get firestore object
       this.encuentroDocument = this.encuentrosCollection.doc(encuentroID);
-      this.encuentroDocument.valueChanges()
-        .subscribe(snap => {
-          // TODO: improve this code
+      this.encuentroDocument.ref.get()
+        .then(doc => {
+          // validate if document exists
+          if (!doc.exists) {
+            this.showMessage('Este encuentro ya no se encuentra disponible.');
+          }
+          // get doc data
+          const snap: Encuentro = doc.data() as Encuentro;
+
           // create guests as needed
-          for (let index = 0; index < snap.guests.length; index++)
-            this.addGuest();
+          for (let index = 0; index < snap.guests.length; index++) this.addGuest();
 
           // set values to form
-          this.headFormGroup.setValue({ title: snap.title, img: snap.img });
-          this.descriptionFormGroup.setValue({ description: snap.description });
-          this.guestsFormGroup.setValue({ guests: snap.guests });
+          this.headFormGroup.controls['title'].setValue(snap.title);
+          this.headFormGroup.controls['img'].setValue(snap.img);
+          this.descriptionFormGroup.controls['description'].setValue(snap.description);
+          this.guestsFormGroup.controls['guests'].setValue(snap.guests);
+        })
+        .catch(e => {
+          this.showMessage('Ha ocurrido un error al cargar el encuentro.');
+          this._location.back();
         });
     }
   }
@@ -71,8 +80,7 @@ export class CreateComponent implements OnInit {
     });
     this.descriptionFormGroup = this._formBuilder.group({
       description: ['', [
-        Validators.required,
-        Validators.minLength(20)
+        Validators.required, Validators.minLength(20)
       ]]
     });
     this.guestsFormGroup = this._formBuilder.group({
@@ -104,9 +112,7 @@ export class CreateComponent implements OnInit {
   submit() {
     // validate forms
     if (this.headFormGroup.invalid || this.descriptionFormGroup.invalid || this.guestsFormGroup.invalid) {
-      this._snackBar.open('La forma es invalida', null, {
-        duration: 4000,
-      });
+      this.showMessage('La forma es invalida');
       return;
     }
 
@@ -122,18 +128,24 @@ export class CreateComponent implements OnInit {
     if (this.encuentroDocument !== undefined)
       this.encuentroDocument.update(encuentro)
         // show confirmation message and go back
-        .then(snap => this._snackBar.open('Se ha actualizo correctamente', null, { duration: 5000, }))
+        .then(snap => this.showMessage('Se ha actualizo correctamente'))
         .catch(this.showErrorMessage);
     else
       this.encuentrosCollection.add(encuentro)
         // show confirmation message and go back
-        .then(snap => this._snackBar.open('Se ha guardado correctamente', null, { duration: 5000, }))
+        .then(snap => this.showMessage('Se ha guardado correctamente'))
         .catch(this.showErrorMessage);
     this._location.back();
   }
 
   private showErrorMessage(e) {
-    this._snackBar.open('Ocurrido un error al guardar, por favor vuelve a intentarlo', null, { duration: 4000, });
+    this.showMessage('Ocurrido un error al guardar, por favor vuelve a intentarlo');
+  }
+
+  private showMessage(m: string) {
+    this._snackBar.open(m, null, {
+      duration: 5000,
+    });
   }
 
   ////////////getters/////////////
