@@ -10,20 +10,17 @@ import { map } from 'rxjs/operators';
   templateUrl: './dashboard.component.html',
 })
 export class DashboardComponent {
-  columnsToDisplay = ['title', 'author', 'date', 'actions'];
   encuentrosCollection: AngularFirestoreCollection<Encuentro>;
   encuentros: Observable<Encuentro[]>;
-  isLoading: boolean = false;
 
   constructor(
     private afs: AngularFirestore,
-    private snackBar: MatSnackBar,
-  ) {
-    this.afs.firestore.settings({ timestampsInSnapshots: true });
-  }
+    private snackBar: MatSnackBar
+  ) { }
 
   ngOnInit(): void {
-    this.encuentrosCollection = this.afs.collection('/programa-formacion/cafe-cientifico/encuentros', ref => ref.orderBy('date'));
+    // subscribe to document changes
+    this.encuentrosCollection = this.afs.collection('/programa-formacion/cafe-cientifico/encuentros', ref => ref.orderBy('date', 'desc'));
     this.encuentros = this.encuentrosCollection.snapshotChanges().pipe(
       map(doc => doc.map(a => {
         const data = a.payload.doc.data() as Encuentro;
@@ -33,6 +30,10 @@ export class DashboardComponent {
     );
   }
 
+  /**
+   * date in correct format
+   * @param date timestamp
+   */
   getDate(date) {
     return new Date(date.seconds * 1000) // unix date
       .toLocaleDateString(
@@ -41,6 +42,10 @@ export class DashboardComponent {
       );
   }
 
+  /**
+   * Delete document from firebase
+   * @param id of document to be deleted
+   */
   async delete(id: string) {
     try {
       await this.encuentrosCollection.doc(id).delete();
