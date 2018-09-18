@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { HomeComponent } from './components/home/home.component';
+import { ProgramaFormacionComponent } from './components/programa-formacion/programa-formacion.component';
 import { CreateCursosComponent } from './components/create-cursos/create-cursos.component';
 
 
 const routes: Routes = [
   {
     path: '',
-    component: HomeComponent,
+    component: ProgramaFormacionComponent,
   },
   {
     path: 'create',

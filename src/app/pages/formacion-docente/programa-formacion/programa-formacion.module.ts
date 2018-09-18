@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import { ProgramaFormacionRoutingModule } from 'src/app/pages/formacion-docente/programa-formacion/programa-formacion.routing.module';
 import { CursosComponent } from './components/cursos/cursos.component';
-import { HomeComponent } from '../../home/components/home.component';
 import { CreateCursosComponent } from './components/create-cursos/create-cursos.component';
+import { ProgramaFormacionComponent } from './components/programa-formacion/programa-formacion.component';
 
 @NgModule({
   imports: [
@@ -13,7 +13,7 @@ import { CreateCursosComponent } from './components/create-cursos/create-cursos.
   ],
   declarations: [
     CursosComponent,
-    HomeComponent,
+    ProgramaFormacionComponent,
     CreateCursosComponent
   ]
 })

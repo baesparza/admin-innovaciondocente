@@ -17,6 +17,10 @@ const routes: Routes = [
         path: 'formacion-docente/cafe-cientifico',
         loadChildren: '../../pages/formacion-docente/cafe-cientifico/cafe-cientifico.module#CafeCientificoModule',
       },
+      {
+        path: 'formacion-docente/programa-formacion',
+        loadChildren: '../../pages/formacion-docente/programa-formacion/programa-formacion.module#ProgramaFormacionModule',
+      },
     ]
   }
 ];

@@ -36,7 +36,7 @@ export class NavbarComponent {
     {
       name: 'Formación Docente',
       children: [
-        { name: 'Programa Formacion' },
+        { name: 'Programa Formacion', goto: ['/', 'formacion-docente', 'programa-formacion'] },
         { name: 'Cafe Cientifico', goto: ['/', 'formacion-docente', 'cafe-cientifico'] },
         { name: 'Jornadas de Reflexion' },
       ]
