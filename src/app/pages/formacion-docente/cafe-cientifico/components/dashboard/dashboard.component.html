@@ -23,10 +23,10 @@
 
     <!-- expanded content -->
     <ng-template matExpansionPanelContent>
-      <p><b>Autor:</b> {{encuentro.author}}</p>
-      <p><b>Fecha:</b> {{getDate(encuentro.date)}}</p>
-      <p><b>Invitados:</b> {{encuentro.guests.length}}</p>
-      <p>{{encuentro.description}}</p>
+      <p *ngIf="encuentro.autor"><b>Autor:</b> {{encuentro.author}}</p>
+      <p *ngIf="encuentro.date"><b>Fecha:</b> {{getDate(encuentro.date)}}</p>
+      <p *ngIf="encuentro.guests"><b>Invitados:</b> {{encuentro.guests.length}}</p>
+      <p *ngIf="encuentro.description">{{encuentro.description}}</p>
       <!-- options -->
       <mat-action-row>
         <button mat-button

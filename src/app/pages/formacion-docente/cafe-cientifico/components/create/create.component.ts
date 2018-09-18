@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { Location } from '@angular/common';
 import { AuthService } from 'src/app/shared/services/auth.service';
-import { AngularFirestoreCollection, AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestoreCollection, AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Encuentro } from '../../interfaces/encuentro.interface';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -18,8 +18,7 @@ export class CreateComponent implements OnInit {
   private descriptionFormGroup: FormGroup;
   private guestsFormGroup: FormGroup;
   private encuentrosCollection: AngularFirestoreCollection<Encuentro>;
-  private encuentroID: string;
-  private encuentro: Observable<Encuentro>;
+  private encuentroDocument: AngularFirestoreDocument<Encuentro>;
 
 
   constructor(
@@ -32,36 +31,40 @@ export class CreateComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    // get params routes
+    let encuentroID = this._route.snapshot.queryParams['id'];
+
+    // init forms with empty values
+    this.buildForms();
+
+    /////////firestore reference//////////
     // ref to firestore collection
     this.encuentrosCollection = this._afs.collection('/programa-formacion/cafe-cientifico/encuentros');
 
-    // get params routes
-    this.encuentroID = this._route.snapshot.queryParams['id'];
-
-    // init forms with empty values, and them fill it up if id is defined
-    this.createForms();
-    if (this.encuentroID !== undefined) {
+    // fill up forms if id is defined
+    if (encuentroID !== undefined) {
       // TODO: remove subscription
       // get firestore object
-      this.encuentro = this.encuentrosCollection.doc<Encuentro>(this.encuentroID).valueChanges();
-      this.encuentro.subscribe(snap => {
-        // TODO: improve this code
-        // create guests as needed
-        for (let index = 0; index < snap.guests.length; index++)
-          this.addGuest();
+      this.encuentroDocument = this.encuentrosCollection.doc(encuentroID);
+      this.encuentroDocument.valueChanges()
+        .subscribe(snap => {
+          // TODO: improve this code
+          // create guests as needed
+          for (let index = 0; index < snap.guests.length; index++)
+            this.addGuest();
 
-        // set values to form
-        this.headFormGroup.setValue({ title: snap.title, img: snap.img });
-        this.descriptionFormGroup.setValue({ description: snap.description });
-        this.guestsFormGroup.setValue({ guests: snap.guests });
-      });
+          // set values to form
+          this.headFormGroup.setValue({ title: snap.title, img: snap.img });
+          this.descriptionFormGroup.setValue({ description: snap.description });
+          this.guestsFormGroup.setValue({ guests: snap.guests });
+        });
     }
   }
 
   /**
    * Create form to store individual values
    */
-  private createForms() {
+  private buildForms() {
     this.headFormGroup = this._formBuilder.group({
       title: ['', Validators.required],
       img: ['', Validators.required],
@@ -95,6 +98,9 @@ export class CreateComponent implements OnInit {
     this.guests.removeAt(-1);
   }
 
+  /**
+   * Validate forms, and submit
+   */
   submit() {
     // validate forms
     if (this.headFormGroup.invalid || this.descriptionFormGroup.invalid || this.guestsFormGroup.invalid) {
@@ -103,25 +109,31 @@ export class CreateComponent implements OnInit {
       });
       return;
     }
-    // push to firebase firestore
-    this.encuentrosCollection.add(
-      {
-        ...this.headFormGroup.value,
-        ...this.descriptionFormGroup.value,
-        ...this.guestsFormGroup.value,
-        date: new Date(),
-        author: this._auth.userId
-      }).then(snap => {
+
+    let encuentro: Encuentro = {
+      ...this.headFormGroup.value,
+      ...this.descriptionFormGroup.value,
+      ...this.guestsFormGroup.value,
+      date: new Date(),
+      author: this._auth.userId
+    };
+
+    // Save or update on firebase
+    if (this.encuentroDocument !== undefined)
+      this.encuentroDocument.update(encuentro)
         // show confirmation message and go back
-        this._snackBar.open('Se ha guardado correctamente', null, {
-          duration: 5000,
-        });
-      }).catch(e => {
-        this._snackBar.open('Ocurrido un error al guardar, por favor vuelve a intentarlo', null, {
-          duration: 4000,
-        });
-      });
+        .then(snap => this._snackBar.open('Se ha actualizo correctamente', null, { duration: 5000, }))
+        .catch(this.showErrorMessage);
+    else
+      this.encuentrosCollection.add(encuentro)
+        // show confirmation message and go back
+        .then(snap => this._snackBar.open('Se ha guardado correctamente', null, { duration: 5000, }))
+        .catch(this.showErrorMessage);
     this._location.back();
+  }
+
+  private showErrorMessage(e) {
+    this._snackBar.open('Ocurrido un error al guardar, por favor vuelve a intentarlo', null, { duration: 4000, });
   }
 
   ////////////getters/////////////
