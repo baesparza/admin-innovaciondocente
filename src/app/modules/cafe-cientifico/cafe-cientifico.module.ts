@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { SharedModule } from 'src/app/shared/shared.module';
+
 import { CafeCientificoRoutingModule } from './cafe-cientifico.routing.module';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { CreateComponent } from './components/create/create.component';
-import { SharedModule } from '../../../shared/shared.module';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { CreateComponent } from './pages/create/create.component';
 
 @NgModule({
   imports: [
