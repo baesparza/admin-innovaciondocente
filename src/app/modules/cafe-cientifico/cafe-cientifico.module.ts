@@ -4,8 +4,9 @@ import { CommonModule } from '@angular/common';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 import { CafeCientificoRoutingModule } from './cafe-cientifico.routing.module';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { CreateComponent } from './pages/create/create.component';
+import { CafeCientificoService } from './cafe-cientifico.service';
+import { CafeCientificoComponent } from './pages/cafe-cientifico/cafe-cientifico.component';
 
 @NgModule({
   imports: [
@@ -13,8 +14,11 @@ import { CreateComponent } from './pages/create/create.component';
     SharedModule,
     CafeCientificoRoutingModule
   ],
+  providers: [
+    CafeCientificoService
+  ],
   declarations: [
-    DashboardComponent,
+    CafeCientificoComponent,
     CreateComponent
   ]
 })

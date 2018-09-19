@@ -1,27 +1,27 @@
 import { Component } from '@angular/core';
-import { AngularFirestoreCollection, AngularFirestore } from '@angular/fire/firestore';
-import { Encuentro } from '../../interfaces/encuentro.interface';
-import { Observable } from 'rxjs';
 import { MatSnackBar } from '@angular/material';
+
+import { Encuentro } from '../../interfaces/encuentro.interface';
+import { CafeCientificoService } from '../../cafe-cientifico.service';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Component({
-  selector: 'id-dashboard',
-  templateUrl: './dashboard.component.html',
+  selector: 'id-cafe-cientifico',
+  templateUrl: './cafe-cientifico.component.html',
 })
-export class DashboardComponent {
-  public encuentrosCollection: AngularFirestoreCollection<Encuentro>;
+export class CafeCientificoComponent {
+
   public encuentros: Observable<Encuentro[]>;
 
   constructor(
-    private afs: AngularFirestore,
-    private snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private _cafeCientificoService: CafeCientificoService
   ) { }
 
   ngOnInit(): void {
-    // subscribe to document changes
-    this.encuentrosCollection = this.afs.collection('/programa-formacion/cafe-cientifico/encuentros', ref => ref.orderBy('edited', 'desc'));
-    this.encuentros = this.encuentrosCollection.snapshotChanges().pipe(
+    // get encuentros from db
+    this.encuentros = this._cafeCientificoService.getEncuentros().snapshotChanges().pipe(
       map(doc => doc.map(a => {
         const data = a.payload.doc.data() as Encuentro;
         const id = a.payload.doc.id;
@@ -48,14 +48,18 @@ export class DashboardComponent {
    */
   async delete(id: string) {
     try {
-      await this.encuentrosCollection.doc(id).delete();
-      this.snackBar.open('El encuentro se elimino correctamente', null, {
-        duration: 4000,
-      });
+      await this._cafeCientificoService.getEncuentro(id).delete();
+      this.showMessage('El encuentro se elimino correctamente');
     } catch {
-      this.snackBar.open('No se pudo eliminar, vuelve a intentarlo', null, {
-        duration: 4000,
-      });
+      this.showMessage('No se pudo eliminar, vuelve a intentarlo');
     }
+  }
+
+  /**
+    * show snack with message
+    * @param m message to show
+    */
+  private showMessage(m: string) {
+    this._snackBar.open(m, null, { duration: 5000, });
   }
 }

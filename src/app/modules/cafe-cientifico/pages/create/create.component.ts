@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { Location } from '@angular/common';
-import { AuthService } from 'src/app/shared/services/auth.service';
-import { AngularFirestoreCollection, AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
-import { Encuentro } from '../../interfaces/encuentro.interface';
 import { ActivatedRoute } from '@angular/router';
+
+import { Encuentro } from '../../interfaces/encuentro.interface';
+import { CafeCientificoService } from '../../cafe-cientifico.service';
 
 @Component({
   selector: 'id-create',
@@ -14,57 +14,51 @@ import { ActivatedRoute } from '@angular/router';
 export class CreateComponent implements OnInit {
 
   public encuentroFormGroup: FormGroup = null;
-  public encuentrosCollection: AngularFirestoreCollection<Encuentro> = null;
-  public encuentroDocument: AngularFirestoreDocument<Encuentro> = null;
-
+  private shouldUpdate: boolean = false;
+  private encuentroID: string = null;
   constructor(
     private _formBuilder: FormBuilder,
     private _snackBar: MatSnackBar,
-    private _afs: AngularFirestore,
     private _location: Location,
-    private _auth: AuthService,
-    private _route: ActivatedRoute
+    private _route: ActivatedRoute,
+    private _cafeCientificoService: CafeCientificoService
   ) { }
 
   ngOnInit() {
     // get params routes
-    let encuentroID = this._route.snapshot.queryParams['id'] || null;
+    this.encuentroID = this._route.snapshot.queryParams['id'];
 
     // init forms with empty values
     this.buildForm();
 
-    /////////firestore reference//////////
-    // ref to firestore collection
-    this.encuentrosCollection = this._afs.collection('/programa-formacion/cafe-cientifico/encuentros');
+    // if encuentroID isnt defined continue
+    console.log(this.encuentroID);
+    if (this.encuentroID === undefined)
+      return;
 
-    // fill up forms if id is defined
-    if (encuentroID !== null) {
-      // TODO: remove subscription
-      // get firestore object
-      this.encuentroDocument = this.encuentrosCollection.doc(encuentroID);
-      this.encuentroDocument.ref.get()
-        .then(doc => {
-          // validate if document exists
-          if (!doc.exists) {
-            this.showMessage('Este encuentro ya no se encuentra disponible.');
-          }
-          // get doc data
-          const snap: Encuentro = doc.data() as Encuentro;
+    // if encuentroID is defined, validate document and fill formF
+    this._cafeCientificoService.getEncuentroData(this.encuentroID)
+      .then(doc => {
+        // validate if document exists
+        if (!doc.exists) {
+          this.showMessage('Este encuentro ya no se encuentra disponible.');
+        }
+        this.shouldUpdate = true;
+        const snap: Encuentro = doc.data() as Encuentro;
 
-          // create guests as needed
-          for (let index = 0; index < snap.guests.length; index++) this.addGuest();
+        // create guests as needed
+        for (let index = 0; index < snap.guests.length; index++) this.addGuest();
 
-          // set values to form
-          this.encuentroFormGroup.controls['name'].setValue(snap.name);
-          this.encuentroFormGroup.controls['img'].setValue(snap.img);
-          this.encuentroFormGroup.controls['description'].setValue(snap.description);
-          this.encuentroFormGroup.controls['guests'].setValue(snap.guests);
-        })
-        .catch(e => {
-          this.showMessage('Ha ocurrido un error al cargar el encuentro.');
-          this._location.back();
-        });
-    }
+        // set values to form
+        this.encuentroFormGroup.controls['name'].setValue(snap.name);
+        this.encuentroFormGroup.controls['img'].setValue(snap.img);
+        this.encuentroFormGroup.controls['description'].setValue(snap.description);
+        this.encuentroFormGroup.controls['guests'].setValue(snap.guests);
+      })
+      .catch(e => {
+        this.showMessage('Ha ocurrido un error al cargar el encuentro.');
+        this._location.back();
+      });
   }
 
   /**
@@ -107,39 +101,34 @@ export class CreateComponent implements OnInit {
       return;
     }
 
-    // Save or update on firebase
-    if (this.encuentroDocument !== null)
-      this.encuentroDocument.update({
-        ...this.encuentroFormGroup.value,
-        edited: new Date(),
-        editor: this._auth.userId
-      })
-        // show confirmation message and go back
-        .then(snap => this.showMessage('Se ha actualizo correctamente'))
+    // add or update
+    if (this.shouldUpdate)
+      this._cafeCientificoService.updateEncuentro(this.encuentroID, this.encuentroFormGroup.value)
+        .then(m => this.showMessage('Se actualizo correctamente'))
         .catch(this.showErrorMessage);
-    else {
-      let date = new Date();
-      this.encuentrosCollection.add({
-        ...this.encuentroFormGroup.value,
-        created: date,
-        edited: date,
-        creator: this._auth.userId
-      })
-        // show confirmation message and go back
-        .then(snap => this.showMessage('Se ha guardado correctamente'))
+    else
+      this._cafeCientificoService.addEncuentro(this.encuentroFormGroup.value)
+        .then(m => this.showMessage('Se ha guardado correctamente'))
         .catch(this.showErrorMessage);
-    }
+
+    // navigate back
     this._location.back();
   }
 
+  /**
+   * show snack error message
+   * @param e error
+   */
   private showErrorMessage(e) {
     this.showMessage('Ocurrido un error al guardar, por favor vuelve a intentarlo');
   }
 
+  /**
+   * show snack with message
+   * @param m message to show
+   */
   private showMessage(m: string) {
-    this._snackBar.open(m, null, {
-      duration: 5000,
-    });
+    this._snackBar.open(m, null, { duration: 5000, });
   }
 
   ////////////getters/////////////
