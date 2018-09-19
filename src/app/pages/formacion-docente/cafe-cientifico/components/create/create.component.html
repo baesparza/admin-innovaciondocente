@@ -5,14 +5,14 @@
     <!-- first part -->
     <mat-step>
       <ng-template matStepLabel>Nombre e Imagen</ng-template>
-      <!-- title -->
+      <!-- name -->
       <mat-form-field appearance="outline"
                       class="full-width">
         <mat-label>Nombre del Encuentro</mat-label>
         <input matInput
                type="text"
-               formControlName="title">
-        <mat-error *ngIf="title.hasError('required')">
+               formControlName="name">
+        <mat-error *ngIf="name.hasError('required')">
           El nombre es <strong>requerido</strong>
         </mat-error>
       </mat-form-field>
@@ -113,7 +113,6 @@
                 color="primary"
                 (click)="addGuest()">Añadir Invitado</button>
       </div>
-      <br>
       <div class="button-row">
         <button mat-button
                 class="margin-btn"

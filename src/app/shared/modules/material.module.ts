@@ -13,7 +13,10 @@ import {
   MatPaginatorModule,
   MatTableModule,
   MatStepperModule,
-  MatExpansionModule
+  MatExpansionModule,
+  MatDatepickerModule,
+  MatNativeDateModule,
+  MatSelectModule
 } from '@angular/material';
 
 const modules: any[] = [
@@ -30,7 +33,10 @@ const modules: any[] = [
   MatPaginatorModule,
   MatTableModule,
   MatStepperModule,
-  MatExpansionModule
+  MatExpansionModule,
+  MatDatepickerModule,
+  MatNativeDateModule,
+  MatSelectModule
 ];
 
 @NgModule({
