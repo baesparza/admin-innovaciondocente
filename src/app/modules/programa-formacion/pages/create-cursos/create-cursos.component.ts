@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Validators, FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
+import { Validators, FormGroup, FormBuilder, FormArray } from '@angular/forms';
+import { MatSnackBar } from '@angular/material';
+import { Location } from '@angular/common';
+
+import { ProgramaFormacionService } from '../../programa-formacion.service';
 
 @Component({
   selector: 'id-create-cursos',
@@ -10,7 +14,11 @@ export class CreateCursosComponent implements OnInit {
   isLinear = false;
   cursoFormGroup: FormGroup;
 
-  constructor(private _formBuilder: FormBuilder) { }
+  constructor(
+    private _formBuilder: FormBuilder,
+    private _snackBar: MatSnackBar,
+    private _location: Location,
+    private _programaFormacionService: ProgramaFormacionService) { }
 
   ngOnInit() {
     this.buildCursoForm();
@@ -45,10 +53,6 @@ export class CreateCursosComponent implements OnInit {
     });
   }
 
-  public submit() {
-
-  }
-
   /**
    * Remove las instructor from form
    */
@@ -65,6 +69,38 @@ export class CreateCursosComponent implements OnInit {
       about: ['', Validators.required],
     });
     this.instructors.push(instructorFormGroup);
+  }
+
+  public submit() {
+    // validate form
+    if (this.cursoFormGroup.invalid) {
+      this.showMessage('La forma es invalida');
+      return;
+    }
+
+    // add
+    this._programaFormacionService.addCurso(this.cursoFormGroup.value)
+      .then(m => this.showMessage('Se guardo el curso correctamente'))
+      .catch(this.showErrorMessage);
+
+    // navigate back
+    this._location.back();
+  }
+
+  /**
+   * show snack error message
+   * @param e error
+   */
+  private showErrorMessage(e) {
+    this.showMessage('Ocurrido un error al guardar, por favor vuelve a intentarlo');
+  }
+
+  /**
+   * show snack with message
+   * @param m message to show
+   */
+  private showMessage(m: string) {
+    this._snackBar.open(m, null, { duration: 5000, });
   }
 
   //////////getters//////////

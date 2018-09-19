@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 
-import { Encuentro } from '../../interfaces/encuentro.interface';
+import { Encuentro } from '../../interfaces/encuentro';
 import { CafeCientificoService } from '../../cafe-cientifico.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -13,6 +13,7 @@ import { map } from 'rxjs/operators';
 export class CafeCientificoComponent {
 
   public encuentros: Observable<Encuentro[]>;
+
 
   constructor(
     private _snackBar: MatSnackBar,

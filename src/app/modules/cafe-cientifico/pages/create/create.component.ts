@@ -4,7 +4,7 @@ import { MatSnackBar } from '@angular/material';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 
-import { Encuentro } from '../../interfaces/encuentro.interface';
+import { Encuentro } from '../../interfaces/encuentro';
 import { CafeCientificoService } from '../../cafe-cientifico.service';
 
 @Component({

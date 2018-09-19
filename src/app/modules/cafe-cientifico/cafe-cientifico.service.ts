@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { AngularFirestoreCollection, AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
-import { Encuentro } from './interfaces/encuentro.interface';
+import { Encuentro } from './interfaces/encuentro';
 
 @Injectable()
 export class CafeCientificoService {
@@ -14,13 +14,13 @@ export class CafeCientificoService {
     private _auth: AuthService,
   ) {
     // ref to firestore collection
-    this.encuentrosCollection = this._afs.collection('/programa-formacion/cafe-cientifico/encuentros', ref => ref.orderBy('edited', 'desc'));
+    this.encuentrosCollection = this._afs.collection('formacion-docente/cafe-cientifico/encuentros', ref => ref.orderBy('edited', 'desc'));
   }
 
   /**
    * get encuentros collection
    */
-  getEncuentros(): AngularFirestoreCollection<Encuentro> {
+  public getEncuentros(): AngularFirestoreCollection<Encuentro> {
     return this.encuentrosCollection;
   }
 
@@ -28,7 +28,7 @@ export class CafeCientificoService {
    * get specific encuentro
    * @param id
    */
-  getEncuentro(id: string): AngularFirestoreDocument<Encuentro> {
+  public getEncuentro(id: string): AngularFirestoreDocument<Encuentro> {
     return this.encuentrosCollection.doc(id)
   }
 
@@ -36,7 +36,7 @@ export class CafeCientificoService {
    * get data ref if specific encuentro
    * @param id
    */
-  getEncuentroData(id: string): Promise<firebase.firestore.DocumentSnapshot> {
+  public getEncuentroData(id: string): Promise<firebase.firestore.DocumentSnapshot> {
     return this.getEncuentro(id).ref.get()
   }
 
@@ -44,16 +44,15 @@ export class CafeCientificoService {
    * add encuentro to document
    * @param encuentro obj with encuentro data
    */
-  addEncuentro(encuentro: Encuentro): Promise<firebase.firestore.DocumentReference> {
+  public addEncuentro(encuentro: Encuentro): Promise<firebase.firestore.DocumentReference> {
     // Save dave document
     let date = new Date();
-    // return save
     return this.encuentrosCollection.add({
       ...encuentro,
       created: date,
       edited: date,
       creator: this._auth.userId
-    })
+    });
   }
 
   /**
@@ -61,7 +60,7 @@ export class CafeCientificoService {
    * @param id of encuentro
    * @param encuentro data to be updated
    */
-  updateEncuentro(id: string, encuentro: Encuentro): Promise<void> {
+  public updateEncuentro(id: string, encuentro: Encuentro): Promise<void> {
     return this.getEncuentro(id).update({
       ...encuentro,
       edited: new Date(),
