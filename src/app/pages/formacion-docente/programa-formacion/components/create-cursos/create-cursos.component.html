@@ -1,44 +1,366 @@
-<form [formGroup]="firstFormGroup">
+<form [formGroup]="cursoFormGroup">
   <mat-vertical-stepper [linear]="isLinear"
                         #stepper>
-    <mat-step [stepControl]="firstFormGroup">
-      <ng-template matStepLabel>Fill out your name</ng-template>
-      <mat-form-field>
+    <!-- Name -->
+    <mat-step>
+      <ng-template matStepLabel>Nombre del Curso</ng-template>
+      <mat-form-field appearance="outline"
+                      class="full-width">
+        <mat-label>Nombre</mat-label>
         <input matInput
-               placeholder="Last name, First name"
-               formControlName="firstCtrl"
+               type="text"
+               formControlName="name"
                required>
+        <mat-error *ngIf="name.hasError('required')">
+          El nombre es <strong>requerido</strong>
+        </mat-error>
       </mat-form-field>
-      <div>
-        <button mat-button
-                matStepperNext>Next</button>
+      <div class="button-row">
+        <button mat-raised-button
+                color="primary"
+                matStepperNext>Siguiente</button>
       </div>
     </mat-step>
+
+    <!-- description -->
     <mat-step>
-      <ng-template matStepLabel>Fill out your address</ng-template>
-      <mat-form-field>
-        <input matInput
-               placeholder="Address"
-               formControlName="secondCtrl"
-               required>
+      <ng-template matStepLabel>Descripción y Finalidades del Curso</ng-template>
+      <mat-form-field appearance="outline"
+                      class="full-width">
+        <mat-label>Descripción</mat-label>
+        <textarea matInput
+                  type="text"
+                  class="big-text-area"
+                  formControlName="description"
+                  required></textarea>
+        <mat-error *ngIf="description.hasError('required')">
+          La descripción es <strong>requerida</strong>
+        </mat-error>
+        <mat-error *ngIf="description.hasError('minlength')">
+          La descripción necesita al menos <strong>{{description.errors.minlength.requiredLength}}
+            caracteres</strong>
+        </mat-error>
       </mat-form-field>
-      <div>
+      <div class="button-row">
         <button mat-button
-                matStepperPrevious>Back</button>
-        <button mat-button
-                matStepperNext>Next</button>
+                matStepperPrevious>Anterior</button>
+        <button mat-raised-button
+                color="primary"
+                matStepperNext>Siguiente</button>
       </div>
     </mat-step>
+
+    <!-- Img -->
     <mat-step>
-      <ng-template matStepLabel>Done</ng-template>
-      You are now done.
-      <div>
+      <ng-template matStepLabel>Imagen y Tipo de Curso</ng-template>
+      <mat-form-field appearance="outline"
+                      class="full-width">
+        <mat-label>Tipo de curso</mat-label>
+        <mat-select [formControl]="img">
+          <mat-option>--</mat-option>
+          <mat-option value="tics">Tic</mat-option>
+        </mat-select>
+        <mat-error *ngIf="img.hasError('required')">
+          Seleccione un tipo valido
+        </mat-error>
+      </mat-form-field>
+      <div class="button-row">
         <button mat-button
-                matStepperPrevious>Back</button>
+                matStepperPrevious>Anterior</button>
+        <button mat-raised-button
+                color="primary"
+                matStepperNext>Siguiente</button>
+      </div>
+    </mat-step>
+
+    <!-- date -->
+    <mat-step>
+      <ng-template matStepLabel>Fecha del Curso</ng-template>
+      <mat-form-field appearance="outline"
+                      class="full-width">
+        <mat-label>Fecha</mat-label>
+        <input matInput
+               [matDatepicker]="datePicker"
+               formControlName="date"
+               required>
+        <mat-datepicker-toggle matSuffix
+                               [for]="datePicker"></mat-datepicker-toggle>
+        <mat-datepicker #datePicker></mat-datepicker>
+        <mat-error *ngIf="date.hasError('required')">
+          La fecha debe ser <strong>valida</strong>
+        </mat-error>
+      </mat-form-field>
+      <div class="button-row">
         <button mat-button
-                (click)="stepper.reset()">Reset</button>
+                matStepperPrevious>Anterior</button>
+        <button mat-raised-button
+                color="primary"
+                matStepperNext>Siguiente</button>
+      </div>
+    </mat-step>
+
+    <!-- instructors -->
+    <mat-step>
+      <ng-template matStepLabel>Instructores</ng-template>
+      <div formArrayName="instructors">
+        <div *ngFor="let instructor of instructors.controls; let i=index"
+             [formGroupName]="i">
+          <!-- name -->
+          <mat-form-field appearance="outline"
+                          class="full-width">
+            <mat-label>Nombre del Instructor</mat-label>
+            <input matInput
+                   type="text"
+                   formControlName="name"
+                   required>
+            <mat-error *ngIf="instructorName(i).hasError('required')">
+              El nombre es <strong>requerido</strong>
+            </mat-error>
+          </mat-form-field>
+          <!-- description -->
+          <mat-form-field appearance="outline"
+                          class="full-width">
+            <mat-label>Acerca de</mat-label>
+            <input matInput
+                   type="text"
+                   formControlName="about">
+            <textarea matInput
+                      type="text"
+                      formControlName="about"
+                      required></textarea>
+            <mat-error *ngIf="instructorAbout(i).hasError('required')">
+              "Acerca de" es <strong>requerido</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="button-row">
+        <button mat-button
+                color="warn"
+                (click)="removeinstructor()">Eliminar ultimo instructor</button>
+        <button mat-button
+                color="primary"
+                (click)="addinstructor()">Añadir instructor</button>
+      </div>
+      <div class="button-row">
+        <button mat-button
+                matStepperPrevious>Anterior</button>
+        <button mat-raised-button
+                color="primary"
+                matStepperNext>Siguiente</button>
+      </div>
+    </mat-step>
+
+    <!-- postulations -->
+    <mat-step>
+      <ng-template matStepLabel>Postulaciones</ng-template>
+      <form formGroupName="postulation">
+        <!-- date -->
+        <mat-form-field appearance="outline"
+                        class="full-width">
+          <mat-label>Fecha de finalización para postulaciones</mat-label>
+          <input matInput
+                 [matDatepicker]="postulationPicker"
+                 formControlName="date"
+                 required>
+          <mat-datepicker-toggle matSuffix
+                                 [for]="postulationPicker"></mat-datepicker-toggle>
+          <mat-datepicker #postulationPicker></mat-datepicker>
+          <mat-error *ngIf="postulationDate.hasError('required')">
+            La fecha es <strong>requerida</strong>
+          </mat-error>
+        </mat-form-field>
+        <!-- link -->
+        <mat-form-field appearance="outline"
+                        class="full-width">
+          <mat-label>Link para postular</mat-label>
+          <input matInput
+                 type="text"
+                 formControlName="link"
+                 required>
+          <mat-error *ngIf="postulationLink.hasError('required')">
+            El link es <strong>requerido</strong>
+          </mat-error>
+        </mat-form-field>
+      </form>
+      <div class="button-row">
+        <button mat-button
+                matStepperPrevious>Anterior</button>
+        <button mat-raised-button
+                color="primary"
+                matStepperNext>Siguiente</button>
+      </div>
+    </mat-step>
+
+    <!-- duration -->
+    <mat-step>
+      <ng-template matStepLabel>Duración del Curso</ng-template>
+      <p><b>Recomendación:</b> Seleccione al menos uno</p>
+      <form formGroupName="duration">
+        <!-- hours -->
+        <mat-form-field appearance="outline">
+          <mat-label>Numero de Horas</mat-label>
+          <input matInput
+                 type="number"
+                 formControlName="hours">
+        </mat-form-field>
+        <!-- days -->
+        <mat-form-field appearance="outline">
+          <mat-label>Numero de Días</mat-label>
+          <input matInput
+                 type="number"
+                 formControlName="days">
+        </mat-form-field>
+        <!-- weeks -->
+        <mat-form-field appearance="outline">
+          <mat-label>Numero de Semanas</mat-label>
+          <input matInput
+                 type="number"
+                 formControlName="weeks">
+        </mat-form-field>
+      </form>
+      <div class="button-row">
+        <button mat-button
+                matStepperPrevious>Anterior</button>
+        <button mat-raised-button
+                color="primary"
+                matStepperNext>Siguiente</button>
+      </div>
+    </mat-step>
+
+    <!-- place -->
+    <mat-step>
+      <ng-template matStepLabel>Lugar del Curso</ng-template>
+      <mat-form-field appearance="outline"
+                      class="full-width">
+        <mat-label>Lugar</mat-label>
+        <input matInput
+               type="text"
+               formControlName="place"
+               required>
+        <mat-error *ngIf="place.hasError('required')">
+          El lugar es <strong>requerido</strong>
+        </mat-error>
+      </mat-form-field>
+      <div class="button-row">
+        <button mat-button
+                matStepperPrevious>Anterior</button>
+        <button mat-raised-button
+                color="primary"
+                matStepperNext>Siguiente</button>
+      </div>
+    </mat-step>
+
+    <!-- schedule -->
+    <mat-step>
+      <ng-template matStepLabel>Horario</ng-template>
+      <mat-form-field appearance="outline"
+                      class="full-width">
+        <p>Online o 15:30 a 19:00</p>
+        <mat-label>Horario</mat-label>
+        <input matInput
+               type="text"
+               formControlName="schedule"
+               required>
+        <mat-error *ngIf="schedule.hasError('required')">
+          El horario es <strong>requerido</strong>
+        </mat-error>
+      </mat-form-field>
+      <div class="button-row">
+        <button mat-button
+                matStepperPrevious>Anterior</button>
+        <button mat-raised-button
+                color="primary"
+                matStepperNext>Siguiente</button>
+      </div>
+    </mat-step>
+
+    <!-- module -->
+    <mat-step>
+      <ng-template matStepLabel>Módulo del Curso</ng-template>
+      <mat-form-field appearance="outline"
+                      class="full-width">
+        <mat-label>Módulo</mat-label>
+        <input matInput
+               type="text"
+               formControlName="module"
+               required>
+        <mat-error *ngIf="module.hasError('required')">
+          El módulo es <strong>requerido</strong>
+        </mat-error>
+      </mat-form-field>
+      <div class="button-row">
+        <button mat-button
+                matStepperPrevious>Anterior</button>
+        <button mat-raised-button
+                color="primary"
+                matStepperNext>Siguiente</button>
+      </div>
+    </mat-step>
+
+    <!-- addressedTo -->
+    <mat-step>
+      <ng-template matStepLabel>Dirigido a ...</ng-template>
+      <mat-form-field appearance="outline"
+                      class="full-width">
+        <mat-label>Dirigido a</mat-label>
+        <input matInput
+               type="text"
+               formControlName="addressedTo"
+               required>
+        <mat-error *ngIf="addressedTo.hasError('required')">
+          "Dirigido a ..." es <strong>requerido</strong>
+        </mat-error>
+      </mat-form-field>
+      <div class="button-row">
+        <button mat-button
+                matStepperPrevious>Anterior</button>
+        <button mat-raised-button
+                color="primary"
+                matStepperNext>Siguiente</button>
+      </div>
+    </mat-step>
+
+    <!-- content -->
+    <mat-step>
+      <ng-template matStepLabel>Contenido del Curso</ng-template>
+      <form formGroupName="content">
+        <!-- hours -->
+        <mat-form-field appearance="outline"
+                        class="full-width">
+          <mat-label>URL para descargar el contenido</mat-label>
+          <input matInput
+                 type="text"
+                 formControlName="url"
+                 required>
+          <mat-error *ngIf="contentURL.hasError('required')">
+            La URL es <strong>requerida</strong>
+          </mat-error>
+        </mat-form-field>
+      </form>
+      <div class="button-row">
+        <button mat-button
+                matStepperPrevious>Anterior</button>
+        <button mat-raised-button
+                color="primary"
+                matStepperNext>Siguiente</button>
+      </div>
+    </mat-step>
+
+    <!-- final, submit -->
+    <mat-step>
+      <ng-template matStepLabel>Finalizar</ng-template>
+      <p>
+        Presiona guardar para continuar, y regresar a la pagina anterior
+      </p>
+
+      <div class="button-row">
+        <button mat-button
+                matStepperPrevious>Anterior</button>
+        <button mat-raised-button
+                color="primary"
+                (click)="submit()">Guardar</button>
       </div>
     </mat-step>
   </mat-vertical-stepper>
-
 </form>

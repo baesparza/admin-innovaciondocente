@@ -5,7 +5,7 @@ export interface Encuentro {
   edited?: Date,
   description: string,
   img: string,
-  title: string
+  name: string
   guests: Guest[]
 }
 

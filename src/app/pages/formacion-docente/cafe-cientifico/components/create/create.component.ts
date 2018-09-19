@@ -55,7 +55,7 @@ export class CreateComponent implements OnInit {
           for (let index = 0; index < snap.guests.length; index++) this.addGuest();
 
           // set values to form
-          this.encuentroFormGroup.controls['title'].setValue(snap.title);
+          this.encuentroFormGroup.controls['name'].setValue(snap.name);
           this.encuentroFormGroup.controls['img'].setValue(snap.img);
           this.encuentroFormGroup.controls['description'].setValue(snap.description);
           this.encuentroFormGroup.controls['guests'].setValue(snap.guests);
@@ -72,7 +72,7 @@ export class CreateComponent implements OnInit {
    */
   private buildForm() {
     this.encuentroFormGroup = this._formBuilder.group({
-      title: ['', Validators.required],
+      name: ['', Validators.required],
       img: ['', Validators.required],
       description: ['', [Validators.required, Validators.minLength(20)]],
       guests: this._formBuilder.array([])
@@ -143,7 +143,7 @@ export class CreateComponent implements OnInit {
   }
 
   ////////////getters/////////////
-  get title() { return this.encuentroFormGroup.get('title'); }
+  get name() { return this.encuentroFormGroup.get('name'); }
   get img() { return this.encuentroFormGroup.get('img'); }
   get description() { return this.encuentroFormGroup.get('description'); }
   get guests() { return this.encuentroFormGroup.get('guests') as FormArray; }

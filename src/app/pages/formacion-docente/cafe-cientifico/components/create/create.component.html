@@ -1,36 +1,22 @@
 <form [formGroup]="encuentroFormGroup">
-  <mat-vertical-stepper [linear]="encuentroDocument === null"
+  <mat-vertical-stepper [linear]="true"
                         class="mat-elevation-z8"
                         #stepper>
     <!-- first part -->
     <mat-step>
-      <ng-template matStepLabel>Nombre e Imagen</ng-template>
-      <!-- title -->
+      <ng-template matStepLabel>Nombre del Encuentro</ng-template>
+      <!-- name -->
       <mat-form-field appearance="outline"
                       class="full-width">
-        <mat-label>Nombre del Encuentro</mat-label>
+        <mat-label>Nombre</mat-label>
         <input matInput
                type="text"
-               formControlName="title">
-        <mat-error *ngIf="title.hasError('required')">
+               formControlName="name"
+               required>
+        <mat-error *ngIf="name.hasError('required')">
           El nombre es <strong>requerido</strong>
         </mat-error>
       </mat-form-field>
-
-      <!-- url img -->
-      <mat-form-field appearance="outline"
-                      class="full-width">
-        <mat-label>Link de la Imagen</mat-label>
-        <input matInput
-               type="text"
-               formControlName="img">
-        <mat-icon matSuffix>link</mat-icon>
-        <mat-error *ngIf="img.hasError('required')">
-          La url es <strong>requerida</strong>
-        </mat-error>
-      </mat-form-field>
-
-      <!-- actions -->
       <div class="button-row">
         <button mat-raised-button
                 color="primary"
@@ -40,14 +26,39 @@
 
     <!-- description part-->
     <mat-step>
+      <ng-template matStepLabel>Imagen del Encuentro</ng-template>
+      <!-- url img -->
+      <mat-form-field appearance="outline"
+                      class="full-width">
+        <mat-label>Link de la Imagen</mat-label>
+        <input matInput
+               type="text"
+               formControlName="img"
+               required>
+        <mat-icon matSuffix>link</mat-icon>
+        <mat-error *ngIf="img.hasError('required')">
+          La url es <strong>requerida</strong>
+        </mat-error>
+      </mat-form-field>
+      <div class="button-row">
+        <button mat-button
+                matStepperPrevious>Anterior</button>
+        <button mat-raised-button
+                color="primary"
+                matStepperNext>Siguiente</button>
+      </div>
+    </mat-step>
+
+    <!-- description -->
+    <mat-step>
       <ng-template matStepLabel>Descripción</ng-template>
-      <!-- description -->
       <mat-form-field appearance="outline"
                       class="full-width">
         <textarea matInput
                   type="text"
                   class="big-text-area"
-                  formControlName="description"></textarea>
+                  formControlName="description"
+                  required></textarea>
         <mat-error *ngIf="description.hasError('required')">
           La descripción es <strong>requerida</strong>
         </mat-error>
@@ -56,22 +67,18 @@
             caracteres</strong>
         </mat-error>
       </mat-form-field>
-
-      <!-- actions -->
       <div class="button-row">
         <button mat-button
-                matStepperPrevious
-                class="margin-btn">Anterior</button>
+                matStepperPrevious>Anterior</button>
         <button mat-raised-button
                 color="primary"
                 matStepperNext>Siguiente</button>
       </div>
     </mat-step>
 
-    <!-- guests part-->
+    <!-- guests -->
     <mat-step>
       <ng-template matStepLabel>Invitados</ng-template>
-      <!-- guests -->
       <div formArrayName="guests">
         <div *ngFor="let guest of guests.controls; let i=index"
              [formGroupName]="i">
@@ -81,13 +88,12 @@
             <mat-label>Nombre del Invitado</mat-label>
             <input matInput
                    type="text"
-                   formControlName="name">
-
+                   formControlName="name"
+                   required>
             <mat-error *ngIf="guestName(i).hasError('required')">
               El nombre es <strong>requerido</strong>
             </mat-error>
           </mat-form-field>
-
           <!-- description -->
           <mat-form-field appearance="outline"
                           class="full-width">
@@ -95,28 +101,24 @@
             <textarea matInput
                       class=" small-text-area"
                       type="text"
-                      formControlName="description"></textarea>
+                      formControlName="description"
+                      required></textarea>
             <mat-error *ngIf="guestDescription(i).hasError('required')">
               La descripción es <strong>requerida</strong>
             </mat-error>
           </mat-form-field>
         </div>
       </div>
-      <!-- actions -->
       <div class="button-row">
-
         <button mat-button
                 color="warn"
-                class="margin-btn"
                 (click)="removeGuest()">Eliminar ultimo Invitado</button>
         <button mat-button
                 color="primary"
                 (click)="addGuest()">Añadir Invitado</button>
       </div>
-      <br>
       <div class="button-row">
         <button mat-button
-                class="margin-btn"
                 matStepperPrevious>Anterior</button>
         <button mat-raised-button
                 color="primary"
@@ -130,10 +132,8 @@
       <p>
         Presiona guardar para continuar, y regresar a la pagina anterior
       </p>
-
       <div class="button-row">
         <button mat-button
-                class="margin-btn"
                 matStepperPrevious>Anterior</button>
         <button mat-raised-button
                 color="primary"
