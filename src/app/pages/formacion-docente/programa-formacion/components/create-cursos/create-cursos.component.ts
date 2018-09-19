@@ -45,6 +45,10 @@ export class CreateCursosComponent implements OnInit {
     });
   }
 
+  public submit() {
+
+  }
+
   /**
    * Remove las instructor from form
    */
