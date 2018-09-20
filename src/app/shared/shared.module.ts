@@ -23,8 +23,19 @@ const modules: any[] = [
 ];
 
 @NgModule({
-  imports: modules,
-  exports: modules.concat(TimestampDatePipe),
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    MaterialModule,
+    FirebaseModule
+  ],
+  exports: [
+    CommonModule,
+    ReactiveFormsModule,
+    MaterialModule,
+    FirebaseModule,
+    TimestampDatePipe
+  ],
   declarations: [TimestampDatePipe],
 })
 export class SharedModule {

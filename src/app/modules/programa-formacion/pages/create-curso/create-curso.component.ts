@@ -13,7 +13,7 @@ import { Curso } from '../../interfaces/curso';
 })
 export class CreateCursoComponent implements OnInit {
 
-  private cursoFormGroup: FormGroup;
+  public cursoFormGroup: FormGroup;
   private shouldUpdate: boolean = false;
   private cursoID: string = null;
 
