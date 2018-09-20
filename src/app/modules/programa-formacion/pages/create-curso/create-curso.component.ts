@@ -4,6 +4,8 @@ import { MatSnackBar } from '@angular/material';
 import { Location } from '@angular/common';
 
 import { ProgramaFormacionService } from '../../programa-formacion.service';
+import { ActivatedRoute } from '@angular/router';
+import { Curso } from '../../interfaces/curso';
 
 @Component({
   selector: 'id-create-curso',
@@ -11,17 +13,70 @@ import { ProgramaFormacionService } from '../../programa-formacion.service';
 })
 export class CreateCursoComponent implements OnInit {
 
-  isLinear = false;
-  cursoFormGroup: FormGroup;
+  private cursoFormGroup: FormGroup;
+  private shouldUpdate: boolean = false;
+  private cursoID: string = null;
 
   constructor(
     private _formBuilder: FormBuilder,
     private _snackBar: MatSnackBar,
     private _location: Location,
+    private _route: ActivatedRoute,
     private _programaFormacionService: ProgramaFormacionService) { }
 
   ngOnInit() {
+    // get params routes
+    this.cursoID = this._route.snapshot.queryParams['id'];
+
+    // init forms with empty values
     this.buildCursoForm();
+
+    // if cursoID isnt defined continue
+    if (this.cursoID === undefined)
+      return;
+
+    // if cursoID is defined, validate document and fill formF
+    this._programaFormacionService.getCursoData(this.cursoID)
+      .then(doc => {
+        // validate if document exists
+        if (!doc.exists) {
+          this.showMessage('Este curso ya no se encuentra disponible.');
+          this._location.back();
+        }
+        this.shouldUpdate = true;
+        const snap: Curso = doc.data() as Curso;
+
+        // create fields as needed
+        for (let index = 0; index < snap.instructors.length; index++) this.addinstructor();
+        for (let index = 0; index < snap.downloadableContent.length; index++) this.addDownloadableContent();
+
+        // set values to form
+        this.cursoFormGroup.controls['name'].setValue(snap.name);
+        this.cursoFormGroup.controls['description'].setValue(snap.description);
+        this.cursoFormGroup.controls['typeId'].setValue(snap.typeId);
+        this.cursoFormGroup.controls['date'].setValue(snap.date);
+        this.cursoFormGroup.controls['instructors'].setValue(snap.instructors);
+        this.cursoFormGroup.controls['schedule'].setValue(snap.schedule);
+        this.cursoFormGroup.controls['place'].setValue(snap.place);
+        this.cursoFormGroup.controls['module'].setValue(snap.module);
+        this.cursoFormGroup.controls['addressedTo'].setValue(snap.addressedTo);
+        this.cursoFormGroup.controls['downloadableContent'].setValue(snap.downloadableContent);
+
+        // fill postulaciones form group
+        let postulation = this.cursoFormGroup.controls['postulation'] as FormGroup;
+        postulation.controls['date'].setValue(snap.postulation.date);
+        postulation.controls['link'].setValue(snap.postulation.link);
+
+        // fill duration form group
+        let duration = this.cursoFormGroup.controls['duration'] as FormGroup;
+        if (snap.duration.hours !== null) duration.controls['hours'].setValue(snap.duration.hours);
+        if (snap.duration.days !== null) duration.controls['days'].setValue(snap.duration.days);
+        if (snap.duration.weeks !== null) duration.controls['weeks'].setValue(snap.duration.weeks);
+      })
+      .catch(e => {
+        this.showMessage('Ha ocurrido un error al cargar el curso.');
+        // this._location.back();
+      });
   }
 
   /**

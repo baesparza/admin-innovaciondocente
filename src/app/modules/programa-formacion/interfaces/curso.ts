@@ -12,7 +12,7 @@ export interface Curso {
   edited: Date,
   description: string,
   typeId: number,
-  date: Date,
+  date: string,
   instructors: Instructor[],
   postulation: Postulation,
   duration: Duration,

@@ -55,7 +55,7 @@
             *matHeaderCellDef
             mat-sort-header> Fecha curso </th>
         <td mat-cell
-            *matCellDef="let row"> {{row.date|timestampDate:true}} </td>
+            *matCellDef="let row"> {{row.date}} </td>
       </ng-container>
 
       <!-- postulationDate Column -->
@@ -64,7 +64,7 @@
             *matHeaderCellDef
             mat-sort-header> Fecha postulaciones </th>
         <td mat-cell
-            *matCellDef="let row"> {{row.postulation.date|timestampDate:true}} </td>
+            *matCellDef="let row"> {{row.postulation.date}} </td>
       </ng-container>
 
       <!-- options Column -->

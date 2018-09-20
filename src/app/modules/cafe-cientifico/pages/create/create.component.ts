@@ -32,7 +32,6 @@ export class CreateComponent implements OnInit {
     this.buildForm();
 
     // if encuentroID isnt defined continue
-    console.log(this.encuentroID);
     if (this.encuentroID === undefined)
       return;
 
@@ -42,6 +41,7 @@ export class CreateComponent implements OnInit {
         // validate if document exists
         if (!doc.exists) {
           this.showMessage('Este encuentro ya no se encuentra disponible.');
+          this._location.back();
         }
         this.shouldUpdate = true;
         const snap: Encuentro = doc.data() as Encuentro;

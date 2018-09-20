@@ -30,6 +30,10 @@ export class ProgramaFormacionService {
     return this.cursosCollection.doc(id);
   }
 
+  getCursoData(id: string): Promise<firebase.firestore.DocumentSnapshot> {
+    return this.getCurso(id).ref.get();
+  }
+
   public addCurso(curso: Curso) {
     let date = new Date();
     return this.cursosCollection.add({

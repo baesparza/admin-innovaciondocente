@@ -81,12 +81,9 @@
                       class="full-width">
         <mat-label>Fecha</mat-label>
         <input matInput
-               [matDatepicker]="datePicker"
+               type="date"
                formControlName="date"
                required>
-        <mat-datepicker-toggle matSuffix
-                               [for]="datePicker"></mat-datepicker-toggle>
-        <mat-datepicker #datePicker></mat-datepicker>
         <mat-error *ngIf="date.hasError('required')">
           La fecha debe ser <strong>valida</strong>
         </mat-error>
@@ -158,12 +155,9 @@
                         class="full-width">
           <mat-label>Fecha de finalización para postulaciones</mat-label>
           <input matInput
-                 [matDatepicker]="postulationPicker"
+                 type="date"
                  formControlName="date"
                  required>
-          <mat-datepicker-toggle matSuffix
-                                 [for]="postulationPicker"></mat-datepicker-toggle>
-          <mat-datepicker #postulationPicker></mat-datepicker>
           <mat-error *ngIf="postulationDate.hasError('required')">
             La fecha es <strong>requerida</strong>
           </mat-error>

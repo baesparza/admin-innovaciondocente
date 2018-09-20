@@ -53,17 +53,9 @@ export class CursosComponent implements OnInit {
   async delete(id: string) {
     try {
       await this._programaFormacionService.getCurso(id).delete();
-      this.showMessage('El encuentro se elimino correctamente');
+      this._snackBar.open('El curso se elimino correctamente', null, { duration: 5000, });
     } catch {
-      this.showMessage('No se pudo eliminar, vuelve a intentarlo');
+      this._snackBar.open('No se pudo eliminar, vuelve a intentarlo', null, { duration: 5000, });
     }
-  }
-
-  /**
-   * show snack with message
-   * @param m message to show
-   */
-  private showMessage(m: string) {
-    this._snackBar.open(m, null, { duration: 5000, });
   }
 }
