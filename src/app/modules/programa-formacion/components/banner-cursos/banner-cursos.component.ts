@@ -38,8 +38,8 @@ export class BannerCursosComponent implements OnInit {
    */
   async delete(id: string) {
     try {
-      await this._programaFormacionServie.getCurso(id).delete();
-      this._snackBar.open('El encuentro se elimino correctamente', null, { duration: 5000, });
+      await this._programaFormacionServie.getBannerCurso(id).delete();
+      this._snackBar.open('El banner se elimino correctamente', null, { duration: 5000, });
     } catch {
       this._snackBar.open('No se pudo eliminar, vuelve a intentarlo', null, { duration: 5000, });
     }

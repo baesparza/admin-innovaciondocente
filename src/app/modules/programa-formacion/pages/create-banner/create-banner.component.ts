@@ -71,12 +71,12 @@ export class CreateBannerComponent implements OnInit {
     // form is valid, submit or update
     if (this.shouldUpdate)
       this._programaFormacionService.updateCurso(this.bannerCursoId, this.bannerCursoFormGroup.value)
-        .then(m => this.showMessage('Se ha guardado correctamente'))
-        .catch(this.showErrorMessage);
+        .then(console.log)
+        .catch(console.log);
     else
       this._programaFormacionService.addBannerCurso(this.bannerCursoFormGroup.value)
-        .then(m => this.showMessage('Se ha guardado correctamente'))
-        .catch(this.showErrorMessage);
+        .then(console.log)
+        .catch(console.log);
 
     // navigate back
     this._location.back();

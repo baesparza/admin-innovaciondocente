@@ -19,7 +19,7 @@ export class ProgramaFormacionService {
   ) {
     this.programaFormacion = this._afs.collection('formacion-docente').doc('programa-formacion');
     this.cursosCollection = this.programaFormacion.collection('cursos', ref => ref.orderBy('edited', 'desc'));
-    this.bannerCursosCollection = this.programaFormacion.collection('banner-cursos',ref => ref.orderBy('name'));
+    this.bannerCursosCollection = this.programaFormacion.collection('banner-cursos', ref => ref.orderBy('name'));
   }
 
   /**
@@ -64,7 +64,7 @@ export class ProgramaFormacionService {
    * @param cursoID
    * @param curso
    */
- public updateCurso(cursoID: string, curso: Curso): Promise<void> {
+  public updateCurso(cursoID: string, curso: Curso): Promise<void> {
     return this.getCurso(cursoID).update({
       ...curso,
       edited: new Date(),
@@ -107,7 +107,14 @@ export class ProgramaFormacionService {
    * @param id
    * @param banner data
    */
-  public updateBannerCurso(id: string, banner: BannerCurso) {
+  public updateBannerCurso(id: string, banner: BannerCurso): Promise<void> {
+    console.log("Shouldupdate")
+    console.log(banner)
+    console.log({
+      ...banner,
+      edited: new Date(),
+      editor: this._auth.userId
+    })
     return this.getBannerCurso(id).update({
       ...banner,
       edited: new Date(),
