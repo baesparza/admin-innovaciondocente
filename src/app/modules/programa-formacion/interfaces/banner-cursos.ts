@@ -1,4 +1,8 @@
-export interface BannerCursos {
+export interface BannerCurso {
   name: string,
-  value, string
+  url: string,
+  created?: Date,
+  edited: Date,
+  creator?: string,
+  editor: string,
 }

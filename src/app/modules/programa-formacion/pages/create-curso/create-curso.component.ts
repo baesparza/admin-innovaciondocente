@@ -35,13 +35,12 @@ export class CreateCursoComponent implements OnInit {
     if (this.cursoID === undefined)
       return;
 
-    // if cursoID is defined, validate document and fill formF
     this._programaFormacionService.getCursoData(this.cursoID)
       .then(doc => {
         // validate if document exists
         if (!doc.exists) {
           this.showMessage('Este curso ya no se encuentra disponible.');
-          this._location.back();
+          return;
         }
         this.shouldUpdate = true;
         const snap: Curso = doc.data() as Curso;
