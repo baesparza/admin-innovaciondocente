@@ -69,13 +69,13 @@ export class CreateCursoComponent implements OnInit {
 
         // fill duration form group
         let duration = this.cursoFormGroup.controls['duration'] as FormGroup;
-        if (snap.duration.hours !== null) duration.controls['hours'].setValue(snap.duration.hours);
-        if (snap.duration.days !== null) duration.controls['days'].setValue(snap.duration.days);
-        if (snap.duration.weeks !== null) duration.controls['weeks'].setValue(snap.duration.weeks);
+        duration.controls['hours'].setValue(snap.duration.hours);
+        duration.controls['days'].setValue(snap.duration.days);
+        duration.controls['weeks'].setValue(snap.duration.weeks);
       })
       .catch(e => {
         this.showMessage('Ha ocurrido un error al cargar el curso.');
-        // this._location.back();
+        this._location.back();
       });
   }
 
@@ -148,10 +148,15 @@ export class CreateCursoComponent implements OnInit {
       return;
     }
 
-    // add
-    this._programaFormacionService.addCurso(this.cursoFormGroup.value)
-      .then(m => this.showMessage('Se guardo el curso correctamente'))
-      .catch(this.showErrorMessage);
+    // add or update
+    if (this.shouldUpdate)
+      this._programaFormacionService.updateCurso(this.cursoID, this.cursoFormGroup.value)
+        .then(m => this.showMessage('Se actualizo correctamente'))
+        .catch(this.showErrorMessage);
+    else
+      this._programaFormacionService.addCurso(this.cursoFormGroup.value)
+        .then(m => this.showMessage('Se ha guardado correctamente'))
+        .catch(this.showErrorMessage);
 
     // navigate back
     this._location.back();

@@ -12,7 +12,6 @@ export class ProgramaFormacionService {
   private cursosCollection: AngularFirestoreCollection<Curso> = null;
   private bannerCursosCollection: AngularFirestoreCollection<BannerCursos> = null;
 
-
   constructor(
     private _afs: AngularFirestore,
     private _auth: AuthService,
@@ -41,6 +40,14 @@ export class ProgramaFormacionService {
       created: date,
       edited: date,
       creator: this._auth.userId
+    });
+  }
+
+  updateCurso(cursoID: string, curso: Curso): Promise<void> {
+    return this.getCurso(cursoID).update({
+      ...curso,
+      edited: new Date(),
+      editor: this._auth.userId
     });
   }
 }
