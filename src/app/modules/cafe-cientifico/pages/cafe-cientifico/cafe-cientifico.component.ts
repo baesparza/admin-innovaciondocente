@@ -32,18 +32,6 @@ export class CafeCientificoComponent {
   }
 
   /**
-   * date in correct format
-   * @param date timestamp
-   */
-  getDate(date) {
-    return new Date(date.seconds * 1000) // unix date
-      .toLocaleDateString(
-        'es-ES', // lang
-        { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' } // options
-      );
-  }
-
-  /**
    * Delete document from firebase
    * @param id of document to be deleted
    */
