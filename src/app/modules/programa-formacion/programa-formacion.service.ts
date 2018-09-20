@@ -26,6 +26,10 @@ export class ProgramaFormacionService {
     return this.cursosCollection;
   }
 
+  getCurso(id: string): AngularFirestoreDocument<Curso> {
+    return this.cursosCollection.doc(id);
+  }
+
   public addCurso(curso: Curso) {
     let date = new Date();
     return this.cursosCollection.add({

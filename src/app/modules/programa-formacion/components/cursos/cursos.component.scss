@@ -7,9 +7,10 @@ table {
 }
 
 td,
-th {
-  margin: auto 20px;
-
+th,
+.mat-cell,
+.mat-header-cell {
+  padding: 0px 20px;
 }
 
 .new-btn {
