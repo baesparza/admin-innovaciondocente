@@ -1,3 +1,4 @@
+<pre>{{cursoFormGroup.value|json}}</pre>
 <form [formGroup]="cursoFormGroup">
   <mat-vertical-stepper [linear]="isLinear"
                         #stepper>
@@ -124,11 +125,8 @@
             <mat-label>Acerca de</mat-label>
             <input matInput
                    type="text"
-                   formControlName="about">
-            <textarea matInput
-                      type="text"
-                      formControlName="about"
-                      required></textarea>
+                   formControlName="about"
+                   required>
             <mat-error *ngIf="instructorAbout(i).hasError('required')">
               "Acerca de" es <strong>requerido</strong>
             </mat-error>
@@ -322,23 +320,33 @@
       </div>
     </mat-step>
 
-    <!-- content -->
+    <!-- downloadableContent -->
     <mat-step>
       <ng-template matStepLabel>Contenido del Curso</ng-template>
-      <form formGroupName="content">
-        <!-- hours -->
-        <mat-form-field appearance="outline"
-                        class="full-width">
-          <mat-label>URL para descargar el contenido</mat-label>
-          <input matInput
-                 type="text"
-                 formControlName="url"
-                 required>
-          <mat-error *ngIf="contentURL.hasError('required')">
-            La URL es <strong>requerida</strong>
-          </mat-error>
-        </mat-form-field>
-      </form>
+      <div formArrayName="downloadableContent">
+        <div *ngFor="let downloadable of downloadableContent.controls; let i=index"
+             [formGroupName]="i">
+          <mat-form-field appearance="outline"
+                          class="full-width">
+            <mat-label>Contenido descargable</mat-label>
+            <input matInput
+                   type="text"
+                   formControlName="url"
+                   required>
+            <mat-error *ngIf="downloadableContentUrl(i).hasError('required')">
+              El archivo es <strong>requerido</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="button-row">
+        <button mat-button
+                color="warn"
+                (click)="removeDownloadableContent()">Eliminar ultimo archivo</button>
+        <button mat-button
+                color="primary"
+                (click)="addDownloadableContent()">Añadir archivo</button>
+      </div>
       <div class="button-row">
         <button mat-button
                 matStepperPrevious>Anterior</button>

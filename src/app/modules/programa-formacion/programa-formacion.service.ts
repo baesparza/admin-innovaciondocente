@@ -18,7 +18,7 @@ export class ProgramaFormacionService {
     private _auth: AuthService,
   ) {
     this.programaFormacion = this._afs.collection('formacion-docente').doc('programa-formacion');
-    this.cursosCollection = this.programaFormacion.collection('cursos');
+    this.cursosCollection = this.programaFormacion.collection('cursos', ref => ref.orderBy('edited', 'desc'));
     this.bannerCursosCollection = this.programaFormacion.collection('banner-cursos');
   }
 

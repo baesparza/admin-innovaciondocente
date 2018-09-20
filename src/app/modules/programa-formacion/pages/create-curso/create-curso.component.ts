@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { Validators, FormGroup, FormBuilder, FormArray } from '@angular/forms';
+import { Validators, FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { Location } from '@angular/common';
 
 import { ProgramaFormacionService } from '../../programa-formacion.service';
 
 @Component({
-  selector: 'id-create-cursos',
-  templateUrl: './create-cursos.component.html',
+  selector: 'id-create-curso',
+  templateUrl: './create-curso.component.html',
 })
-export class CreateCursosComponent implements OnInit {
+export class CreateCursoComponent implements OnInit {
 
   isLinear = false;
   cursoFormGroup: FormGroup;
@@ -47,9 +47,7 @@ export class CreateCursosComponent implements OnInit {
       place: ['', Validators.required],
       module: ['', Validators.required],
       addressedTo: ['', Validators.required],
-      content: this._formBuilder.group({
-        url: ['', Validators.required],
-      }),
+      downloadableContent: this._formBuilder.array([]),
     });
   }
 
@@ -69,6 +67,23 @@ export class CreateCursosComponent implements OnInit {
       about: ['', Validators.required],
     });
     this.instructors.push(instructorFormGroup);
+  }
+
+  /**
+   * Remove last field
+   */
+  removeDownloadableContent() {
+    this.downloadableContent.removeAt(-1);
+  }
+
+  /**
+   * add one field to DownloadableContent
+   */
+  addDownloadableContent() {
+    let contentFormGroup: FormGroup = this._formBuilder.group({
+      url: ['', Validators.required],
+    });
+    this.downloadableContent.push(contentFormGroup);
   }
 
   public submit() {
@@ -118,6 +133,6 @@ export class CreateCursosComponent implements OnInit {
   get place() { return this.cursoFormGroup.get('place') }
   get module() { return this.cursoFormGroup.get('module') }
   get addressedTo() { return this.cursoFormGroup.get('addressedTo') }
-  get content() { return this.cursoFormGroup.get('content') as FormGroup }
-  get contentURL() { return this.content.get('url') }
+  get downloadableContent() { return this.cursoFormGroup.get('downloadableContent') as FormArray }
+  downloadableContentUrl(i: number) { return this.downloadableContent.controls[i].get('url') }
 }
