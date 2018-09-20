@@ -31,7 +31,7 @@ export class CreateCursosComponent implements OnInit {
     this.cursoFormGroup = this._formBuilder.group({
       name: ['', Validators.required],
       description: ['', [Validators.required, Validators.minLength(15)]],
-      img: ['', Validators.required],
+      typeId: ['', Validators.required],
       date: ['', Validators.required],
       instructors: this._formBuilder.array([]),
       postulation: this._formBuilder.group({
@@ -106,7 +106,7 @@ export class CreateCursosComponent implements OnInit {
   //////////getters//////////
   get name() { return this.cursoFormGroup.get('name') }
   get description() { return this.cursoFormGroup.get('description') }
-  get img() { return this.cursoFormGroup.get('img') }
+  get typeId() { return this.cursoFormGroup.get('typeId') }
   get date() { return this.cursoFormGroup.get('date') }
   get instructors() { return this.cursoFormGroup.get('instructors') as FormArray }
   instructorName(i: number) { return this.instructors.controls[i].get('name'); }

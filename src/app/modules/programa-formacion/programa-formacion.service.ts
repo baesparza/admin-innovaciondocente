@@ -22,6 +22,10 @@ export class ProgramaFormacionService {
     this.bannerCursosCollection = this.programaFormacion.collection('banner-cursos');
   }
 
+  public getCursos(): AngularFirestoreCollection<Curso> {
+    return this.cursosCollection;
+  }
+
   public addCurso(curso: Curso) {
     let date = new Date();
     return this.cursosCollection.add({

@@ -1,16 +1,17 @@
 import { Instructor } from "./instructor";
 import { Postulation } from "./postulation";
 import { Duration } from "./duration";
-import { Content } from "./content";
+import { DownloadableContent } from "./downloadableContent";
 
 export interface Curso {
+  id?: any
   name: string,
   creator: string,
   created: Date,
   editor?: string,
-  edited: Date, F
+  edited: Date,
   description: string,
-  img: string,
+  typeId: number,
   date: Date,
   instructors: Instructor[],
   postulation: Postulation,
@@ -19,5 +20,5 @@ export interface Curso {
   place: string,
   module: string,
   addressedTo: string,
-  content: Content,
+  downloadableContent: DownloadableContent[],
 }
