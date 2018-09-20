@@ -8,6 +8,7 @@ import { BannerCurso } from './interfaces/banner-cursos';
 @Injectable()
 export class ProgramaFormacionService {
 
+
   private programaFormacion: AngularFirestoreDocument<ProgramaFormacion>;
   private cursosCollection: AngularFirestoreCollection<Curso> = null;
   private bannerCursosCollection: AngularFirestoreCollection<BannerCurso> = null;
@@ -18,7 +19,7 @@ export class ProgramaFormacionService {
   ) {
     this.programaFormacion = this._afs.collection('formacion-docente').doc('programa-formacion');
     this.cursosCollection = this.programaFormacion.collection('cursos', ref => ref.orderBy('edited', 'desc'));
-    this.bannerCursosCollection = this.programaFormacion.collection('banner-cursos');
+    this.bannerCursosCollection = this.programaFormacion.collection('banner-cursos',ref => ref.orderBy('name'));
   }
 
   /**
@@ -112,5 +113,9 @@ export class ProgramaFormacionService {
       edited: new Date(),
       editor: this._auth.userId
     });
+  }
+
+  getBannerCursos(): AngularFirestoreCollection<BannerCurso> {
+    return this.bannerCursosCollection;
   }
 }
