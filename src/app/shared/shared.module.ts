@@ -13,6 +13,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 // shared services
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { AuthGuard } from './services/auth.guard.service';
+import { TimestampDatePipe } from './pipes/timestamp-date.pipe';
 
 const modules: any[] = [
   CommonModule,
@@ -22,8 +23,20 @@ const modules: any[] = [
 ];
 
 @NgModule({
-  imports: modules,
-  exports: modules
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    MaterialModule,
+    FirebaseModule
+  ],
+  exports: [
+    CommonModule,
+    ReactiveFormsModule,
+    MaterialModule,
+    FirebaseModule,
+    TimestampDatePipe
+  ],
+  declarations: [TimestampDatePipe],
 })
 export class SharedModule {
   static forRoot(): ModuleWithProviders {

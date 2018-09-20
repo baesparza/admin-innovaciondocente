@@ -1,0 +1,19 @@
+.overflow {
+  overflow-x: scroll;
+}
+
+table {
+  width: 100%;
+}
+
+td,
+th,
+.mat-cell,
+.mat-header-cell {
+  padding: 0px 20px;
+}
+
+.new-btn {
+  margin: 20px 0px;
+  float: right;
+}

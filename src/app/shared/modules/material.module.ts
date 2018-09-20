@@ -36,7 +36,7 @@ const modules: any[] = [
   MatExpansionModule,
   MatDatepickerModule,
   MatNativeDateModule,
-  MatSelectModule
+  MatSelectModule,
 ];
 
 @NgModule({

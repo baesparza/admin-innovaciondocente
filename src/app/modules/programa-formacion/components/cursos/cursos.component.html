@@ -1,0 +1,107 @@
+<!-- filter -->
+<mat-form-field appearance="outline"
+                class="full-width">
+  <mat-label>Filtro</mat-label>
+  <input matInput
+         placeholder="Ingrese el nombre del curso que desea buscar"
+         (keyup)="applyFilter($event.target.value)">
+</mat-form-field>
+
+<!-- table -->
+<div class="mat-elevation-z8">
+  <div class="overflow">
+    <table mat-table
+           [dataSource]="cursosSource">
+
+      <!-- name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header> Nombre </th>
+        <td mat-cell
+            *matCellDef="let row"> {{row.name}} </td>
+      </ng-container>
+
+      <!-- creator Column -->
+      <ng-container matColumnDef="creator">
+        <th mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header> Autor </th>
+        <td mat-cell
+            *matCellDef="let row"> {{row.creator}} </td>
+      </ng-container>
+
+      <!-- edited Column -->
+      <ng-container matColumnDef="edited">
+        <th mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header> Ultima edición </th>
+        <td mat-cell
+            *matCellDef="let row"> {{row.edited|timestampDate:true}} </td>
+      </ng-container>
+
+      <!-- typeImg Column -->
+      <ng-container matColumnDef="typeId">
+        <th mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header> Tipo </th>
+        <td mat-cell
+            *matCellDef="let row"> {{row.typeId}} </td>
+      </ng-container>
+
+      <!-- date Column -->
+      <ng-container matColumnDef="date">
+        <th mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header> Fecha curso </th>
+        <td mat-cell
+            *matCellDef="let row"> {{row.date}} </td>
+      </ng-container>
+
+      <!-- postulationDate Column -->
+      <ng-container matColumnDef="postulationDate">
+        <th mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header> Fecha postulaciones </th>
+        <td mat-cell
+            *matCellDef="let row"> {{row.postulation.date}} </td>
+      </ng-container>
+
+      <!-- options Column -->
+      <ng-container matColumnDef="options">
+        <th mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header></th>
+        <td mat-cell
+            *matCellDef="let row">
+          <mat-action-row>
+            <button mat-button
+                    color="warn"
+                    (click)="delete(row.id)">Eliminar</button>
+            <button mat-button
+                    [routerLink]="['create']"
+                    [queryParams]="{'id':row.id}"
+                    color="primary">Editar</button>
+          </mat-action-row>
+        </td>
+      </ng-container>
+
+
+
+
+      <!-- other -->
+      <tr mat-header-row
+          *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row
+          *matRowDef="let row; columns: displayedColumns;">
+      </tr>
+    </table>
+  </div>
+  <mat-paginator></mat-paginator>
+</div>
+
+<!-- create new -->
+<a mat-raised-button
+   color="primary"
+   routerLink="create"
+   class="new-btn">Nuevo Curso</a>
