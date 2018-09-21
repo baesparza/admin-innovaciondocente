@@ -1,5 +1,5 @@
 <form [formGroup]="cursoFormGroup">
-  <mat-vertical-stepper [linear]="false"
+  <mat-vertical-stepper [linear]="true"
                         #stepper>
     <!-- Name -->
     <mat-step>
@@ -59,7 +59,8 @@
         <mat-label>Tipo de curso</mat-label>
         <mat-select [formControl]="typeId">
           <mat-option>--</mat-option>
-          <mat-option value="tics">Tic</mat-option>
+          <mat-option *ngFor="let type of types | async"
+                      [value]="type.id">{{type.name}}</mat-option>
         </mat-select>
         <mat-error *ngIf="typeId.hasError('required')">
           Seleccione un tipo valido

@@ -1,38 +1,52 @@
 <form [formGroup]="bannerCursoFormGroup">
-  <mat-vertical-stepper [linear]="true" #stepper>
+  <mat-vertical-stepper [linear]="true"
+                        #stepper>
     <!-- name -->
     <mat-step>
       <ng-template matStepLabel>Nombre del Banner</ng-template>
-      <mat-form-field appearance="outline" class="full-width">
+      <mat-form-field appearance="outline"
+                      class="full-width">
         <mat-label>Nombre</mat-label>
-        <input matInput type="text" formControlName="name" required>
+        <input matInput
+               type="text"
+               formControlName="name"
+               required>
         <mat-error *ngIf="name.hasError('required')">
           El nombre es <strong>requerido</strong>
         </mat-error>
       </mat-form-field>
       <div class="button-row">
-        <button mat-raised-button color="primary" matStepperNext>Siguiente</button>
+        <button mat-raised-button
+                color="primary"
+                matStepperNext>Siguiente</button>
       </div>
     </mat-step>
 
     <!-- banner -->
     <mat-step>
       <ng-template matStepLabel>Imagen(banner)</ng-template>
-      <mat-form-field appearance="outline" class="full-width">
+      <mat-form-field appearance="outline"
+                      class="full-width">
         <mat-label>Archivo</mat-label>
-        <input matInput type="text" formControlName="url" required>
+        <input matInput
+               type="text"
+               formControlName="url"
+               required>
         <mat-error *ngIf="url.hasError('required')">
           La imagen es <strong>requerida</strong>
         </mat-error>
       </mat-form-field>
       <div class="button-row">
-        <button mat-button matStepperPrevious>Anterior</button>
-        <button mat-raised-button color="primary" matStepperNext>Siguiente</button>
+        <button mat-button
+                matStepperPrevious>Anterior</button>
+        <button mat-raised-button
+                color="primary"
+                matStepperNext>Siguiente</button>
       </div>
     </mat-step>
 
-   <!-- final, submit -->
-   <mat-step>
+    <!-- final, submit -->
+    <mat-step>
       <ng-template matStepLabel>Finalizar</ng-template>
       <p>
         Presiona guardar para continuar, y regresar a la pagina anterior

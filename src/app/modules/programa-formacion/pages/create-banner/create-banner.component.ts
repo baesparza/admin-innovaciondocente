@@ -10,7 +10,6 @@ import { BannerCurso } from '../../interfaces/banner-cursos';
 @Component({
   selector: 'id-create-banner',
   templateUrl: './create-banner.component.html',
-  styleUrls: ['./create-banner.component.scss']
 })
 export class CreateBannerComponent implements OnInit {
 
@@ -73,7 +72,6 @@ export class CreateBannerComponent implements OnInit {
       this._programaFormacionService.updateBannerCurso(this.bannerCursoId, this.bannerCursoFormGroup.value)
         .then(m => this.showMessage('Se actualizo correctamente'))
         .catch(this.showErrorMessage);
-      console.log('should have  updated');
     }
     else
       this._programaFormacionService.addBannerCurso(this.bannerCursoFormGroup.value)
