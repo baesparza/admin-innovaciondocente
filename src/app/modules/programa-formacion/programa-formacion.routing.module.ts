@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { ProgramaFormacionComponent } from './pages/programa-formacion/programa-formacion.component';
 import { CreateCursoComponent } from './pages/create-curso/create-curso.component';
+import { CreateBannerComponent } from './pages/create-banner/create-banner.component';
 
 const routes: Routes = [
   {
@@ -10,8 +11,12 @@ const routes: Routes = [
     component: ProgramaFormacionComponent,
   },
   {
-    path: 'create',
+    path: 'nuevo-curso',
     component: CreateCursoComponent,
+  },
+  {
+    path: 'nuevo-banner',
+    component: CreateBannerComponent,
   }
 ];
 

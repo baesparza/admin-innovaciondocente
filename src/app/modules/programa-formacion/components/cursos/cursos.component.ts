@@ -29,9 +29,10 @@ export class CursosComponent implements OnInit {
         const id = a.payload.doc.id;
         return { id, ...data };
       }))
-    ).subscribe(val => this.cursosSource = new MatTableDataSource(val));
-
-    this.cursosSource.paginator = this.paginator;
+    ).subscribe(val => {
+      this.cursosSource = new MatTableDataSource(val)
+      this.cursosSource.paginator = this.paginator;
+    });
   }
 
   /**

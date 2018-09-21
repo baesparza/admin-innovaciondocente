@@ -6,6 +6,9 @@ import { Location } from '@angular/common';
 import { ProgramaFormacionService } from '../../programa-formacion.service';
 import { ActivatedRoute } from '@angular/router';
 import { Curso } from '../../interfaces/curso';
+import { BannerCurso } from '../../interfaces/banner-cursos';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'id-create-curso',
@@ -14,6 +17,7 @@ import { Curso } from '../../interfaces/curso';
 export class CreateCursoComponent implements OnInit {
 
   public cursoFormGroup: FormGroup;
+  public types: Observable<BannerCurso[]>;
   private shouldUpdate: boolean = false;
   private cursoID: string = null;
 
@@ -28,20 +32,20 @@ export class CreateCursoComponent implements OnInit {
     // get params routes
     this.cursoID = this._route.snapshot.queryParams['id'];
 
-    // init forms with empty values
+    // init forms with empty values, and load values
     this.buildCursoForm();
+    this.loadTypes();
 
     // if cursoID isnt defined continue
     if (this.cursoID === undefined)
       return;
 
-    // if cursoID is defined, validate document and fill formF
     this._programaFormacionService.getCursoData(this.cursoID)
       .then(doc => {
         // validate if document exists
         if (!doc.exists) {
           this.showMessage('Este curso ya no se encuentra disponible.');
-          this._location.back();
+          return;
         }
         this.shouldUpdate = true;
         const snap: Curso = doc.data() as Curso;
@@ -104,6 +108,20 @@ export class CreateCursoComponent implements OnInit {
       addressedTo: ['', Validators.required],
       downloadableContent: this._formBuilder.array([]),
     });
+  }
+
+  /**
+   * Loads types of courses for mat-selector
+   */
+  private loadTypes(): void {
+    this.types = this._programaFormacionService.getBannerCursos().snapshotChanges()
+      .pipe(
+        map(doc => doc.map(a => {
+          const data = a.payload.doc.data() as BannerCurso;
+          const id = a.payload.doc.id;
+          return { ...data, id };
+        }))
+      );
   }
 
   /**

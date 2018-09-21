@@ -1,0 +1,22 @@
+<mat-list role="list">
+    <mat-list-item role="listitem"
+    *ngFor="let banner of bannerCursos | async">
+    {{banner.name}}
+    <div class="spacer"></div>
+    <mat-action-row>
+        <button mat-button
+                color="warn"
+                (click)="delete(banner.id)">Eliminar</button>
+        <button mat-button
+                [routerLink]="['nuevo-banner']"
+                [queryParams]="{'id':banner.id}"
+                color="primary">Editar</button>
+      </mat-action-row>
+  </mat-list-item>
+  </mat-list>
+
+<!-- create new -->
+<a mat-raised-button
+   color="primary"
+   routerLink="nuevo-banner"
+   class="new-btn">Nuevo Banner</a>

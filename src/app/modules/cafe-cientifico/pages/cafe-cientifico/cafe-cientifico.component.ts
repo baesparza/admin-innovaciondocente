@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { Encuentro } from '../../interfaces/encuentro';
 import { CafeCientificoService } from '../../cafe-cientifico.service';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'id-cafe-cientifico',

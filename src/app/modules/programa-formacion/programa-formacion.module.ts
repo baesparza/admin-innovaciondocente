@@ -8,6 +8,8 @@ import { CursosComponent } from './components/cursos/cursos.component';
 import { ProgramaFormacionComponent } from './pages/programa-formacion/programa-formacion.component';
 import { ProgramaFormacionService } from './programa-formacion.service';
 import { CreateCursoComponent } from './pages/create-curso/create-curso.component';
+import { BannerCursosComponent } from './components/banner-cursos/banner-cursos.component';
+import { CreateBannerComponent } from './pages/create-banner/create-banner.component';
 
 
 @NgModule({
@@ -19,7 +21,9 @@ import { CreateCursoComponent } from './pages/create-curso/create-curso.componen
   declarations: [
     CursosComponent,
     ProgramaFormacionComponent,
-    CreateCursoComponent
+    CreateCursoComponent,
+    BannerCursosComponent,
+    CreateBannerComponent
   ],
   providers: [
     ProgramaFormacionService
