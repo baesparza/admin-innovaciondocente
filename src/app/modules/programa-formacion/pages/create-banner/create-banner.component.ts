@@ -69,14 +69,16 @@ export class CreateBannerComponent implements OnInit {
       return;
     }
     // form is valid, submit or update
-    if (this.shouldUpdate)
-      this._programaFormacionService.updateCurso(this.bannerCursoId, this.bannerCursoFormGroup.value)
-        .then(console.log)
-        .catch(console.log);
+    if (this.shouldUpdate) {
+      this._programaFormacionService.updateBannerCurso(this.bannerCursoId, this.bannerCursoFormGroup.value)
+        .then(m => this.showMessage('Se actualizo correctamente'))
+        .catch(this.showErrorMessage);
+      console.log('should have  updated');
+    }
     else
       this._programaFormacionService.addBannerCurso(this.bannerCursoFormGroup.value)
-        .then(console.log)
-        .catch(console.log);
+        .then(m => this.showMessage('Se ha guardado correctamente'))
+        .catch(this.showErrorMessage);
 
     // navigate back
     this._location.back();

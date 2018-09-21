@@ -108,17 +108,10 @@ export class ProgramaFormacionService {
    * @param banner data
    */
   public updateBannerCurso(id: string, banner: BannerCurso): Promise<void> {
-    console.log("Shouldupdate")
-    console.log(banner)
-    console.log({
-      ...banner,
-      edited: new Date(),
-      editor: this._auth.userId
-    })
     return this.getBannerCurso(id).update({
-      ...banner,
       edited: new Date(),
-      editor: this._auth.userId
+      editor: this._auth.userId,
+      ...banner
     });
   }
 
