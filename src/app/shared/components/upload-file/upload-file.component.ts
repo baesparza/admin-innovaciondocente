@@ -9,7 +9,7 @@ import { DropZoneComponent } from '../drop-zone/drop-zone.component';
 export class UploadFileComponent {
 
   @Input() path: string;
-  @Input() type: string;
+  @Input() type: string = 'imagen';
 
   url: string = '';
 
@@ -27,6 +27,7 @@ export class UploadFileComponent {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
       this.url = result;
+      console.log(this.url);
     });
   }
 

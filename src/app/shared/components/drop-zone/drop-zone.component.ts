@@ -30,6 +30,14 @@ export class DropZoneComponent {
 
   startUpload(event: FileList) {
     const file = event.item(0);
+    // Client-side validation example
+    if (this.data.type !== undefined)
+      if (file.type.split('/')[0] !== 'image') {
+        alert('Archivo no soportado');
+        return;
+      }
+
+    // upload file
     const filePath = `${this.data.path}/${file.name}_${new Date().getTime()}`;
     const fileRef = this._fireStorage.ref(filePath);
     const task = this._fireStorage.upload(filePath, file);
@@ -44,14 +52,6 @@ export class DropZoneComponent {
         finalize(() => this.downloadURL = fileRef.getDownloadURL())
       )
       .subscribe()
-
-    // TODO: valdate type
-    // Client-side validation example
-    // if (file.type.split('/')[0] !== 'image') {
-    //   console.error('unsupported file type :( ')
-    //   return;
-    // }
-
   }
 
   pickFile(el) {

@@ -18,7 +18,8 @@ import {
   MatNativeDateModule,
   MatSelectModule,
   MatTabsModule,
-  MatDialogModule
+  MatDialogModule,
+  MatProgressBarModule
 } from '@angular/material';
 
 const modules: any[] = [
@@ -40,7 +41,8 @@ const modules: any[] = [
   MatNativeDateModule,
   MatSelectModule,
   MatTabsModule,
-  MatDialogModule
+  MatDialogModule,
+  MatProgressBarModule
 ];
 
 @NgModule({
