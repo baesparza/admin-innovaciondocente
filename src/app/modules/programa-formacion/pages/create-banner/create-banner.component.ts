@@ -93,4 +93,5 @@ export class CreateBannerComponent implements OnInit {
 
   /////////////getters////////////
   get name() { return this.bannerCursoFormGroup.get('name'); }
+  get url() { return this.bannerCursoFormGroup.get('url'); }
 }
