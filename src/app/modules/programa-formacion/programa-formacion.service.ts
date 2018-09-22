@@ -10,8 +10,8 @@ export class ProgramaFormacionService {
 
 
   private programaFormacion: AngularFirestoreDocument<ProgramaFormacion>;
-  private cursosCollection: AngularFirestoreCollection<Curso> = null;
-  private bannerCursosCollection: AngularFirestoreCollection<BannerCurso> = null;
+  public cursosCollection: AngularFirestoreCollection<Curso> = null;
+  public bannerCursosCollection: AngularFirestoreCollection<BannerCurso> = null;
 
   constructor(
     private _afs: AngularFirestore,

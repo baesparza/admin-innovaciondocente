@@ -58,8 +58,8 @@ export class CreateBannerComponent implements OnInit {
 
   private initForms() {
     this.bannerCursoFormGroup = this._formBuilder.group({
-      name: ['', Validators.required],
-      url: ['', Validators.required]
+      name: [null, Validators.required],
+      url: [null, Validators.required]
     });
   }
 

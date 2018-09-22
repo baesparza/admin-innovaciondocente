@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Validators, FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
+import { Validators, FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { Location } from '@angular/common';
 
@@ -50,32 +50,7 @@ export class CreateCursoComponent implements OnInit {
         this.shouldUpdate = true;
         const snap: Curso = doc.data() as Curso;
 
-        // create fields as needed
-        for (let index = 0; index < snap.instructors.length; index++) this.addinstructor();
-        for (let index = 0; index < snap.downloadableContent.length; index++) this.addDownloadableContent();
-
-        // set values to form
-        this.cursoFormGroup.controls['name'].setValue(snap.name);
-        this.cursoFormGroup.controls['description'].setValue(snap.description);
-        this.cursoFormGroup.controls['typeId'].setValue(snap.typeId);
-        this.cursoFormGroup.controls['date'].setValue(snap.date);
-        this.cursoFormGroup.controls['instructors'].setValue(snap.instructors);
-        this.cursoFormGroup.controls['schedule'].setValue(snap.schedule);
-        this.cursoFormGroup.controls['place'].setValue(snap.place);
-        this.cursoFormGroup.controls['module'].setValue(snap.module);
-        this.cursoFormGroup.controls['addressedTo'].setValue(snap.addressedTo);
-        this.cursoFormGroup.controls['downloadableContent'].setValue(snap.downloadableContent);
-
-        // fill postulaciones form group
-        let postulation = this.cursoFormGroup.controls['postulation'] as FormGroup;
-        postulation.controls['date'].setValue(snap.postulation.date);
-        postulation.controls['link'].setValue(snap.postulation.link);
-
-        // fill duration form group
-        let duration = this.cursoFormGroup.controls['duration'] as FormGroup;
-        duration.controls['hours'].setValue(snap.duration.hours);
-        duration.controls['days'].setValue(snap.duration.days);
-        duration.controls['weeks'].setValue(snap.duration.weeks);
+        this.fillFields(snap);
       })
       .catch(e => {
         this.showMessage('Ha ocurrido un error al cargar el curso.');
@@ -83,29 +58,57 @@ export class CreateCursoComponent implements OnInit {
       });
   }
 
+  private fillFields(snap: Curso) {
+    // create fields as needed
+    for (let index = 0; index < snap.instructors.length; index++)
+      this.addinstructor();
+    for (let index = 0; index < snap.downloadableContent.length; index++)
+      this.addDownloadableContent();
+    // set values to form
+    this.cursoFormGroup.controls['name'].setValue(snap.name);
+    this.cursoFormGroup.controls['description'].setValue(snap.description);
+    this.cursoFormGroup.controls['typeId'].setValue(snap.typeId);
+    this.cursoFormGroup.controls['date'].setValue(snap.date);
+    this.cursoFormGroup.controls['instructors'].setValue(snap.instructors);
+    this.cursoFormGroup.controls['schedule'].setValue(snap.schedule);
+    this.cursoFormGroup.controls['place'].setValue(snap.place);
+    this.cursoFormGroup.controls['module'].setValue(snap.module);
+    this.cursoFormGroup.controls['addressedTo'].setValue(snap.addressedTo);
+    this.cursoFormGroup.controls['downloadableContent'].setValue(snap.downloadableContent);
+    // fill postulaciones form group
+    let postulation = this.cursoFormGroup.controls['postulation'] as FormGroup;
+    postulation.controls['date'].setValue(snap.postulation.date);
+    postulation.controls['link'].setValue(snap.postulation.link);
+    // fill duration form group
+    let duration = this.cursoFormGroup.controls['duration'] as FormGroup;
+    duration.controls['hours'].setValue(snap.duration.hours);
+    duration.controls['days'].setValue(snap.duration.days);
+    duration.controls['weeks'].setValue(snap.duration.weeks);
+  }
+
   /**
    * Build form with validators
    */
   private buildCursoForm() {
     this.cursoFormGroup = this._formBuilder.group({
-      name: ['', Validators.required],
-      description: ['', [Validators.required, Validators.minLength(15)]],
-      typeId: ['', Validators.required],
-      date: ['', Validators.required],
+      name: [null, Validators.required],
+      description: [null, [Validators.required, Validators.minLength(15)]],
+      typeId: [null, Validators.required],
+      date: [null, Validators.required],
       instructors: this._formBuilder.array([]),
       postulation: this._formBuilder.group({
-        date: ['', Validators.required],
-        link: ['', Validators.required]
+        date: [null, Validators.required],
+        link: [null, Validators.required]
       }),
       duration: this._formBuilder.group({
-        hours: '',
-        days: '',
-        weeks: ''
+        hours: null,
+        days: null,
+        weeks: null
       }),
-      schedule: ['', Validators.required],
-      place: ['', Validators.required],
-      module: ['', Validators.required],
-      addressedTo: ['', Validators.required],
+      schedule: [null, Validators.required],
+      place: [null, Validators.required],
+      module: [null, Validators.required],
+      addressedTo: [null, Validators.required],
       downloadableContent: this._formBuilder.array([]),
     });
   }
@@ -136,8 +139,8 @@ export class CreateCursoComponent implements OnInit {
    */
   addinstructor() {
     let instructorFormGroup: FormGroup = this._formBuilder.group({
-      name: ['', Validators.required],
-      about: ['', Validators.required],
+      name: [null, Validators.required],
+      about: [null, Validators.required],
     });
     this.instructors.push(instructorFormGroup);
   }
@@ -154,7 +157,7 @@ export class CreateCursoComponent implements OnInit {
    */
   addDownloadableContent() {
     let contentFormGroup: FormGroup = this._formBuilder.group({
-      url: ['', Validators.required],
+      url: [null, Validators.required],
     });
     this.downloadableContent.push(contentFormGroup);
   }
@@ -213,4 +216,8 @@ export class CreateCursoComponent implements OnInit {
   get addressedTo() { return this.cursoFormGroup.get('addressedTo') }
   get downloadableContent() { return this.cursoFormGroup.get('downloadableContent') as FormArray }
   downloadableContentUrl(i: number) { return this.downloadableContent.controls[i].get('url') }
+
+  get uploadPath() {
+    return `${this._programaFormacionService.cursosCollection.ref.path}/${this.name.value}`;
+  }
 }

@@ -66,9 +66,9 @@ export class CreateComponent implements OnInit {
    */
   private buildForm() {
     this.encuentroFormGroup = this._formBuilder.group({
-      name: ['', Validators.required],
-      img: ['', Validators.required],
-      description: ['', [Validators.required, Validators.minLength(20)]],
+      name: [null, Validators.required],
+      img: [null, Validators.required],
+      description: [null, [Validators.required, Validators.minLength(20)]],
       guests: this._formBuilder.array([])
     });
   }
@@ -78,8 +78,8 @@ export class CreateComponent implements OnInit {
    */
   addGuest(): void {
     let guestFormGroup: FormGroup = this._formBuilder.group({
-      name: ['', Validators.required],
-      description: ['', Validators.required],
+      name: [null, Validators.required],
+      description: [null, Validators.required],
     });
     this.guests.push(guestFormGroup);
   }

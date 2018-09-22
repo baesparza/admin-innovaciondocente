@@ -28,6 +28,25 @@
     <mat-step>
       <ng-template matStepLabel>Imagen del Encuentro</ng-template>
       <!-- url img -->
+
+
+
+
+
+      <id-upload-file [path]="uploadPath"
+                      type="imagen"
+                      label="Url imagen Curso"
+                      errorMessage="La url es requerida"
+                      [formControlChild]="url"
+                      required></id-upload-file>
+
+
+
+
+
+
+
+
       <mat-form-field appearance="outline"
                       class="full-width">
         <mat-label>Link de la Imagen</mat-label>
