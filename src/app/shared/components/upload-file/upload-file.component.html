@@ -1,0 +1,17 @@
+<mat-form-field appearance="outline"
+                class="full-width"
+                [formGroup]="parentForm">
+  <mat-label *ngIf="label">{{label}}</mat-label>
+  <input matInput
+         type="text"
+         [required]="required"
+         formControlName="url">
+  <mat-icon matSuffix
+            (click)="openDialog()"
+            style="cursor:pointer">
+    cloud_upload
+  </mat-icon>
+  <mat-error *ngIf="url.hasError('required')">
+    {{errorMessage}}
+  </mat-error>
+</mat-form-field>

@@ -14,6 +14,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { AuthGuard } from './services/auth.guard.service';
 import { TimestampDatePipe } from './pipes/timestamp-date.pipe';
+import { DropZoneDirective } from './directives/drop-zone.directive';
+import { DropZoneComponent } from './components/drop-zone/drop-zone.component';
+import { UploadFileComponent } from './components/upload-file/upload-file.component';
 
 const modules: any[] = [
   CommonModule,
@@ -27,16 +30,27 @@ const modules: any[] = [
     CommonModule,
     ReactiveFormsModule,
     MaterialModule,
-    FirebaseModule
+    FirebaseModule,
   ],
   exports: [
     CommonModule,
     ReactiveFormsModule,
     MaterialModule,
     FirebaseModule,
-    TimestampDatePipe
+    TimestampDatePipe,
+    DropZoneDirective,
+    DropZoneComponent,
+    UploadFileComponent
   ],
-  declarations: [TimestampDatePipe],
+  declarations: [
+    TimestampDatePipe,
+    DropZoneDirective,
+    DropZoneComponent,
+    UploadFileComponent
+  ],
+  entryComponents: [
+    DropZoneComponent
+  ]
 })
 export class SharedModule {
   static forRoot(): ModuleWithProviders {

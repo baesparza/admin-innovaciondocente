@@ -16,7 +16,10 @@ import {
   MatExpansionModule,
   MatDatepickerModule,
   MatNativeDateModule,
-  MatSelectModule
+  MatSelectModule,
+  MatTabsModule,
+  MatDialogModule,
+  MatProgressBarModule
 } from '@angular/material';
 
 const modules: any[] = [
@@ -37,6 +40,9 @@ const modules: any[] = [
   MatDatepickerModule,
   MatNativeDateModule,
   MatSelectModule,
+  MatTabsModule,
+  MatDialogModule,
+  MatProgressBarModule
 ];
 
 @NgModule({
