@@ -1,10 +1,11 @@
-<h3>Arrastre sus archivos</h3>
 <mat-form-field appearance="outline"
-                class="full-width">
-  <mat-label>Subir archivo</mat-label>
+                class="full-width"
+                [formGroup]="parentForm">
+  <mat-label *ngIf="label">{{label}}</mat-label>
   <input matInput
          type="text"
-         required>
+         [required]="required"
+         formControlName="url">
   <mat-icon matSuffix
             (click)="openDialog()"
             style="cursor:pointer">

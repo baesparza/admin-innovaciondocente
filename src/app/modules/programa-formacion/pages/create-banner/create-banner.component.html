@@ -1,6 +1,3 @@
-<id-upload-file path="test"
-                type="imagen"></id-upload-file>
-
 <form [formGroup]="bannerCursoFormGroup">
   <mat-vertical-stepper [linear]="true"
                         #stepper>
@@ -28,17 +25,21 @@
     <!-- banner -->
     <mat-step>
       <ng-template matStepLabel>Imagen(banner)</ng-template>
-      <mat-form-field appearance="outline"
+      <id-upload-file path="test"
+                      type="imagen"
+                      label="Imagen Tipo Curso"
+                      [parentForm]="bannerCursoFormGroup"
+                      required></id-upload-file>
+      <!-- <mat-form-field appearance="outline"
                       class="full-width">
         <mat-label>Archivo</mat-label>
         <input matInput
                type="text"
-               formControlName="url"
                required>
         <mat-error *ngIf="url.hasError('required')">
           La imagen es <strong>requerida</strong>
         </mat-error>
-      </mat-form-field>
+      </mat-form-field> -->
       <div class="button-row">
         <button mat-button
                 matStepperPrevious>Anterior</button>
