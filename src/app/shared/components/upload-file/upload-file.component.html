@@ -11,4 +11,7 @@
             style="cursor:pointer">
     cloud_upload
   </mat-icon>
+  <mat-error *ngIf="url.hasError('required')">
+    {{errorMessage}}
+  </mat-error>
 </mat-form-field>

@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { DropZoneComponent } from '../drop-zone/drop-zone.component';
-import { ControlValueAccessor, FormGroup, FormGroupName, FormControlName } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'id-upload-file',
@@ -12,6 +12,7 @@ export class UploadFileComponent {
   @Input() path: string;
   @Input() type: string;
   @Input() label: string;
+  @Input() errorMessage: string;
   @Input() required: boolean = false;
   @Input() parentForm: FormGroup;
 
@@ -27,11 +28,11 @@ export class UploadFileComponent {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
       if (result)
         this.parentForm.controls['url'].setValue(result);
       console.log(this.parentForm.value);
     });
   }
 
+  get url() { return this.parentForm.get('url'); }
 }
