@@ -17,6 +17,7 @@ export class CreateBannerComponent implements OnInit {
   private shouldUpdate: boolean = false;
   private bannerCursoId: string = null;
 
+
   constructor(
     private _formBuilder: FormBuilder,
     private _snackBar: MatSnackBar,

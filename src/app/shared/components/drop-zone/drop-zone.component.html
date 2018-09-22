@@ -1,0 +1,63 @@
+<h1 mat-dialog-title>Seleccione sus archivos</h1>
+<div mat-dialog-content>
+  <div class="dropzone"
+       id-dropZone
+       (hovered)="toggleHover($event)"
+       (dropped)="startUpload($event)"
+       [class.hovering]="isHovering">
+
+    <h3>Arrastre sus archivos</h3>
+    <button mat-raised-button
+            color="primary"
+            (click)="pickFile(inputFile)">Seleccionar un archivo</button>
+    <input class="hide-input"
+           type="file"
+           #inputFile
+           (change)="startUpload($event.target.files)">
+
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-button
+          (click)="onNoClick()">Cancelar</button>
+  <div class="spacer"></div>
+  <button mat-raised-button
+          color="primary"
+          [mat-dialog-close]="'url'"
+          cdkFocusInitial>Ok</button>
+</div>
+
+
+
+
+
+
+
+
+<!--
+<div *ngIf="percentage | async as pct">
+
+<progress class="progress is-info"
+        [value]="pct"
+        max="100">
+</progress>
+
+{{ pct | number }}%
+
+</div> -->
+
+
+<!-- <div *ngIf="snapshot | async as snap">
+{{ snap.bytesTransferred | fileSize }} of {{ snap.totalBytes | fileSize }}
+
+<div *ngIf="downloadURL | async as url">
+<h3>Results!</h3>
+<img [src]="url"><br>
+<a [href]="url" target="_blank" rel="noopener">Download Me!</a>
+</div>
+
+<button (click)="task.pause()" class="button is-warning" [disabled]="!isActive(snap)">Pause</button>
+<button (click)="task.cancel()" class="button is-danger" [disabled]="!isActive(snap)">Cancel</button>
+<button (click)="task.resume()" class="button is-info"   [disabled]="!(snap?.state === 'paused')">Resume</button>
+
+</div> -->

@@ -1,0 +1,13 @@
+<h3>Arrastre sus archivos</h3>
+<mat-form-field appearance="outline"
+                class="full-width">
+  <mat-label>Subir archivo</mat-label>
+  <input matInput
+         type="text"
+         required>
+  <mat-icon matSuffix
+            (click)="openDialog()"
+            style="cursor:pointer">
+    cloud_upload
+  </mat-icon>
+</mat-form-field>
