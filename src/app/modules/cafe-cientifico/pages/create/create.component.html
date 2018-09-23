@@ -28,37 +28,12 @@
     <mat-step>
       <ng-template matStepLabel>Imagen del Encuentro</ng-template>
       <!-- url img -->
-
-
-
-
-
       <id-upload-file [path]="uploadPath"
                       type="imagen"
-                      label="Url imagen Curso"
+                      label="Url de la Imagen"
                       errorMessage="La url es requerida"
-                      [formControlChild]="url"
+                      [formControlChild]="img"
                       required></id-upload-file>
-
-
-
-
-
-
-
-
-      <mat-form-field appearance="outline"
-                      class="full-width">
-        <mat-label>Link de la Imagen</mat-label>
-        <input matInput
-               type="text"
-               formControlName="img"
-               required>
-        <mat-icon matSuffix>link</mat-icon>
-        <mat-error *ngIf="img.hasError('required')">
-          La url es <strong>requerida</strong>
-        </mat-error>
-      </mat-form-field>
       <div class="button-row">
         <button mat-button
                 matStepperPrevious>Anterior</button>

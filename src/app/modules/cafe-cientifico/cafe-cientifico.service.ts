@@ -7,7 +7,7 @@ import { Encuentro } from './interfaces/encuentro';
 @Injectable()
 export class CafeCientificoService {
 
-  private encuentrosCollection: AngularFirestoreCollection<Encuentro> = null;
+  public encuentrosCollection: AngularFirestoreCollection<Encuentro> = null;
 
   constructor(
     private _afs: AngularFirestore,
