@@ -5,7 +5,8 @@ import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'id-upload-file',
-  templateUrl: './upload-file.component.html'
+  templateUrl: './upload-file.component.html',
+  styleUrls: ['./upload-file.component.scss']
 })
 export class UploadFileComponent {
 
@@ -15,6 +16,8 @@ export class UploadFileComponent {
   @Input() errorMessage: string;
   @Input() required: boolean = false;
   @Input() formControlChild: FormControl;
+
+  url: string = null;
 
   constructor(public dialog: MatDialog) { }
 
@@ -28,8 +31,10 @@ export class UploadFileComponent {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result)
-        this.formControlChild.setValue(result);
+      if (!result)
+        return;
+      this.url = result;
+      this.formControlChild.setValue(result);
     });
   }
 }

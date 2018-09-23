@@ -14,3 +14,10 @@
     {{errorMessage}}
   </mat-error>
 </mat-form-field>
+<div *ngIf="type === 'imagen'"
+     class="center">
+  <img [src]="formControlChild.value"
+       class="img"
+       alt="Url"
+       *ngIf="formControlChild.valid">
+</div>
