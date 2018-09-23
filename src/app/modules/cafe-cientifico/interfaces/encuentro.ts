@@ -7,7 +7,8 @@ export interface Encuentro {
   edited: Date,
   description: string,
   img: string,
-  name: string
+  name: string,
+  date: string,
   guests: Guest[]
 }
 

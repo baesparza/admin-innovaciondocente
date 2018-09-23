@@ -24,9 +24,7 @@
     <!-- expanded content -->
     <ng-template matExpansionPanelContent>
       <p *ngIf="encuentro.creator"><b>Autor:</b> {{encuentro.creator}}</p>
-      <p *ngIf="encuentro.created"><b>Fecha creación:</b> {{encuentro.created|timestampDate}}</p>
-      <p *ngIf="encuentro.editor"><b>Ultimo editor:</b> {{encuentro.editor}}</p>
-      <p *ngIf="encuentro.edited"><b>Ultima edición:</b> {{encuentro.edited|timestampDate}}</p>
+      <p *ngIf="encuentro.creator"><b>Fecha:</b> {{encuentro.date}}</p>
       <p *ngIf="encuentro.guests"><b>Invitados:</b> {{encuentro.guests.length}}</p>
       <p *ngIf="encuentro.description">{{encuentro.description}}</p>
       <!-- options -->

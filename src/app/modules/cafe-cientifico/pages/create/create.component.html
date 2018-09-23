@@ -43,6 +43,29 @@
       </div>
     </mat-step>
 
+    <!-- Date part-->
+    <mat-step>
+      <ng-template matStepLabel>Fecha del Encuentro</ng-template>
+      <mat-form-field appearance="outline"
+                      class="full-width">
+        <mat-label>Fecha</mat-label>
+        <input matInput
+               type="date"
+               formControlName="date"
+               required>
+        <mat-error *ngIf="date.hasError('required')">
+          La fecha es <strong>requerida</strong>
+        </mat-error>
+      </mat-form-field>
+      <div class="button-row">
+        <button mat-button
+                matStepperPrevious>Anterior</button>
+        <button mat-raised-button
+                color="primary"
+                matStepperNext>Siguiente</button>
+      </div>
+    </mat-step>
+
     <!-- description -->
     <mat-step>
       <ng-template matStepLabel>Descripción</ng-template>
