@@ -14,7 +14,7 @@ export class CafeCientificoService {
     private _auth: AuthService,
   ) {
     // ref to firestore collection
-    this.encuentrosCollection = this._afs.collection('formacion-docente/cafe-cientifico/encuentros', ref => ref.orderBy('edited', 'desc'));
+    this.encuentrosCollection = this._afs.collection('formacion-docente/cafe-cientifico/encuentros', ref => ref.orderBy('date', 'desc'));
   }
 
   /**
