@@ -320,17 +320,11 @@
       <div formArrayName="downloadableContent">
         <div *ngFor="let downloadable of downloadableContent.controls; let i=index"
              [formGroupName]="i">
-          <mat-form-field appearance="outline"
-                          class="full-width">
-            <mat-label>Contenido descargable</mat-label>
-            <input matInput
-                   type="text"
-                   formControlName="url"
-                   required>
-            <mat-error *ngIf="downloadableContentUrl(i).hasError('required')">
-              El archivo es <strong>requerido</strong>
-            </mat-error>
-          </mat-form-field>
+          <id-upload-file label="Contenido descargable"
+                          [path]="uploadPath"
+                          errorMessage="El archivo es requerido"
+                          [formControlChild]="downloadableContentUrl(i)"
+                          required></id-upload-file>
         </div>
       </div>
       <div class="button-row">

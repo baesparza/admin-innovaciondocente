@@ -25,11 +25,11 @@
     <!-- upload banner -->
     <mat-step>
       <ng-template matStepLabel>Imagen(banner)</ng-template>
-      <id-upload-file path="test"
+      <id-upload-file path="/formacion-docente/programa-formacion/banner-cursos"
                       type="imagen"
                       label="Url Tipo Curso"
                       errorMessage="La url es requerida"
-                      [parentForm]="bannerCursoFormGroup"
+                      [formControlChild]="url"
                       required></id-upload-file>
       <div class="button-row">
         <button mat-button

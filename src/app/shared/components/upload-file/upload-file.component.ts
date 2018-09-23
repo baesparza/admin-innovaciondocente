@@ -1,11 +1,12 @@
 import { Component, Input } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { DropZoneComponent } from '../drop-zone/drop-zone.component';
-import { FormGroup } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'id-upload-file',
-  templateUrl: './upload-file.component.html'
+  templateUrl: './upload-file.component.html',
+  styleUrls: ['./upload-file.component.scss']
 })
 export class UploadFileComponent {
 
@@ -14,7 +15,9 @@ export class UploadFileComponent {
   @Input() label: string;
   @Input() errorMessage: string;
   @Input() required: boolean = false;
-  @Input() parentForm: FormGroup;
+  @Input() formControlChild: FormControl;
+
+  url: string = null;
 
   constructor(public dialog: MatDialog) { }
 
@@ -28,11 +31,10 @@ export class UploadFileComponent {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result)
-        this.parentForm.controls['url'].setValue(result);
-      console.log(this.parentForm.value);
+      if (!result)
+        return;
+      this.url = result;
+      this.formControlChild.setValue(result);
     });
   }
-
-  get url() { return this.parentForm.get('url'); }
 }
