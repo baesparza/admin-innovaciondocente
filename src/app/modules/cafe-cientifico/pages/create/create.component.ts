@@ -74,7 +74,7 @@ export class CreateComponent implements OnInit {
       name: [null, Validators.required],
       img: [null, Validators.required],
       date: [null, Validators.required],
-      postulations: [null],
+      postulations: [null, Validators.required],
       description: [null, [Validators.required, Validators.minLength(20)]],
       guests: this._formBuilder.array([]),
     });
@@ -139,6 +139,7 @@ export class CreateComponent implements OnInit {
   guestName(i: number) { return this.guests.controls[i].get('name'); }
   guestDescription(i: number) { return this.guests.controls[i].get('description'); }
   get date() { return this.encuentroFormGroup.get('date'); }
+  get postulations() { return this.encuentroFormGroup.get('postulations'); }
 
   get uploadPath() { return `${this._cafeCientificoService.encuentrosCollection.ref.path}/${this.name.value}` }
 }
