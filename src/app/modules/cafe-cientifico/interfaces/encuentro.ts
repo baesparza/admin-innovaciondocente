@@ -9,6 +9,7 @@ export interface Encuentro {
   img: string,
   name: string,
   date: string,
+  postulations: string,
   guests: Guest[]
 }
 
