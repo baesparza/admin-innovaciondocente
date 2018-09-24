@@ -11,7 +11,7 @@ import { Curso } from "../../interfaces/curso";
   styleUrls: ['./cursos.component.scss']
 })
 export class CursosComponent implements OnInit {
-  public displayedColumns: string[] = ['name', 'creator', 'edited', 'typeId', 'date', 'postulationDate', 'options'];
+  public displayedColumns: string[] = ['name', 'creator', 'edited', 'date', 'postulationDate', 'options'];
   public cursosSource: MatTableDataSource<Curso> = new MatTableDataSource([]);
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
