@@ -11,7 +11,7 @@ export interface Curso {
   editor?: string,
   edited: Date,
   description: string,
-  typeId: number,
+  img: string,
   date: string,
   instructors: Instructor[],
   postulation: Postulation,

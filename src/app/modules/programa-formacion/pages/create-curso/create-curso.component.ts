@@ -67,7 +67,7 @@ export class CreateCursoComponent implements OnInit {
     // set values to form
     this.cursoFormGroup.controls['name'].setValue(snap.name);
     this.cursoFormGroup.controls['description'].setValue(snap.description);
-    this.cursoFormGroup.controls['typeId'].setValue(snap.typeId);
+    this.cursoFormGroup.controls['img'].setValue(snap.img);
     this.cursoFormGroup.controls['date'].setValue(snap.date);
     this.cursoFormGroup.controls['instructors'].setValue(snap.instructors);
     this.cursoFormGroup.controls['schedule'].setValue(snap.schedule);
@@ -93,7 +93,7 @@ export class CreateCursoComponent implements OnInit {
     this.cursoFormGroup = this._formBuilder.group({
       name: [null, Validators.required],
       description: [null, [Validators.required, Validators.minLength(15)]],
-      typeId: [null, Validators.required],
+      img: [null, Validators.required],
       date: [null, Validators.required],
       instructors: this._formBuilder.array([]),
       postulation: this._formBuilder.group({
@@ -105,10 +105,10 @@ export class CreateCursoComponent implements OnInit {
         days: null,
         weeks: null
       }),
-      schedule: [null, Validators.required],
-      place: [null, Validators.required],
-      module: [null, Validators.required],
-      addressedTo: [null, Validators.required],
+      schedule: null,
+      place: null,
+      module: null,
+      addressedTo: null,
       downloadableContent: this._formBuilder.array([]),
     });
   }
@@ -120,9 +120,7 @@ export class CreateCursoComponent implements OnInit {
     this.types = this._programaFormacionService.getBannerCursos().snapshotChanges()
       .pipe(
         map(doc => doc.map(a => {
-          const data = a.payload.doc.data() as BannerCurso;
-          const id = a.payload.doc.id;
-          return { ...data, id };
+          return a.payload.doc.data() as BannerCurso;
         }))
       );
   }
@@ -202,7 +200,7 @@ export class CreateCursoComponent implements OnInit {
   //////////getters//////////
   get name() { return this.cursoFormGroup.get('name') }
   get description() { return this.cursoFormGroup.get('description') }
-  get typeId() { return this.cursoFormGroup.get('typeId') }
+  get img() { return this.cursoFormGroup.get('img') }
   get date() { return this.cursoFormGroup.get('date') }
   get instructors() { return this.cursoFormGroup.get('instructors') as FormArray }
   instructorName(i: number) { return this.instructors.controls[i].get('name'); }
@@ -210,10 +208,6 @@ export class CreateCursoComponent implements OnInit {
   get postulation() { return this.cursoFormGroup.get('postulation') as FormGroup }
   get postulationDate() { return this.postulation.get('date') }
   get postulationLink() { return this.postulation.get('link') }
-  get schedule() { return this.cursoFormGroup.get('schedule') }
-  get place() { return this.cursoFormGroup.get('place') }
-  get module() { return this.cursoFormGroup.get('module') }
-  get addressedTo() { return this.cursoFormGroup.get('addressedTo') }
   get downloadableContent() { return this.cursoFormGroup.get('downloadableContent') as FormArray }
   downloadableContentUrl(i: number) { return this.downloadableContent.controls[i].get('url') }
 
