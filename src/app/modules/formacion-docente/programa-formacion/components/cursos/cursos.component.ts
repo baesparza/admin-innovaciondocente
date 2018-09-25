@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 
-import { MatTableDataSource, MatPaginator, MatSort, MatSnackBar } from "@angular/material";
+import { MatTableDataSource, MatPaginator, MatSnackBar } from "@angular/material";
 import { ProgramaFormacionService } from "../../programa-formacion.service";
 import { map } from "rxjs/operators";
 import { Curso } from "../../interfaces/curso";

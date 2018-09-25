@@ -6,6 +6,7 @@ import { SharedModule } from '../../../shared/shared.module';
 import { EdutendenciasComponent } from './pages/edutendencias/edutendencias.component';
 import { CreateTipComponent } from './pages/create-tip/create-tip.component';
 import { EdutendenciasService } from './edutendencias.service';
+import { TipsComponent } from './components/tips/tips.component';
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import { EdutendenciasService } from './edutendencias.service';
   providers: [EdutendenciasService],
   declarations: [
     EdutendenciasComponent,
-    CreateTipComponent
+    CreateTipComponent,
+    TipsComponent
   ]
 })
 export class EdutendenciasModule { }

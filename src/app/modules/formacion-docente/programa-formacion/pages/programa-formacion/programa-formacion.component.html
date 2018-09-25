@@ -1,8 +1,12 @@
 <mat-tab-group>
   <mat-tab label="Cursos">
-    <id-cursos></id-cursos>
+    <ng-template matTabContent>
+      <id-cursos></id-cursos>
+    </ng-template>
   </mat-tab>
   <mat-tab label="Banners - Tipos">
-    <id-banner-cursos></id-banner-cursos>
+    <ng-template matTabContent>
+      <id-banner-cursos></id-banner-cursos>
+    </ng-template>
   </mat-tab>
 </mat-tab-group>

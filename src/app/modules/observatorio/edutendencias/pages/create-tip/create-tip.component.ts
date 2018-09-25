@@ -68,7 +68,6 @@ export class CreateTipComponent implements OnInit {
   }
 
   public async submit() {
-    console.log(this.tipFormGroup.value)
     if (this.tipFormGroup.invalid) {
       this._snackBar.open('La forma es invalida', null, { duration: 5000, })
       return;
@@ -94,7 +93,7 @@ export class CreateTipComponent implements OnInit {
   get tag() { return this.tipFormGroup.get('tag'); }
 
   get uploadPath() {
-    return `observatorio/${this.name.value}`;
+    return `${this._edutendenciasService.tipsCollection.ref.path}/${this.name.value}`;
   }
 
 }
