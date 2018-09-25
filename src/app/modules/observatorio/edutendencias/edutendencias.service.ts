@@ -5,7 +5,7 @@ import { Tip } from './interfaces/tip';
 import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Injectable()
-export class ProgramaFormacionService {
+export class EdutendenciasService {
 
   private edutendenciasDocument: AngularFirestoreDocument;
   public tipsCollection: AngularFirestoreCollection<Tip> = null;

@@ -23,7 +23,7 @@ export class CursosComponent implements OnInit {
 
   ngOnInit() {
     // get changes on the go
-    this._programaFormacionService.getCursos().snapshotChanges().pipe(
+    this._programaFormacionService.cursosCollection.snapshotChanges().pipe(
       map(doc => doc.map(a => {
         const data = a.payload.doc.data() as Curso;
         const id = a.payload.doc.id;

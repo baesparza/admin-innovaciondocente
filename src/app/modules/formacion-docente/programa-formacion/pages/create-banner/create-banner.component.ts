@@ -33,27 +33,10 @@ export class CreateBannerComponent implements OnInit {
     // build formsƒ
     this.initForms();
 
-    // if id is undefined, return, else, load data
-    if (this.bannerCursoId === undefined)
-      return;
+    // load data, and fill form if id is defined
+    if (this.bannerCursoId !== undefined)
+      this.loadData();
 
-    // load data, and fill form
-    this._programaFormacionService.getBannerCursoData(this.bannerCursoId)
-      .then(doc => {
-        // validate doc
-        if (!doc.exists) {
-          this._snackBar.open('Este banner ya no se encuentra disponible.', null, { duration: 5000, });
-          return;
-        }
-        // fill fields
-        this.shouldUpdate = true;
-        const snap: BannerCurso = doc.data() as BannerCurso;
-        this.bannerCursoFormGroup.controls['name'].setValue(snap.name); this.bannerCursoFormGroup.controls['url'].setValue(snap.url);
-      })
-      .catch(e => {
-        this._snackBar.open('Ha ocurrido un error al cargar el banner.', null, { duration: 5000, })
-        this._location.back();
-      });
   }
 
   private initForms() {
@@ -61,6 +44,26 @@ export class CreateBannerComponent implements OnInit {
       name: [null, Validators.required],
       url: [null, Validators.required]
     });
+  }
+
+  private loadData() {
+    this._programaFormacionService.getBannerCursoData(this.bannerCursoId)
+      .then(doc => {
+        // validate doc
+        if (!doc.exists) {
+          this._snackBar.open('Este banner no se encuentra disponible.', null, { duration: 5000, });
+          return;
+        }
+        // fill fields
+        this.shouldUpdate = true;
+        const snap: BannerCurso = doc.data() as BannerCurso;
+        this.bannerCursoFormGroup.controls['name'].setValue(snap.name);
+        this.bannerCursoFormGroup.controls['url'].setValue(snap.url);
+      })
+      .catch(e => {
+        this._snackBar.open('Ha ocurrido un error al cargar el banner.', null, { duration: 5000, });
+        this._location.back();
+      });
   }
 
   public submit() {

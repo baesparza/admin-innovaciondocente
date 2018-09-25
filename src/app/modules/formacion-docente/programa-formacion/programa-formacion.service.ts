@@ -23,6 +23,7 @@ export class ProgramaFormacionService {
     this.bannerCursosCollection = this.programaFormacionDocument.collection('banner-cursos', ref => ref.orderBy('name'));
   }
 
+
   /**
    * get document of curso
    * @param id
@@ -107,9 +108,5 @@ export class ProgramaFormacionService {
       editor: this._auth.userId,
       ...banner
     });
-  }
-
-  getBannerCursos(): AngularFirestoreCollection<BannerCurso> {
-    return this.bannerCursosCollection;
   }
 }

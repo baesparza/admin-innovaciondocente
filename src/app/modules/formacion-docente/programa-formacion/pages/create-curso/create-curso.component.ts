@@ -118,7 +118,7 @@ export class CreateCursoComponent implements OnInit {
    */
   private loadTypes(): void {
     this.types = this._programaFormacionService
-      .getBannerCursos()
+      .bannerCursosCollection
       .snapshotChanges()
       .pipe(
         map(doc => doc.map(a => {

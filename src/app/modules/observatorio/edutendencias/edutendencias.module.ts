@@ -5,6 +5,7 @@ import { EdutendenciasRoutingModule } from './edutendencias.routing.module';
 import { SharedModule } from '../../../shared/shared.module';
 import { EdutendenciasComponent } from './pages/edutendencias/edutendencias.component';
 import { CreateTipComponent } from './pages/create-tip/create-tip.component';
+import { EdutendenciasService } from './edutendencias.service';
 
 @NgModule({
   imports: [
@@ -12,6 +13,7 @@ import { CreateTipComponent } from './pages/create-tip/create-tip.component';
     SharedModule,
     EdutendenciasRoutingModule
   ],
+  providers: [EdutendenciasService],
   declarations: [
     EdutendenciasComponent,
     CreateTipComponent

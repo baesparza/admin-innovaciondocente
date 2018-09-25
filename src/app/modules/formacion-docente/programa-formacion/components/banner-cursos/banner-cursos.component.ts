@@ -21,7 +21,8 @@ export class BannerCursosComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.bannerCursos = this._programaFormacionServie.getBannerCursos()
+    this.bannerCursos = this._programaFormacionServie
+      .bannerCursosCollection
       .snapshotChanges()
       .pipe(
         map(doc => doc.map(a => {
@@ -32,10 +33,10 @@ export class BannerCursosComponent implements OnInit {
       );
   }
 
-    /**
-   * Delete document from firebase
-   * @param id of document to be deleted
-   */
+  /**
+ * Delete document from firebase
+ * @param id of document to be deleted
+ */
   async delete(id: string) {
     try {
       await this._programaFormacionServie.getBannerCurso(id).delete();

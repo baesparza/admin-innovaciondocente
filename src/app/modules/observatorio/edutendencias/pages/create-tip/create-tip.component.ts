@@ -3,6 +3,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { ActivatedRoute, } from '@angular/router';
 import { Location } from '@angular/common';
+import { EdutendenciasService } from '../../edutendencias.service';
+import { Tip } from '../../interfaces/tip';
 
 @Component({
   selector: 'id-create-tip',
@@ -20,7 +22,7 @@ export class CreateTipComponent implements OnInit {
     private _snackBar: MatSnackBar,
     private _location: Location,
     private _route: ActivatedRoute,
-    // private service
+    private _edutendenciasService: EdutendenciasService
   ) { }
 
   ngOnInit() {
@@ -28,8 +30,33 @@ export class CreateTipComponent implements OnInit {
     this.tipId = this._route.snapshot.queryParams['id'];
 
     this.buildForm();
+
+    if (this.tipId !== undefined)
+      this.loadData();
   }
 
+  private async loadData(): Promise<void> {
+    try {
+      const doc = await this._edutendenciasService.getTipData(this.tipId);
+      if (!doc.exists) {
+        this._snackBar.open('Este tip no se encuentra disponible.', null, { duration: 5000, });
+        return;
+      }
+
+      // load data into forms
+      const tip: Tip = doc.data() as Tip;
+      this.shouldUpdate = true;
+      this.tipFormGroup.controls['name'].setValue(tip.name);
+      this.tipFormGroup.controls['img'].setValue(tip.img);
+      this.tipFormGroup.controls['description'].setValue(tip.description);
+      this.tipFormGroup.controls['tag'].setValue(tip.tag);
+      this.tipFormGroup.controls['link'].setValue(tip.link);
+    }
+    catch (error) {
+      this._snackBar.open('Ha ocurrido un error al cargar el tip.', null, { duration: 5000, });
+      this._location.back();
+    }
+  }
 
   private buildForm(): void {
     this.tipFormGroup = this._fb.group({
@@ -41,21 +68,23 @@ export class CreateTipComponent implements OnInit {
     });
   }
 
-  public submit() {
+  public async submit() {
     console.log(this.tipFormGroup.value)
     if (this.tipFormGroup.invalid) {
       this._snackBar.open('La forma es invalida', null, { duration: 5000, })
       return;
     }
-  }
-
-
-  /**
-  * show snack error message
-  * @param e error
-  */
-  private showErrorMessage(e) {
-    this._snackBar.open('Ocurrido un error al guardar, por favor vuelve a intentarlo', null, { duration: 5000, });
+    try {
+      if (this.shouldUpdate)
+        await this._edutendenciasService.updateTip(this.tipId, this.tipFormGroup.value);
+      else
+        await this._edutendenciasService.addTip(this.tipFormGroup.value);
+      this._snackBar.open('Se guardaron los cambios correctamente', null, { duration: 5000, });
+      // navigate back
+      this._location.back();
+    } catch (error) {
+      this._snackBar.open('Ocurrido un error al guardar, por favor vuelve a intentarlo', null, { duration: 5000, });
+    }
   }
 
   /////////getters/////////////
