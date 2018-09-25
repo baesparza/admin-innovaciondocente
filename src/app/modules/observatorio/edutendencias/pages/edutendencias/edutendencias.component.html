@@ -1,0 +1,22 @@
+<mat-tab-group>
+  <mat-tab label="Aula Divertida">
+    <ng-template matTabContent>
+      <id-tips filter="aula-divertida"></id-tips>
+    </ng-template>
+  </mat-tab>
+  <mat-tab label="Docentes del Futuro">
+    <ng-template matTabContent>
+      <id-tips filter="docentes-futuro"></id-tips>
+    </ng-template>
+  </mat-tab>
+  <mat-tab label="Videos">
+    <ng-template matTabContent>
+      <id-tips filter="videos"></id-tips>
+    </ng-template>
+  </mat-tab>
+</mat-tab-group>
+<!-- create new -->
+<a mat-raised-button
+   color="primary"
+   routerLink="nuevo-tip"
+   class="new-btn">Nuevo Tip</a>
