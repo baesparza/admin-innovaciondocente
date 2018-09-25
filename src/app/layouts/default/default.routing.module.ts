@@ -15,11 +15,11 @@ const routes: Routes = [
       },
       {
         path: 'cafe-cientifico',
-        loadChildren: '../../modules/cafe-cientifico/cafe-cientifico.module#CafeCientificoModule',
+        loadChildren: '../../modules/formacion-docente/cafe-cientifico/cafe-cientifico.module#CafeCientificoModule',
       },
       {
         path: 'programa-formacion',
-        loadChildren: '../../modules/programa-formacion/programa-formacion.module#ProgramaFormacionModule',
+        loadChildren: '../../modules/formacion-docente/programa-formacion/programa-formacion.module#ProgramaFormacionModule',
       },
     ]
   }

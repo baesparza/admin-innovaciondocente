@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
-import { AuthService } from '../../shared/services/auth.service';
+
 import { Curso } from './interfaces/curso';
 import { ProgramaFormacion } from './interfaces/programa-formacion';
 import { BannerCurso } from './interfaces/banner-cursos';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Injectable()
 export class ProgramaFormacionService {
