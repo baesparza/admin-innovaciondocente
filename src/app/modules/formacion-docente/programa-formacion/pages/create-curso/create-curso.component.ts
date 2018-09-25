@@ -117,7 +117,9 @@ export class CreateCursoComponent implements OnInit {
    * Loads types of courses for mat-selector
    */
   private loadTypes(): void {
-    this.types = this._programaFormacionService.getBannerCursos().snapshotChanges()
+    this.types = this._programaFormacionService
+      .getBannerCursos()
+      .snapshotChanges()
       .pipe(
         map(doc => doc.map(a => {
           return a.payload.doc.data() as BannerCurso;

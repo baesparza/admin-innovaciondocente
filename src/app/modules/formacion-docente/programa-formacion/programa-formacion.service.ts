@@ -10,7 +10,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 export class ProgramaFormacionService {
 
 
-  private programaFormacion: AngularFirestoreDocument<ProgramaFormacion>;
+  private programaFormacionDocument: AngularFirestoreDocument<ProgramaFormacion>;
   public cursosCollection: AngularFirestoreCollection<Curso> = null;
   public bannerCursosCollection: AngularFirestoreCollection<BannerCurso> = null;
 
@@ -18,16 +18,9 @@ export class ProgramaFormacionService {
     private _afs: AngularFirestore,
     private _auth: AuthService,
   ) {
-    this.programaFormacion = this._afs.collection('formacion-docente').doc('programa-formacion');
-    this.cursosCollection = this.programaFormacion.collection('cursos', ref => ref.orderBy('date', 'desc').orderBy('postulation.date', 'desc'));
-    this.bannerCursosCollection = this.programaFormacion.collection('banner-cursos', ref => ref.orderBy('name'));
-  }
-
-  /**
-   * get all documents from cursos collection
-   */
-  public getCursos(): AngularFirestoreCollection<Curso> {
-    return this.cursosCollection;
+    this.programaFormacionDocument = this._afs.collection('formacion-docente').doc('programa-formacion');
+    this.cursosCollection = this.programaFormacionDocument.collection('cursos', ref => ref.orderBy('date', 'desc').orderBy('postulation.date', 'desc'));
+    this.bannerCursosCollection = this.programaFormacionDocument.collection('banner-cursos', ref => ref.orderBy('name'));
   }
 
   /**

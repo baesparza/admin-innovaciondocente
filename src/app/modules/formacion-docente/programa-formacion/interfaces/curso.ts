@@ -2,14 +2,11 @@ import { Instructor } from "./instructor";
 import { Postulation } from "./postulation";
 import { Duration } from "./duration";
 import { DownloadableContent } from "./downloadableContent";
+import { DefaultInterface } from "src/app/shared/interface/defaultInterface";
 
-export interface Curso {
+export interface Curso extends DefaultInterface {
   id?: any
   name: string,
-  creator: string,
-  created: Date,
-  editor?: string,
-  edited: Date,
   description: string,
   img: string,
   date: string,

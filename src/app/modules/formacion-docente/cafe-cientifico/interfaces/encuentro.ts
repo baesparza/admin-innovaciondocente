@@ -1,10 +1,7 @@
 import { Guest } from "./guest";
+import { DefaultInterface } from "src/app/shared/interface/defaultInterface";
 
-export interface Encuentro {
-  creator: string,
-  created: Date,
-  editor?: string,
-  edited: Date,
+export interface Encuentro extends DefaultInterface {
   description: string,
   img: string,
   name: string,
