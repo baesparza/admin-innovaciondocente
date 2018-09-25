@@ -18,13 +18,6 @@ export class CafeCientificoService {
   }
 
   /**
-   * get encuentros collection
-   */
-  public getEncuentros(): AngularFirestoreCollection<Encuentro> {
-    return this.encuentrosCollection;
-  }
-
-  /**
    * get specific encuentro
    * @param id
    */

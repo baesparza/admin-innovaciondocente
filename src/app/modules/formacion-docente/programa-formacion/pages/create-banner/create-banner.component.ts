@@ -6,6 +6,7 @@ import { Location } from '@angular/common';
 
 import { ProgramaFormacionService } from '../../programa-formacion.service';
 import { BannerCurso } from '../../interfaces/banner-cursos';
+import { promise } from 'protractor';
 
 @Component({
   selector: 'id-create-banner',
@@ -16,7 +17,6 @@ export class CreateBannerComponent implements OnInit {
   public bannerCursoFormGroup: FormGroup;
   private shouldUpdate: boolean = false;
   private bannerCursoId: string = null;
-
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -30,68 +30,51 @@ export class CreateBannerComponent implements OnInit {
     // get params routes
     this.bannerCursoId = this._route.snapshot.queryParams['id'];
 
-    // build formsƒ
-    this.initForms();
+    this.initForm();
 
-    // load data, and fill form if id is defined
     if (this.bannerCursoId !== undefined)
       this.loadData();
-
   }
 
-  private initForms() {
+  private initForm() {
     this.bannerCursoFormGroup = this._formBuilder.group({
       name: [null, Validators.required],
       url: [null, Validators.required]
     });
   }
 
-  private loadData() {
-    this._programaFormacionService.getBannerCursoData(this.bannerCursoId)
-      .then(doc => {
-        // validate doc
-        if (!doc.exists) {
-          this._snackBar.open('Este banner no se encuentra disponible.', null, { duration: 5000, });
-          return;
-        }
-        // fill fields
-        this.shouldUpdate = true;
-        const snap: BannerCurso = doc.data() as BannerCurso;
-        this.bannerCursoFormGroup.controls['name'].setValue(snap.name);
-        this.bannerCursoFormGroup.controls['url'].setValue(snap.url);
-      })
-      .catch(e => {
-        this._snackBar.open('Ha ocurrido un error al cargar el banner.', null, { duration: 5000, });
-        this._location.back();
-      });
+  private async loadData(): Promise<void> {
+    try {
+      const doc = await this._programaFormacionService.getBannerCursoData(this.bannerCursoId);
+      if (!doc.exists) {
+        this._snackBar.open('Este documento no se encuentra disponible.', null, { duration: 5000, });
+        return;
+      }
+      const curso: BannerCurso = doc.data() as BannerCurso;
+      this.shouldUpdate = true;
+      this.bannerCursoFormGroup.controls['name'].setValue(curso.name);
+      this.bannerCursoFormGroup.controls['url'].setValue(curso.url);
+    } catch (error) {
+      this._snackBar.open('Ha ocurrido un error al cargar el banner.', null, { duration: 5000, });
+      this._location.back();
+    }
   }
 
-  public submit() {
+  public async submit(): Promise<void> {
     if (this.bannerCursoFormGroup.invalid) {
       this._snackBar.open('La forma es invalida', null, { duration: 5000, })
       return;
     }
-    // form is valid, submit or update
-    if (this.shouldUpdate) {
-      this._programaFormacionService.updateBannerCurso(this.bannerCursoId, this.bannerCursoFormGroup.value)
-        .then(m => this._snackBar.open('Se actualizo correctamente', null, { duration: 5000, }))
-        .catch(this.showErrorMessage);
+    try {
+      if (this.shouldUpdate)
+        await this._programaFormacionService.updateBannerCurso(this.bannerCursoId, this.bannerCursoFormGroup.value);
+      else
+        await this._programaFormacionService.addBannerCurso(this.bannerCursoFormGroup.value)
+      this._snackBar.open('Se guardaron los cambios correctamente', null, { duration: 5000, })
+      this._location.back();
+    } catch (error) {
+      this._snackBar.open('Ocurrido un error al guardar, por favor vuelve a intentarlo', null, { duration: 5000, });
     }
-    else
-      this._programaFormacionService.addBannerCurso(this.bannerCursoFormGroup.value)
-        .then(m => this._snackBar.open('Se ha guardado correctamente', null, { duration: 5000, }))
-        .catch(this.showErrorMessage);
-
-    // navigate back
-    this._location.back();
-  }
-
-  /**
-  * show snack error message
-  * @param e error
-  */
-  private showErrorMessage(e) {
-    this._snackBar.open('Ocurrido un error al guardar, por favor vuelve a intentarlo', null, { duration: 5000, });
   }
 
   /////////////getters////////////

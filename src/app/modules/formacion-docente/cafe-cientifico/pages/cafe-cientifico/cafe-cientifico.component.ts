@@ -22,7 +22,7 @@ export class CafeCientificoComponent {
 
   ngOnInit(): void {
     // get encuentros from db
-    this.encuentros = this._cafeCientificoService.getEncuentros().snapshotChanges().pipe(
+    this.encuentros = this._cafeCientificoService.encuentrosCollection.snapshotChanges().pipe(
       map(doc => doc.map(a => {
         const data = a.payload.doc.data() as Encuentro;
         const id = a.payload.doc.id;
@@ -35,7 +35,7 @@ export class CafeCientificoComponent {
    * Delete document from firebase
    * @param id of document to be deleted
    */
-  async delete(id: string) {
+  public async delete(id: string): Promise<void> {
     try {
       await this._cafeCientificoService.getEncuentro(id).delete();
       this._snackBar.open('El encuentro se elimino correctamente', null, { duration: 5000, });

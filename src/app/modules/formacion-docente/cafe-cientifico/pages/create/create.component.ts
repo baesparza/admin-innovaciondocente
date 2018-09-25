@@ -28,48 +28,44 @@ export class CreateComponent implements OnInit {
     // get params routes
     this.encuentroID = this._route.snapshot.queryParams['id'];
 
-    // init forms with empty values
     this.buildForm();
 
-    // if encuentroID isnt defined continue
-    if (this.encuentroID === undefined)
-      return;
+    if (this.encuentroID !== undefined)
+      this.loadData();
 
-    // if encuentroID is defined, validate document and fill formF
-    this._cafeCientificoService.getEncuentroData(this.encuentroID)
-      .then(doc => {
-        // validate if document exists
-        if (!doc.exists) {
-          this._snackBar.open('Este encuentro ya no se encuentra disponible.', null, { duration: 5000, });
-          this._location.back();
-        }
-        // document loaded
-        this.shouldUpdate = true;
-        this.fillFields(doc.data() as Encuentro);
-      })
-      .catch(e => {
-        this._snackBar.open('Ha ocurrido un error al cargar el encuentro.', null, { duration: 5000, });
-        this._location.back();
-      });
   }
 
-  private fillFields(snap: Encuentro) {
-    // create guests as needed
-    for (let index = 0; index < snap.guests.length; index++)
-      this.addGuest();
-    // set values to form
-    this.encuentroFormGroup.controls['name'].setValue(snap.name);
-    this.encuentroFormGroup.controls['img'].setValue(snap.img);
-    this.encuentroFormGroup.controls['description'].setValue(snap.description);
-    this.encuentroFormGroup.controls['guests'].setValue(snap.guests);
-    this.encuentroFormGroup.controls['date'].setValue(snap.date);
-    this.encuentroFormGroup.controls['postulations'].setValue(snap.postulations);
+  private async  loadData(): Promise<void> {
+    try {
+      const doc = await this._cafeCientificoService.getEncuentroData(this.encuentroID);
+
+      if (!doc.exists) {
+        this._snackBar.open('Este encuentro no se encuentra disponible.', null, { duration: 5000, });
+        return;
+      }
+      const encuentro: Encuentro = doc.data() as Encuentro;
+      this.shouldUpdate = true;
+
+      // create guests as needed
+      for (let index = 0; index < encuentro.guests.length; index++)
+        this.addGuest();
+
+      this.encuentroFormGroup.controls['name'].setValue(encuentro.name);
+      this.encuentroFormGroup.controls['img'].setValue(encuentro.img);
+      this.encuentroFormGroup.controls['description'].setValue(encuentro.description);
+      this.encuentroFormGroup.controls['guests'].setValue(encuentro.guests);
+      this.encuentroFormGroup.controls['date'].setValue(encuentro.date);
+      this.encuentroFormGroup.controls['postulations'].setValue(encuentro.postulations);
+    } catch (error) {
+      this._snackBar.open('Ha ocurrido un error al cargar el encuentro.', null, { duration: 5000, });
+      this._location.back();
+    }
   }
 
   /**
    * Create form to store individual values
    */
-  private buildForm() {
+  private buildForm(): void {
     this.encuentroFormGroup = this._formBuilder.group({
       name: [null, Validators.required],
       img: [null, Validators.required],
@@ -83,25 +79,27 @@ export class CreateComponent implements OnInit {
   /**
    * Add guest to guestFormGroup with validators
    */
-  addGuest(): void {
-    let guestFormGroup: FormGroup = this._formBuilder.group({
-      name: [null, Validators.required],
-      description: [null, Validators.required],
-    });
-    this.guests.push(guestFormGroup);
+  public addGuest(): void {
+    this.guests.push(
+      // new guest group
+      this._formBuilder.group({
+        name: [null, Validators.required],
+        description: [null, Validators.required],
+      })
+    );
   }
 
   /**
    * Remove last guests from form
    */
-  removeGuest(): void {
+  public removeGuest(): void {
     this.guests.removeAt(-1);
   }
 
   /**
    * Validate forms, and submit
    */
-  submit() {
+  public async submit(): Promise<void> {
     // validate forms
     if (this.encuentroFormGroup.invalid) {
       this._snackBar.open('La forma es invalida', null, { duration: 5000, });
@@ -109,26 +107,16 @@ export class CreateComponent implements OnInit {
     }
 
     // add or update
-    if (this.shouldUpdate)
-      this._cafeCientificoService.updateEncuentro(this.encuentroID, this.encuentroFormGroup.value)
-        .then(m =>
-          this._snackBar.open('Se actualizo correctamente', null, { duration: 5000, }))
-        .catch(this.showErrorMessage);
-    else
-      this._cafeCientificoService.addEncuentro(this.encuentroFormGroup.value)
-        .then(m => this._snackBar.open('Se ha guardado correctamente', null, { duration: 5000, }))
-        .catch(this.showErrorMessage);
-
-    // navigate back
-    this._location.back();
-  }
-
-  /**
-   * show snack error message
-   * @param e error
-   */
-  private showErrorMessage(e) {
-    this._snackBar.open('Ocurrido un error al guardar, por favor vuelve a intentarlo', null, { duration: 5000, })
+    try {
+      if (this.shouldUpdate)
+        await this._cafeCientificoService.updateEncuentro(this.encuentroID, this.encuentroFormGroup.value);
+      else
+        await this._cafeCientificoService.addEncuentro(this.encuentroFormGroup.value);
+      this._snackBar.open('Se guardaron los cambios correctamente', null, { duration: 5000, });
+      this._location.back();
+    } catch (error) {
+      this._snackBar.open('Ocurrido un error al guardar, por favor vuelve a intentarlo', null, { duration: 5000, });
+    }
   }
 
   ////////////getters/////////////

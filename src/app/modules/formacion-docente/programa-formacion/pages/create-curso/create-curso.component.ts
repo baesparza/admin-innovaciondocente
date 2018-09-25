@@ -32,64 +32,17 @@ export class CreateCursoComponent implements OnInit {
     // get params routes
     this.cursoID = this._route.snapshot.queryParams['id'];
 
-    // init forms with empty values, and load values
-    this.buildCursoForm();
-    this.loadTypes();
+    this.buildForm();
+    this.loadBannerTypes();
 
-    // if cursoID isnt defined continue
-    if (this.cursoID === undefined)
-      return;
-
-    this._programaFormacionService.getCursoData(this.cursoID)
-      .then(doc => {
-        // validate if document exists
-        if (!doc.exists) {
-          this.showMessage('Este curso ya no se encuentra disponible.');
-          return;
-        }
-        this.shouldUpdate = true;
-        const snap: Curso = doc.data() as Curso;
-
-        this.fillFields(snap);
-      })
-      .catch(e => {
-        this.showMessage('Ha ocurrido un error al cargar el curso.');
-        this._location.back();
-      });
-  }
-
-  private fillFields(snap: Curso) {
-    // create fields as needed
-    for (let index = 0; index < snap.instructors.length; index++)
-      this.addinstructor();
-    for (let index = 0; index < snap.downloadableContent.length; index++)
-      this.addDownloadableContent();
-    // set values to form
-    this.cursoFormGroup.controls['name'].setValue(snap.name);
-    this.cursoFormGroup.controls['description'].setValue(snap.description);
-    this.cursoFormGroup.controls['img'].setValue(snap.img);
-    this.cursoFormGroup.controls['date'].setValue(snap.date);
-    this.cursoFormGroup.controls['instructors'].setValue(snap.instructors);
-    this.cursoFormGroup.controls['schedule'].setValue(snap.schedule);
-    this.cursoFormGroup.controls['place'].setValue(snap.place);
-    this.cursoFormGroup.controls['module'].setValue(snap.module);
-    this.cursoFormGroup.controls['addressedTo'].setValue(snap.addressedTo);
-    this.cursoFormGroup.controls['downloadableContent'].setValue(snap.downloadableContent);
-    // fill postulaciones form group
-    let postulation = this.cursoFormGroup.controls['postulation'] as FormGroup;
-    postulation.controls['date'].setValue(snap.postulation.date);
-    postulation.controls['link'].setValue(snap.postulation.link);
-    // fill duration form group
-    let duration = this.cursoFormGroup.controls['duration'] as FormGroup;
-    duration.controls['hours'].setValue(snap.duration.hours);
-    duration.controls['days'].setValue(snap.duration.days);
-    duration.controls['weeks'].setValue(snap.duration.weeks);
+    if (this.cursoID !== undefined)
+      this.loadData();
   }
 
   /**
    * Build form with validators
    */
-  private buildCursoForm() {
+  private buildForm() {
     this.cursoFormGroup = this._formBuilder.group({
       name: [null, Validators.required],
       description: [null, [Validators.required, Validators.minLength(15)]],
@@ -116,7 +69,7 @@ export class CreateCursoComponent implements OnInit {
   /**
    * Loads types of courses for mat-selector
    */
-  private loadTypes(): void {
+  private loadBannerTypes(): void {
     this.types = this._programaFormacionService
       .bannerCursosCollection
       .snapshotChanges()
@@ -127,22 +80,68 @@ export class CreateCursoComponent implements OnInit {
       );
   }
 
+
+  private async loadData(): Promise<void> {
+    try {
+      const doc = await this._programaFormacionService.getCursoData(this.cursoID);
+      if (!doc.exists) {
+        this._snackBar.open('Este curso no se encuentra disponible.', null, { duration: 5000, });
+        return;
+      }
+
+      const curso: Curso = doc.data() as Curso;
+      this.shouldUpdate = true;
+
+      let postulation = this.cursoFormGroup.controls['postulation'] as FormGroup;
+      let duration = this.cursoFormGroup.controls['duration'] as FormGroup;
+
+      // create fields as needed
+      for (let index = 0; index < curso.instructors.length; index++)
+        this.addInstructor();
+      for (let index = 0; index < curso.downloadableContent.length; index++)
+        this.addDownloadableContent();
+
+      // set values to form
+      this.cursoFormGroup.controls['name'].setValue(curso.name);
+      this.cursoFormGroup.controls['description'].setValue(curso.description);
+      this.cursoFormGroup.controls['img'].setValue(curso.img);
+      this.cursoFormGroup.controls['date'].setValue(curso.date);
+      this.cursoFormGroup.controls['instructors'].setValue(curso.instructors);
+      this.cursoFormGroup.controls['schedule'].setValue(curso.schedule);
+      this.cursoFormGroup.controls['place'].setValue(curso.place);
+      this.cursoFormGroup.controls['module'].setValue(curso.module);
+      this.cursoFormGroup.controls['addressedTo'].setValue(curso.addressedTo);
+      this.cursoFormGroup.controls['downloadableContent'].setValue(curso.downloadableContent);
+
+      postulation.controls['date'].setValue(curso.postulation.date);
+      postulation.controls['link'].setValue(curso.postulation.link);
+
+      duration.controls['hours'].setValue(curso.duration.hours);
+      duration.controls['days'].setValue(curso.duration.days);
+      duration.controls['weeks'].setValue(curso.duration.weeks);
+    } catch (error) {
+      this._snackBar.open('Ha ocurrido un error al cargar el curso.', null, { duration: 5000, });
+      this._location.back();
+    }
+  }
+
   /**
    * Remove las instructor from form
    */
-  removeinstructor() {
+  removeInstructor() {
     this.instructors.removeAt(-1);
   }
 
   /**
    * Add one instructor to form
    */
-  addinstructor() {
-    let instructorFormGroup: FormGroup = this._formBuilder.group({
-      name: [null, Validators.required],
-      about: [null, Validators.required],
-    });
-    this.instructors.push(instructorFormGroup);
+  addInstructor() {
+    this.instructors.push(
+      this._formBuilder.group({
+        name: [null, Validators.required],
+        about: [null, Validators.required],
+      })
+    );
   }
 
   /**
@@ -156,47 +155,29 @@ export class CreateCursoComponent implements OnInit {
    * add one field to DownloadableContent
    */
   addDownloadableContent() {
-    let contentFormGroup: FormGroup = this._formBuilder.group({
-      url: [null, Validators.required],
-    });
-    this.downloadableContent.push(contentFormGroup);
+    this.downloadableContent.push(
+      this._formBuilder.group({
+        url: [null, Validators.required],
+      })
+    );
   }
 
-  public submit() {
+  public async submit(): Promise<void> {
     // validate form
     if (this.cursoFormGroup.invalid) {
-      this.showMessage('La forma es invalida');
+      this._snackBar.open('La forma es invalida', null, { duration: 5000, });
       return;
     }
-
-    // add or update
-    if (this.shouldUpdate)
-      this._programaFormacionService.updateCurso(this.cursoID, this.cursoFormGroup.value)
-        .then(m => this.showMessage('Se actualizo correctamente'))
-        .catch(this.showErrorMessage);
-    else
-      this._programaFormacionService.addCurso(this.cursoFormGroup.value)
-        .then(m => this.showMessage('Se ha guardado correctamente'))
-        .catch(this.showErrorMessage);
-
-    // navigate back
-    this._location.back();
-  }
-
-  /**
-   * show snack error message
-   * @param e error
-   */
-  private showErrorMessage(e) {
-    this.showMessage('Ocurrido un error al guardar, por favor vuelve a intentarlo');
-  }
-
-  /**
-   * show snack with message
-   * @param m message to show
-   */
-  private showMessage(m: string) {
-    this._snackBar.open(m, null, { duration: 5000, });
+    try {
+      if (this.shouldUpdate)
+        await this._programaFormacionService.updateCurso(this.cursoID, this.cursoFormGroup.value);
+      else
+        await this._programaFormacionService.addCurso(this.cursoFormGroup.value);
+      this._snackBar.open('Se guardaron los cambios correctamente', null, { duration: 5000, });
+      this._location.back();
+    } catch (error) {
+      this._snackBar.open('Ocurrido un error al guardar, por favor vuelve a intentarlo', null, { duration: 5000, });
+    }
   }
 
   //////////getters//////////
