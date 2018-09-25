@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { EdutendenciasRoutingModule } from './edutendencias.routing.module';
 import { SharedModule } from '../../../shared/shared.module';
 import { EdutendenciasComponent } from './pages/edutendencias/edutendencias.component';
+import { CreateTipComponent } from './pages/create-tip/create-tip.component';
 
 @NgModule({
   imports: [
@@ -11,6 +12,9 @@ import { EdutendenciasComponent } from './pages/edutendencias/edutendencias.comp
     SharedModule,
     EdutendenciasRoutingModule
   ],
-  declarations: [EdutendenciasComponent]
+  declarations: [
+    EdutendenciasComponent,
+    CreateTipComponent
+  ]
 })
 export class EdutendenciasModule { }
