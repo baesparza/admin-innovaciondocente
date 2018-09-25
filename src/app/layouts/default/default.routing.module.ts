@@ -14,12 +14,16 @@ const routes: Routes = [
         loadChildren: '../../modules/home/home.module#HomeModule',
       },
       {
-        path: 'cafe-cientifico',
+        path: 'formacion-docente/cafe-cientifico',
         loadChildren: '../../modules/formacion-docente/cafe-cientifico/cafe-cientifico.module#CafeCientificoModule',
       },
       {
-        path: 'programa-formacion',
+        path: 'formacion-docente/programa-formacion',
         loadChildren: '../../modules/formacion-docente/programa-formacion/programa-formacion.module#ProgramaFormacionModule',
+      },
+      {
+        path: 'observatorio/edutendencias',
+        loadChildren: '../../modules/observatorio/edutendencias/edutendencias.module#EdutendenciasModule',
       },
     ]
   }
