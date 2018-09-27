@@ -14,6 +14,11 @@ const routes: Routes = [
         loadChildren: '../../modules/home/home.module#HomeModule',
       },
       {
+        // TODO: add guard for admin only
+        path: 'admin',
+        loadChildren: '../../modules/admin/admin.module#AdminModule',
+      },
+      {
         path: 'formacion-docente/cafe-cientifico',
         loadChildren: '../../modules/formacion-docente/cafe-cientifico/cafe-cientifico.module#CafeCientificoModule',
       },

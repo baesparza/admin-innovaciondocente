@@ -1,10 +1,32 @@
 <mat-nav-list>
+  <h3 mat-subheader>Opciones</h3>
   <a mat-list-item
      (click)="signOut($event)">
-    <span mat-line>Cerrar Sección</span>
+    <mat-icon mat-list-icon>close</mat-icon>
+    <h4 mat-line>Cerrar Sección</h4>
+  </a>
+  <mat-divider></mat-divider>
+
+  <h3 mat-subheader>Usuarios</h3>
+  <a mat-list-item>
+    <mat-icon mat-list-icon>person_add</mat-icon>
+    <h4 mat-line>Crear usuario</h4>
+    <p mat-line>Añade un usuario nuevo y su rol</p>
   </a>
 
+  <a mat-list-item
+     (click)="setUserRole($event)">
+    <mat-icon mat-list-icon>person_outline</mat-icon>
+    <h4 mat-line>Establecer el rol de usuario</h4>
+    <p mat-line>Establece el rol de usuario ya existente</p>
+  </a>
+  <mat-divider></mat-divider>
 
-
-
+  <h3 mat-subheader>Notificaciones</h3>
+  <a mat-list-item
+     href="mailto:bruno.be81@gmail.com">
+    <mat-icon mat-list-icon>report</mat-icon>
+    <h4 mat-line>Informar de un error</h4>
+    <p mat-line>Escribe a bruno.be81@gmail.com</p>
+  </a>
 </mat-nav-list>
