@@ -6,7 +6,6 @@ import { Location } from '@angular/common';
 
 import { ProgramaFormacionService } from '../../programa-formacion.service';
 import { BannerCurso } from '../../interfaces/banner-cursos';
-import { promise } from 'protractor';
 
 @Component({
   selector: 'id-create-banner',
