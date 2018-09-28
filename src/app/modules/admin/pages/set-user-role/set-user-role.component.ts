@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { Location } from '@angular/common';
-import { AngularFireFunctions } from '@angular/fire/functions';
+import { AdminService } from '../../admin.service';
+import { throwError } from 'rxjs';
 
 @Component({
   selector: 'id-set-user-role',
@@ -12,14 +13,12 @@ import { AngularFireFunctions } from '@angular/fire/functions';
 export class SetUserRoleComponent implements OnInit {
 
   public userRoleFormGroup: FormGroup;
-  public data$: any;
 
   constructor(
     private _formBuilder: FormBuilder,
     private _snackBar: MatSnackBar,
     private _location: Location,
-    private fns: AngularFireFunctions
-    // private service
+    private _adminService: AdminService
   ) { }
 
   ngOnInit() {
@@ -35,14 +34,23 @@ export class SetUserRoleComponent implements OnInit {
   }
 
   async setRole() {
-
     if (this.userRoleFormGroup.invalid) {
       this._snackBar.open('La forma es invalida', null, { duration: 5000, })
       return;
     }
-
-    const callable = this.fns.httpsCallable('setUserRole');
-    this.data$ = await callable(this.userRoleFormGroup.value);
+    try {
+      const res: any = await this._adminService.setUserRole(this.userRoleFormGroup.value).toPromise();
+      if (res.status === 401)
+        this._snackBar.open('No tienes permisos suficientes para realizar la operación', null, { duration: 5000, });
+      else if (res.status === 200) {
+        this._snackBar.open('Se han guardado los cambios', null, { duration: 5000, });
+        this._location.back();
+      }
+      else
+        throw "error";
+    } catch (error) {
+      this._snackBar.open('Ha ocurrido un error, por favor vuelve a intentarlo', null, { duration: 5000, });
+    }
   }
 
   ////////getters////////////

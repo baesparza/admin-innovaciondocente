@@ -10,7 +10,6 @@ export class AppComponent {
 
   constructor(updates: SwUpdate, public snackBar: MatSnackBar) {
     updates.available.subscribe(event => {
-      alert('Hay una nueva versión disponible');
       updates.activateUpdate().then(() => document.location.reload());
     });
   }
