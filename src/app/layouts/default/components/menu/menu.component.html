@@ -1,12 +1,4 @@
 <mat-nav-list>
-  <h3 mat-subheader>Opciones</h3>
-  <a mat-list-item
-     (click)="signOut($event)">
-    <mat-icon mat-list-icon>close</mat-icon>
-    <h4 mat-line>Cerrar Sección</h4>
-  </a>
-  <mat-divider></mat-divider>
-
   <h3 mat-subheader>Usuarios</h3>
   <a mat-list-item>
     <mat-icon mat-list-icon>person_add</mat-icon>
@@ -22,7 +14,12 @@
   </a>
   <mat-divider></mat-divider>
 
-  <h3 mat-subheader>Notificaciones</h3>
+  <h3 mat-subheader>Opciones</h3>
+  <a mat-list-item
+     (click)="signOut($event)">
+    <mat-icon mat-list-icon>close</mat-icon>
+    <h4 mat-line>Cerrar Sección</h4>
+  </a>
   <a mat-list-item
      href="mailto:bruno.be81@gmail.com">
     <mat-icon mat-list-icon>report</mat-icon>

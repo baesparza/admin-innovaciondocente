@@ -17,13 +17,16 @@ import { DefaultRoutingModule } from './default.routing';
     LayoutModule,
     SharedModule,
     MatSidenavModule,
-    MatBottomSheetModule
+    MatBottomSheetModule,
   ],
   declarations: [
     DefaultComponent,
     NavbarComponent,
     MenuComponent
   ],
-  entryComponents: [MenuComponent, NavbarComponent]
+  entryComponents: [
+    MenuComponent,
+    NavbarComponent
+  ]
 })
 export class DefaultModule { }
