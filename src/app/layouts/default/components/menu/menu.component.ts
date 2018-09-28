@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatBottomSheetRef } from '@angular/material';
 
 import { NavbarComponent } from '../navbar/navbar.component';
@@ -9,18 +9,26 @@ import { Router } from '@angular/router';
   selector: 'id-menu',
   templateUrl: './menu.component.html'
 })
-export class MenuComponent {
+export class MenuComponent implements OnInit {
+
+  public showAdminUI: boolean;
 
   constructor(
     private bottomSheetRef: MatBottomSheetRef<NavbarComponent>,
-    private auth: AuthService,
+    private _authService: AuthService,
     private _router: Router
   ) { }
+
+  ngOnInit(): void {
+    this._authService.isAdmin().then(
+      res => this.showAdminUI = res
+    );
+  }
 
   signOut(event: MouseEvent): void {
     this.bottomSheetRef.dismiss();
     event.preventDefault();
-    this.auth.signOut();
+    this._authService.signOut();
   }
 
   setUserRole(event: MouseEvent): void {

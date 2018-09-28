@@ -1,18 +1,20 @@
 <mat-nav-list>
-  <h3 mat-subheader>Usuarios</h3>
-  <a mat-list-item>
-    <mat-icon mat-list-icon>person_add</mat-icon>
-    <h4 mat-line>Crear usuario</h4>
-    <p mat-line>Añade un usuario nuevo y su rol</p>
-  </a>
+  <div *ngIf="showAdminUI">
+    <h3 mat-subheader>Admin</h3>
+    <a mat-list-item>
+      <mat-icon mat-list-icon>person_add</mat-icon>
+      <h4 mat-line>Crear usuario</h4>
+      <p mat-line>Añade un usuario nuevo y su rol</p>
+    </a>
 
-  <a mat-list-item
-     (click)="setUserRole($event)">
-    <mat-icon mat-list-icon>person_outline</mat-icon>
-    <h4 mat-line>Establecer el rol de usuario</h4>
-    <p mat-line>Establece el rol de usuario ya existente</p>
-  </a>
-  <mat-divider></mat-divider>
+    <a mat-list-item
+       (click)="setUserRole($event)">
+      <mat-icon mat-list-icon>person_outline</mat-icon>
+      <h4 mat-line>Establecer el rol de usuario</h4>
+      <p mat-line>Establece el rol de usuario ya existente</p>
+    </a>
+    <mat-divider></mat-divider>
+  </div>
 
   <h3 mat-subheader>Opciones</h3>
   <a mat-list-item
