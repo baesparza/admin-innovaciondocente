@@ -4,6 +4,7 @@ import { MatBottomSheetRef } from '@angular/material';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { Router } from '@angular/router';
+import { RoleService } from '../../../../shared/services/role.service';
 
 @Component({
   selector: 'id-menu',
@@ -16,13 +17,15 @@ export class MenuComponent implements OnInit {
   constructor(
     private bottomSheetRef: MatBottomSheetRef<NavbarComponent>,
     private _authService: AuthService,
+    private _roleService: RoleService,
     private _router: Router
   ) { }
 
   ngOnInit(): void {
-    this._authService.isAdmin().then(
-      res => this.showAdminUI = res
-    );
+    console.log("hola");
+
+    this.showAdminUI = this._roleService.isAdmin;
+    console.log(this.showAdminUI);
   }
 
   signOut(event: MouseEvent): void {
