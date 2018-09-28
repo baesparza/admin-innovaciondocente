@@ -60,11 +60,13 @@
           <mat-action-row>
             <button mat-button
                     color="warn"
-                    (click)="delete(row.id)">Eliminar</button>
+                    (click)="delete(row.id)"
+                    *ngIf="_role.canDelete">Eliminar</button>
             <button mat-button
                     [routerLink]="['nuevo-tip']"
                     [queryParams]="{'id':row.id}"
-                    color="primary">Editar</button>
+                    color="primary"
+                    *ngIf="_role.canEdit">Editar</button>
           </mat-action-row>
         </td>
       </ng-container>

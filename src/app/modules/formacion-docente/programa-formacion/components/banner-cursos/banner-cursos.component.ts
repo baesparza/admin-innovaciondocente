@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { BannerCurso } from '../../interfaces/banner-cursos';
+import { RoleService } from 'src/app/shared/services/role.service';
 
 @Component({
   selector: 'id-banner-cursos',
@@ -17,7 +18,8 @@ export class BannerCursosComponent implements OnInit {
 
   constructor(
     private _programaFormacionServie: ProgramaFormacionService,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    public _role: RoleService
   ) { }
 
   ngOnInit() {

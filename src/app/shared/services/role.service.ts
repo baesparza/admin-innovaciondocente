@@ -12,7 +12,6 @@ export class RoleService {
   constructor(
     public _authService: AuthService
   ) {
-    console.log('created')
     this.setRole();
   }
 
@@ -30,6 +29,6 @@ export class RoleService {
   get isEditor(): boolean { return this.role === "editor"; }
 
   get canEdit(): boolean { return this.isAdmin || this.isModerator || this.isEditor; }
-  get canCreate(): boolean { return this.isAdmin || this.isModerator; }
+  get canCreate(): boolean { return this.isAdmin || this.isModerator || this.isEditor; }
   get canDelete(): boolean { return this.isAdmin || this.isModerator; }
 }

@@ -8,7 +8,7 @@
 </mat-form-field>
 
 <!-- table -->
-<div class="mat-elevation-z8">
+<div class="mat-elevation-z4">
   <div class="overflow">
     <table mat-table
            [dataSource]="cursosSource">
@@ -68,17 +68,16 @@
           <mat-action-row>
             <button mat-button
                     color="warn"
-                    (click)="delete(row.id)">Eliminar</button>
+                    (click)="delete(row.id)"
+                    *ngIf="_role.canDelete">Eliminar</button>
             <button mat-button
                     [routerLink]="['nuevo-curso']"
                     [queryParams]="{'id':row.id}"
-                    color="primary">Editar</button>
+                    color="primary"
+                    *ngIf="_role.canEdit">Editar</button>
           </mat-action-row>
         </td>
       </ng-container>
-
-
-
 
       <!-- other -->
       <tr mat-header-row
@@ -88,11 +87,12 @@
       </tr>
     </table>
   </div>
-  <mat-paginator pageSize=15></mat-paginator>
+  <mat-paginator pageSize=10></mat-paginator>
 </div>
 
 <!-- create new -->
 <a mat-raised-button
    color="primary"
    routerLink="nuevo-curso"
-   class="new-btn">Nuevo Curso</a>
+   class="new-btn"
+   *ngIf="_role.canCreate">Nuevo Curso</a>

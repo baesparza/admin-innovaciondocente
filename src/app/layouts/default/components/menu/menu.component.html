@@ -1,5 +1,5 @@
 <mat-nav-list>
-  <div *ngIf="showAdminUI">
+  <div *ngIf="_role.isAdmin">
     <h3 mat-subheader>Admin</h3>
     <a mat-list-item>
       <mat-icon mat-list-icon>person_add</mat-icon>

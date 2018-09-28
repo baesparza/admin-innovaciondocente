@@ -3,6 +3,7 @@ import { MatTableDataSource, MatPaginator, MatSnackBar } from '@angular/material
 import { Tip } from '../../interfaces/tip';
 import { EdutendenciasService } from '../../edutendencias.service';
 import { map } from 'rxjs/operators';
+import { RoleService } from '../../../../../shared/services/role.service';
 
 @Component({
   selector: 'id-tips',
@@ -19,7 +20,8 @@ export class TipsComponent implements OnInit {
 
   constructor(
     private _edutendenciasService: EdutendenciasService,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    public _role: RoleService
   ) { }
 
   ngOnInit() {
