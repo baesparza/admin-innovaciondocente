@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { EdutendenciasRoutingModule } from './edutendencias.routing.module';
+import { EdutendenciasRoutingModule } from './edutendencias.routing';
 import { SharedModule } from '../../../shared/shared.module';
 import { EdutendenciasComponent } from './pages/edutendencias/edutendencias.component';
 import { CreateTipComponent } from './pages/create-tip/create-tip.component';

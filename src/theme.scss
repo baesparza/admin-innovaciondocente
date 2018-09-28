@@ -1,0 +1,11 @@
+@import '~@angular/material/theming';
+
+@include mat-core();
+
+$innovaciondocente-primary: mat-palette($mat-blue, 900);
+$innovaciondocente-accent: mat-palette($mat-yellow, 800);
+$innovaciondocente-warn: mat-palette($mat-red, 900);
+
+$innovaciondocente-theme: mat-light-theme($innovaciondocente-primary, $innovaciondocente-accent, $innovaciondocente-warn);
+
+@include angular-material-theme($innovaciondocente-theme);

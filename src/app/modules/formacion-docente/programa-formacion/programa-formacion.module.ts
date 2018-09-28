@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { SharedModule } from 'src/app/shared/shared.module';
 
-import { ProgramaFormacionRoutingModule } from './programa-formacion.routing.module';
+import { ProgramaFormacionRoutingModule } from './programa-formacion.routing';
 import { CursosComponent } from './components/cursos/cursos.component';
 import { ProgramaFormacionComponent } from './pages/programa-formacion/programa-formacion.component';
 import { ProgramaFormacionService } from './programa-formacion.service';

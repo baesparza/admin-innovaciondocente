@@ -57,4 +57,25 @@ export class AuthService {
   public get currentUserObservable(): Observable<firebase.User> {
     return this.afAuth.authState;
   }
+
+  async getCustomClaims() {
+    try {
+      const idToken = await this.user.getIdTokenResult();
+      return idToken.claims;
+    } catch (error) {
+      return null;
+    }
+  }
+
+  async isAdmin(): Promise<boolean> {
+    try {
+      const claims = await this.getCustomClaims();
+      if (claims === null)
+        return false;
+
+      return claims.role === "admin";
+    } catch (error) {
+      return false
+    }
+  }
 }

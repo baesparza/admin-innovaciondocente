@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { DefaultComponent } from './default.component';
+import { AdminGuard } from '../../shared/services/adminGuard.guard';
 
 
 const routes: Routes = [
@@ -12,6 +13,12 @@ const routes: Routes = [
       {
         path: '',
         loadChildren: '../../modules/home/home.module#HomeModule',
+      },
+      {
+        // TODO: add guard for admin only
+        path: 'admin',
+        loadChildren: '../../modules/admin/admin.module#AdminModule',
+        canActivate: [AdminGuard]
       },
       {
         path: 'formacion-docente/cafe-cientifico',

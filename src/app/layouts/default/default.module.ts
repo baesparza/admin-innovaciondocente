@@ -3,12 +3,12 @@ import { CommonModule } from '@angular/common';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatSidenavModule, MatBottomSheetModule } from '@angular/material';
 
-import { DefaultRoutingModule } from './default.routing.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 import { DefaultComponent } from './default.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { MenuComponent } from './components/menu/menu.component';
+import { DefaultRoutingModule } from './default.routing';
 
 @NgModule({
   imports: [
@@ -17,13 +17,16 @@ import { MenuComponent } from './components/menu/menu.component';
     LayoutModule,
     SharedModule,
     MatSidenavModule,
-    MatBottomSheetModule
+    MatBottomSheetModule,
   ],
   declarations: [
     DefaultComponent,
     NavbarComponent,
     MenuComponent
   ],
-  entryComponents: [MenuComponent, NavbarComponent]
+  entryComponents: [
+    MenuComponent,
+    NavbarComponent
+  ]
 })
 export class DefaultModule { }
