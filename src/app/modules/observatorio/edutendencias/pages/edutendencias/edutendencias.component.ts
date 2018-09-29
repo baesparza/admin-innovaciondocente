@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { RoleService } from '../../../../../shared/services/role.service';
 
 @Component({
   selector: 'id-edutendencias',
@@ -6,7 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EdutendenciasComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    public _role: RoleService
+  ) { }
 
   ngOnInit() {
   }

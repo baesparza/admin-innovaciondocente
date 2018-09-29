@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { SwUpdate } from '@angular/service-worker';
-import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'id-root',
@@ -8,7 +7,7 @@ import { MatSnackBar } from '@angular/material';
 })
 export class AppComponent {
 
-  constructor(updates: SwUpdate, public snackBar: MatSnackBar) {
+  constructor(updates: SwUpdate) {
     updates.available.subscribe(event => {
       updates.activateUpdate().then(() => document.location.reload());
     });

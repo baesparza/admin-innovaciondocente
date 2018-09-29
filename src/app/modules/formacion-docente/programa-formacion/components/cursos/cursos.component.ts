@@ -4,6 +4,7 @@ import { MatTableDataSource, MatPaginator, MatSnackBar } from "@angular/material
 import { ProgramaFormacionService } from "../../programa-formacion.service";
 import { map } from "rxjs/operators";
 import { Curso } from "../../interfaces/curso";
+import { RoleService } from "../../../../../shared/services/role.service";
 
 @Component({
   selector: 'id-cursos',
@@ -18,7 +19,8 @@ export class CursosComponent implements OnInit {
 
   constructor(
     private _programaFormacionService: ProgramaFormacionService,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    public _role: RoleService
   ) { }
 
   ngOnInit() {

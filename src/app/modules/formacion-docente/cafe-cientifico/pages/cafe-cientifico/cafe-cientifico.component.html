@@ -11,7 +11,8 @@
       <mat-action-row>
         <a mat-raised-button
            color="primary"
-           routerLink="create">Nuevo</a>
+           routerLink="create"
+           *ngIf="_role.canCreate">Nuevo</a>
       </mat-action-row>
     </ng-template>
   </mat-expansion-panel>
@@ -31,11 +32,13 @@
       <mat-action-row>
         <button mat-button
                 color="warn"
-                (click)="delete(encuentro.id)">Eliminar</button>
+                (click)="delete(encuentro.id)"
+                *ngIf="_role.canDelete">Eliminar</button>
         <button mat-button
                 [routerLink]="['create']"
                 [queryParams]="{'id':encuentro.id}"
-                color="primary">Editar</button>
+                color="primary"
+                *ngIf="_role.canEdit">Editar</button>
       </mat-action-row>
     </ng-template>
   </mat-expansion-panel>

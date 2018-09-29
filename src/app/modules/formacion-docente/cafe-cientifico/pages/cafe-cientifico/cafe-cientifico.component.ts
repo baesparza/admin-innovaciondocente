@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 
 import { Encuentro } from '../../interfaces/encuentro';
 import { CafeCientificoService } from '../../cafe-cientifico.service';
+import { RoleService } from '../../../../../shared/services/role.service';
 
 @Component({
   selector: 'id-cafe-cientifico',
@@ -17,7 +18,8 @@ export class CafeCientificoComponent {
 
   constructor(
     private _snackBar: MatSnackBar,
-    private _cafeCientificoService: CafeCientificoService
+    private _cafeCientificoService: CafeCientificoService,
+    public _role:RoleService
   ) { }
 
   ngOnInit(): void {

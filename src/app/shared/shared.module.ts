@@ -18,6 +18,7 @@ import { DropZoneDirective } from './directives/drop-zone.directive';
 import { DropZoneComponent } from './components/drop-zone/drop-zone.component';
 import { UploadFileComponent } from './components/upload-file/upload-file.component';
 import { AdminGuard } from './services/adminGuard.guard';
+import { RoleService } from './services/role.service';
 
 const modules: any[] = [
   CommonModule,
@@ -60,7 +61,8 @@ export class SharedModule {
       providers: [
         AuthService,
         AuthGuard,
-        AdminGuard
+        AdminGuard,
+        RoleService
       ]
     }
   }
