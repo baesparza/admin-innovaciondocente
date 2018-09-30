@@ -51,7 +51,11 @@
               *ngIf="!isLoading"
               color="primary"
               (click)="signIn()"
-              class="full-width">Sign In</button>
+              class="full-width">Ingresar</button>
+      <button mat-button
+              *ngIf="!isLoading"
+              [routerLink]="['new']"
+              class="full-width">Crear nuevo</button>
       <div class="center"
            *ngIf="isLoading">
         <mat-spinner diameter=30></mat-spinner>
