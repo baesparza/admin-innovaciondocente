@@ -11,6 +11,7 @@ import { CreateCursoComponent } from './pages/create-curso/create-curso.componen
 import { BannerCursosComponent } from './components/banner-cursos/banner-cursos.component';
 import { CreateBannerComponent } from './pages/create-banner/create-banner.component';
 import { TipsComponent } from './components/tips/tips.component';
+import { CreateTipComponent } from './pages/create-tip/create-tip.component';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { TipsComponent } from './components/tips/tips.component';
     CreateCursoComponent,
     BannerCursosComponent,
     CreateBannerComponent,
-    TipsComponent
+    TipsComponent,
+    CreateTipComponent
   ],
   providers: [
     ProgramaFormacionService
