@@ -10,6 +10,7 @@ import { ProgramaFormacionService } from './programa-formacion.service';
 import { CreateCursoComponent } from './pages/create-curso/create-curso.component';
 import { BannerCursosComponent } from './components/banner-cursos/banner-cursos.component';
 import { CreateBannerComponent } from './pages/create-banner/create-banner.component';
+import { TipsComponent } from './components/tips/tips.component';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { CreateBannerComponent } from './pages/create-banner/create-banner.compo
     ProgramaFormacionComponent,
     CreateCursoComponent,
     BannerCursosComponent,
-    CreateBannerComponent
+    CreateBannerComponent,
+    TipsComponent
   ],
   providers: [
     ProgramaFormacionService
