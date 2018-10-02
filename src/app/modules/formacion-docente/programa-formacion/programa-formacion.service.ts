@@ -109,4 +109,9 @@ export class ProgramaFormacionService {
       ...banner
     });
   }
+
+  public async addTip(curso: any): Promise<void>{
+
+  }
 }
+
