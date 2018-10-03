@@ -36,8 +36,12 @@ export class CreateTipComponent implements OnInit {
       this._snackBar.open('Se guardaron los cambios correctamente', null, { duration: 5000, })
       this._location.back();
     } catch (error) {
-      console.error(error);
-      this._snackBar.open('Ocurrido un error al guardar, por favor vuelve a intentarlo', null, { duration: 5000, });
+      if (error === 'Bad Request')
+        this._snackBar.open('La key no es valida', null, { duration: 5000, });
+      else if (error === 'Not found')
+        this._snackBar.open('El video no se encontro', null, { duration: 5000, });
+      else
+        this._snackBar.open('Ocurrido un error al guardar, por favor vuelve a intentarlo', null, { duration: 5000, });
     }
   }
 
