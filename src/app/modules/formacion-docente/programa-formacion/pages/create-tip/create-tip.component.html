@@ -1,0 +1,62 @@
+<form [formGroup]="videoFormGroup">
+  <mat-vertical-stepper [linear]="true"
+                        #stepper>
+    <!-- videoId -->
+    <mat-step>
+      <ng-template matStepLabel>Id del video</ng-template>
+      <mat-form-field appearance="outline"
+                      class="full-width">
+        <mat-label>Id</mat-label>
+        <input matInput
+               type="text"
+               formControlName="videoId"
+               required>
+        <mat-error *ngIf="videoId.hasError('required')">
+          El id es <strong>requerido</strong>
+        </mat-error>
+      </mat-form-field>
+      <div class="button-row">
+        <button mat-raised-button
+                color="primary"
+                matStepperNext>Siguiente</button>
+      </div>
+    </mat-step>
+
+    <!-- apiKey -->
+    <mat-step>
+      <ng-template matStepLabel>YouTube Api Key</ng-template>
+      <mat-form-field appearance="outline"
+                      class="full-width">
+        <mat-label>key</mat-label>
+        <input matInput
+               type="text"
+               formControlName="apiKey"
+               required>
+        <mat-error *ngIf="apiKey.hasError('required')">
+          La key es <strong>requerido</strong>
+        </mat-error>
+      </mat-form-field>
+      <div class="button-row">
+        <button mat-raised-button
+                color="primary"
+                matStepperNext>Siguiente</button>
+      </div>
+    </mat-step>
+
+    <!-- final, submit -->
+    <mat-step>
+      <ng-template matStepLabel>Finalizar</ng-template>
+      <p>
+        Presiona guardar para continuar, y regresar a la pagina anterior
+      </p>
+
+      <div class="button-row">
+        <button mat-button
+                matStepperPrevious>Anterior</button>
+        <button mat-raised-button
+                color="primary"
+                (click)="submit()">Guardar</button>
+      </div>
+    </mat-step>
+  </mat-vertical-stepper>
+</form>
