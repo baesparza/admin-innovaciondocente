@@ -24,7 +24,7 @@ export class ProgramaFormacionService {
     this.programaFormacionDocument = this._afs.collection('formacion-docente').doc('programa-formacion');
     this.cursosCollection = this.programaFormacionDocument.collection('cursos', ref => ref.orderBy('date', 'desc').orderBy('postulation.date', 'desc'));
     this.bannerCursosCollection = this.programaFormacionDocument.collection('banner-cursos', ref => ref.orderBy('name'));
-    this.tipsCollection = this.programaFormacionDocument.collection('tips', ref => ref.orderBy('added'));
+    this.tipsCollection = this.programaFormacionDocument.collection('tips', ref => ref.orderBy('added','desc'));
   }
 
   /**
