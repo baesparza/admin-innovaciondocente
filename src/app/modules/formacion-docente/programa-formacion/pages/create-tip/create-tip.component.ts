@@ -36,6 +36,7 @@ export class CreateTipComponent implements OnInit {
       this._snackBar.open('Se guardaron los cambios correctamente', null, { duration: 5000, })
       this._location.back();
     } catch (error) {
+      console.error(error);
       this._snackBar.open('Ocurrido un error al guardar, por favor vuelve a intentarlo', null, { duration: 5000, });
     }
   }

@@ -19,6 +19,7 @@ import { DropZoneComponent } from './components/drop-zone/drop-zone.component';
 import { UploadFileComponent } from './components/upload-file/upload-file.component';
 import { AdminGuard } from './services/adminGuard.guard';
 import { RoleService } from './services/role.service';
+import { HttpModule } from '@angular/http';
 
 const modules: any[] = [
   CommonModule,
@@ -33,6 +34,7 @@ const modules: any[] = [
     ReactiveFormsModule,
     MaterialModule,
     FirebaseModule,
+    HttpModule
   ],
   exports: [
     CommonModule,
@@ -42,7 +44,8 @@ const modules: any[] = [
     TimestampDatePipe,
     DropZoneDirective,
     DropZoneComponent,
-    UploadFileComponent
+    UploadFileComponent,
+    HttpModule
   ],
   declarations: [
     TimestampDatePipe,
