@@ -1,9 +1,32 @@
-<p>
-  tips works!
-</p>
-<!-- create new -->
-<a mat-raised-button
-   color="primary"
-   routerLink="nuevo-tip"
-   class="new-btn"
-   >Nuevo Tip</a>
+<mat-accordion class="mat-elevation-z4">
+  <mat-expansion-panel expanded="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title>Nuevo Tips de Expertos </mat-panel-title>
+    </mat-expansion-panel-header>
+    <ng-template matExpansionPanelContent>
+      <mat-action-row>
+        <a mat-raised-button
+           color="primary"
+           routerLink="nuevo-tip"
+           *ngIf="_role.canCreate">Nuevo</a>
+      </mat-action-row>
+    </ng-template>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel *ngFor="let tip of tips | async">
+    <mat-expansion-panel-header>
+      <mat-panel-title>{{tip.name}}</mat-panel-title>
+    </mat-expansion-panel-header>
+    <ng-template matExpansionPanelContent>
+      <p *ngIf="tip.addBy"><b>Añadido por:</b> {{tip.addBy}}</p>
+      <p *ngIf="tip.added"><b>Añadido:</b> {{tip.added|timestampDate}}</p>
+      <p *ngIf="tip.description">{{tip.description}}</p>
+      <mat-action-row>
+        <button mat-button
+                color="warn"
+                (click)="delete(tip.id)"
+                *ngIf="_role.canDelete">Eliminar</button>
+      </mat-action-row>
+    </ng-template>
+  </mat-expansion-panel>
+</mat-accordion>

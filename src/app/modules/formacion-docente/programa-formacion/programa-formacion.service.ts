@@ -13,6 +13,7 @@ export class ProgramaFormacionService {
 
   private programaFormacionDocument: AngularFirestoreDocument<ProgramaFormacion>;
   public cursosCollection: AngularFirestoreCollection<Curso> = null;
+  public tipsCollection: AngularFirestoreCollection<any> = null;
   public bannerCursosCollection: AngularFirestoreCollection<BannerCurso> = null;
 
   constructor(
@@ -23,6 +24,7 @@ export class ProgramaFormacionService {
     this.programaFormacionDocument = this._afs.collection('formacion-docente').doc('programa-formacion');
     this.cursosCollection = this.programaFormacionDocument.collection('cursos', ref => ref.orderBy('date', 'desc').orderBy('postulation.date', 'desc'));
     this.bannerCursosCollection = this.programaFormacionDocument.collection('banner-cursos', ref => ref.orderBy('name'));
+    this.tipsCollection = this.programaFormacionDocument.collection('tips', ref => ref.orderBy('added'));
   }
 
   /**
@@ -122,9 +124,17 @@ export class ProgramaFormacionService {
     if (data.items.length === 0)
       throw "Not found";
 
-    const video = data.items[0]['snippet'];
+    const video = data.items[0];
+    const snippet = video['snippet'];
 
-    console.log(video);
+    console.log(video['id']);
+    this.tipsCollection.doc(video['id']).set({
+      addBy: this._auth.userId,
+      added: new Date(),
+      name: snippet.title,
+      description: snippet.description,
+      publishedAt: snippet.publishedAt
+    });
   }
 
   /**
@@ -145,6 +155,14 @@ export class ProgramaFormacionService {
     } catch (error) {
       throw "Bad Request";
     }
+  }
+
+  /**
+   * get doc of tip
+   * @param id of tip doc
+   */
+  public getTip(id: string) {
+    return this.tipsCollection.doc(id);
   }
 }
 
