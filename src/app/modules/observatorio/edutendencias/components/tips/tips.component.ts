@@ -13,7 +13,7 @@ import { RoleService } from '../../../../../shared/services/role.service';
 export class TipsComponent implements OnInit {
 
   @Input() filter: string;
-  public displayedColumns: string[] = ['name', 'creator', 'edited', 'link', 'options'];
+  public displayedColumns: string[] = ['name', 'edited', 'link', 'options'];
   public tipsSource: MatTableDataSource<Tip> = new MatTableDataSource([]);
 
   @ViewChild(MatPaginator) paginator: MatPaginator;

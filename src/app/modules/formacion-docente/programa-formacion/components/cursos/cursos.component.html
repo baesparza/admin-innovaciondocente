@@ -19,17 +19,17 @@
             *matHeaderCellDef
             mat-sort-header> Nombre </th>
         <td mat-cell
-            *matCellDef="let row"> {{row.name}} </td>
+            *matCellDef="let row"> {{row.name | slice:0:30}} </td>
       </ng-container>
 
-      <!-- creator Column -->
+      <!-- creator Column
       <ng-container matColumnDef="creator">
         <th mat-header-cell
             *matHeaderCellDef
             mat-sort-header> Autor </th>
         <td mat-cell
             *matCellDef="let row"> {{row.creator}} </td>
-      </ng-container>
+      </ng-container> -->
 
       <!-- edited Column -->
       <ng-container matColumnDef="edited">
