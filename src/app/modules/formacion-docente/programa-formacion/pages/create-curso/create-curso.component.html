@@ -153,11 +153,7 @@
           <mat-label>Fecha de finalización para postulaciones</mat-label>
           <input matInput
                  type="date"
-                 formControlName="date"
-                 required>
-          <mat-error *ngIf="postulationDate.hasError('required')">
-            La fecha es <strong>requerida</strong>
-          </mat-error>
+                 formControlName="date">
         </mat-form-field>
         <!-- link -->
         <mat-form-field appearance="outline"
@@ -165,12 +161,16 @@
           <mat-label>Link para postular</mat-label>
           <input matInput
                  type="text"
-                 formControlName="link"
-                 required>
+                 formControlName="link">
         </mat-form-field>
-        <mat-error *ngIf="postulationLink.hasError('required')">
-          El link es <strong>requerido</strong>
-        </mat-error>
+        <!-- message -->
+        <mat-form-field appearance="outline"
+                        class="full-width">
+          <mat-label>Mensage</mat-label>
+          <input matInput
+                 type="text"
+                 formControlName="link">
+        </mat-form-field>
       </form>
       <div class="button-row">
         <button mat-button

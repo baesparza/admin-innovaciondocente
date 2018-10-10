@@ -50,8 +50,9 @@ export class CreateCursoComponent implements OnInit {
       date: [null, Validators.required],
       instructors: this._formBuilder.array([]),
       postulation: this._formBuilder.group({
-        date: [null, Validators.required],
-        link: [null, Validators.required]
+        date: null,
+        message: null,
+        link: null
       }),
       duration: this._formBuilder.group({
         hours: [null, Validators.min(0)],
@@ -115,6 +116,7 @@ export class CreateCursoComponent implements OnInit {
 
       postulation.controls['date'].setValue(curso.postulation.date);
       postulation.controls['link'].setValue(curso.postulation.link);
+      postulation.controls['message'].setValue(curso.postulation.message);
 
       duration.controls['hours'].setValue(curso.duration.hours);
       duration.controls['days'].setValue(curso.duration.days);
@@ -191,6 +193,7 @@ export class CreateCursoComponent implements OnInit {
   get postulation() { return this.cursoFormGroup.get('postulation') as FormGroup }
   get postulationDate() { return this.postulation.get('date') }
   get postulationLink() { return this.postulation.get('link') }
+  get postulationMessage() { return this.postulation.get('message') }
   get downloadableContent() { return this.cursoFormGroup.get('downloadableContent') as FormArray }
   downloadableContentUrl(i: number) { return this.downloadableContent.controls[i].get('url') }
 
