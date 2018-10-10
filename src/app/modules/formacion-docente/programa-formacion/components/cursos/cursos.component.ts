@@ -12,7 +12,7 @@ import { RoleService } from "../../../../../shared/services/role.service";
   styleUrls: ['./cursos.component.scss']
 })
 export class CursosComponent implements OnInit {
-  public displayedColumns: string[] = ['name', 'creator', 'edited', 'date', 'postulationDate', 'options'];
+  public displayedColumns: string[] = ['name', 'edited', 'date', 'postulationDate', 'options'];
   public cursosSource: MatTableDataSource<Curso> = new MatTableDataSource([]);
 
   @ViewChild(MatPaginator) paginator: MatPaginator;

@@ -1,4 +1,5 @@
 export interface Postulation {
   date: string,
-  link: string
+  link: string,
+  message: string
 }

@@ -122,11 +122,7 @@
             <mat-label>Acerca de</mat-label>
             <input matInput
                    type="text"
-                   formControlName="about"
-                   required>
-            <mat-error *ngIf="instructorAbout(i).hasError('required')">
-              "Acerca de" es <strong>requerido</strong>
-            </mat-error>
+                   formControlName="about">
           </mat-form-field>
         </div>
       </div>
@@ -157,11 +153,7 @@
           <mat-label>Fecha de finalización para postulaciones</mat-label>
           <input matInput
                  type="date"
-                 formControlName="date"
-                 required>
-          <mat-error *ngIf="postulationDate.hasError('required')">
-            La fecha es <strong>requerida</strong>
-          </mat-error>
+                 formControlName="date">
         </mat-form-field>
         <!-- link -->
         <mat-form-field appearance="outline"
@@ -169,11 +161,15 @@
           <mat-label>Link para postular</mat-label>
           <input matInput
                  type="text"
-                 formControlName="link"
-                 required>
-          <mat-error *ngIf="postulationLink.hasError('required')">
-            El link es <strong>requerido</strong>
-          </mat-error>
+                 formControlName="link">
+        </mat-form-field>
+        <!-- message -->
+        <mat-form-field appearance="outline"
+                        class="full-width">
+          <mat-label>Mensage</mat-label>
+          <input matInput
+                 type="text"
+                 formControlName="link">
         </mat-form-field>
       </form>
       <div class="button-row">
@@ -189,6 +185,9 @@
     <mat-step>
       <ng-template matStepLabel>Duración del Curso</ng-template>
       <p><b>Recomendación:</b> Seleccione al menos uno</p>
+      <mat-error *ngIf="duration.invalid">
+        La duraciónes invalida
+      </mat-error>
       <form formGroupName="duration">
         <!-- hours -->
         <mat-form-field appearance="outline">
