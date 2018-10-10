@@ -54,9 +54,9 @@ export class CreateCursoComponent implements OnInit {
         link: [null, Validators.required]
       }),
       duration: this._formBuilder.group({
-        hours: null,
-        days: null,
-        weeks: null
+        hours: [null, Validators.min(0)],
+        days: [null, Validators.min(0)],
+        weeks: [null, Validators.min(0)]
       }),
       schedule: null,
       place: null,
@@ -139,7 +139,7 @@ export class CreateCursoComponent implements OnInit {
     this.instructors.push(
       this._formBuilder.group({
         name: [null, Validators.required],
-        about: [null, Validators.required],
+        about: null,
       })
     );
   }
@@ -185,9 +185,9 @@ export class CreateCursoComponent implements OnInit {
   get description() { return this.cursoFormGroup.get('description') }
   get img() { return this.cursoFormGroup.get('img') }
   get date() { return this.cursoFormGroup.get('date') }
+  get duration() { return this.cursoFormGroup.get('duration') }
   get instructors() { return this.cursoFormGroup.get('instructors') as FormArray }
   instructorName(i: number) { return this.instructors.controls[i].get('name'); }
-  instructorAbout(i: number) { return this.instructors.controls[i].get('about'); }
   get postulation() { return this.cursoFormGroup.get('postulation') as FormGroup }
   get postulationDate() { return this.postulation.get('date') }
   get postulationLink() { return this.postulation.get('link') }
