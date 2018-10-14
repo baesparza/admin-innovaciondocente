@@ -8,7 +8,7 @@ import 'hammerjs';
 // shared modules
 import { MaterialModule } from './modules/material.module';
 import { FirebaseModule } from './modules/firebase.module';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 // shared services
 import { AuthService } from 'src/app/shared/services/auth.service';
@@ -20,6 +20,8 @@ import { UploadFileComponent } from './components/upload-file/upload-file.compon
 import { AdminGuard } from './services/adminGuard.guard';
 import { RoleService } from './services/role.service';
 import { HttpModule } from '@angular/http';
+import { TimestampPickerComponent } from './components/timestamp-picker/timestamp-picker.component';
+import { TimestampPickerDialogComponent } from './components/timestamp-picker-dialog/timestamp-picker-dialog.component';
 
 const modules: any[] = [
   CommonModule,
@@ -34,27 +36,34 @@ const modules: any[] = [
     ReactiveFormsModule,
     MaterialModule,
     FirebaseModule,
-    HttpModule
+    HttpModule,
+    FormsModule
   ],
   exports: [
     CommonModule,
+    HttpModule,
     ReactiveFormsModule,
+    FormsModule,
     MaterialModule,
     FirebaseModule,
     TimestampDatePipe,
     DropZoneDirective,
     DropZoneComponent,
     UploadFileComponent,
-    HttpModule
+    TimestampPickerComponent,
+    TimestampPickerDialogComponent
   ],
   declarations: [
     TimestampDatePipe,
     DropZoneDirective,
     DropZoneComponent,
-    UploadFileComponent
+    UploadFileComponent,
+    TimestampPickerComponent,
+    TimestampPickerDialogComponent
   ],
   entryComponents: [
-    DropZoneComponent
+    DropZoneComponent,
+    TimestampPickerDialogComponent
   ]
 })
 export class SharedModule {

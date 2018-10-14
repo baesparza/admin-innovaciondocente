@@ -1,5 +1,5 @@
 <form [formGroup]="encuentroFormGroup">
-  <mat-vertical-stepper [linear]="true"
+  <mat-vertical-stepper [linear]="!shouldUpdate"
                         class="mat-elevation-z8"
                         #stepper>
     <!-- first part -->
@@ -46,17 +46,8 @@
     <!-- Date part-->
     <mat-step>
       <ng-template matStepLabel>Fecha del Encuentro</ng-template>
-      <mat-form-field appearance="outline"
-                      class="full-width">
-        <mat-label>Fecha</mat-label>
-        <input matInput
-               type="date"
-               formControlName="date"
-               required>
-        <mat-error *ngIf="date.hasError('required')">
-          La fecha es <strong>requerida</strong>
-        </mat-error>
-      </mat-form-field>
+      <id-timestamp-picker errorMessage="La fecha es requerida"
+                           [formControlChild]="date"></id-timestamp-picker>
       <div class="button-row">
         <button mat-button
                 matStepperPrevious>Anterior</button>
@@ -68,17 +59,8 @@
     <!-- postulations part-->
     <mat-step>
       <ng-template matStepLabel>Fecha fin de Postulaciones</ng-template>
-      <mat-form-field appearance="outline"
-                      class="full-width">
-        <mat-label>Fecha Postulaciones</mat-label>
-        <input matInput
-               type="date"
-               formControlName="postulations"
-               required>
-        <mat-error *ngIf="postulations.hasError('required')">
-          La fecha es <strong>requerida</strong>
-        </mat-error>
-      </mat-form-field>
+      <id-timestamp-picker errorMessage="La fecha de postulaciones es requerida"
+                           [formControlChild]="postulations"></id-timestamp-picker>
       <div class="button-row">
         <button mat-button
                 matStepperPrevious>Anterior</button>
