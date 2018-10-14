@@ -1,5 +1,5 @@
 <form [formGroup]="cursoFormGroup">
-  <mat-vertical-stepper [linear]="true"
+  <mat-vertical-stepper [linear]="!shouldUpdate"
                         #stepper>
     <!-- Name -->
     <mat-step>

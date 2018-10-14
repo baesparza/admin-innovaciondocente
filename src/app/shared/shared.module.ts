@@ -8,7 +8,7 @@ import 'hammerjs';
 // shared modules
 import { MaterialModule } from './modules/material.module';
 import { FirebaseModule } from './modules/firebase.module';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 // shared services
 import { AuthService } from 'src/app/shared/services/auth.service';
@@ -23,13 +23,6 @@ import { HttpModule } from '@angular/http';
 import { TimestampPickerComponent } from './components/timestamp-picker/timestamp-picker.component';
 import { TimestampPickerDialogComponent } from './components/timestamp-picker-dialog/timestamp-picker-dialog.component';
 
-const modules: any[] = [
-  CommonModule,
-  ReactiveFormsModule,
-  MaterialModule,
-  FirebaseModule
-];
-
 @NgModule({
   imports: [
     CommonModule,
@@ -37,13 +30,11 @@ const modules: any[] = [
     MaterialModule,
     FirebaseModule,
     HttpModule,
-    FormsModule
   ],
   exports: [
     CommonModule,
     HttpModule,
     ReactiveFormsModule,
-    FormsModule,
     MaterialModule,
     FirebaseModule,
     TimestampDatePipe,

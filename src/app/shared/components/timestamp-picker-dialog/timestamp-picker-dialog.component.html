@@ -1,10 +1,11 @@
 <h1 mat-dialog-title>Seleccionar fecha</h1>
 <div mat-dialog-content>
   <mat-form-field appearance="outline"
-                  class="full-width">
-    <input [(ngModel)]="date"
+                  class="full-width"
+                  [formGroup]="dateForm">
+    <input matInput
            type="date"
-           matInput
+           formControlName="date"
            required>
   </mat-form-field>
 </div>
