@@ -20,13 +20,8 @@ import { UploadFileComponent } from './components/upload-file/upload-file.compon
 import { AdminGuard } from './services/adminGuard.guard';
 import { RoleService } from './services/role.service';
 import { HttpModule } from '@angular/http';
-
-const modules: any[] = [
-  CommonModule,
-  ReactiveFormsModule,
-  MaterialModule,
-  FirebaseModule
-];
+import { TimestampPickerComponent } from './components/timestamp-picker/timestamp-picker.component';
+import { TimestampPickerDialogComponent } from './components/timestamp-picker-dialog/timestamp-picker-dialog.component';
 
 @NgModule({
   imports: [
@@ -34,10 +29,11 @@ const modules: any[] = [
     ReactiveFormsModule,
     MaterialModule,
     FirebaseModule,
-    HttpModule
+    HttpModule,
   ],
   exports: [
     CommonModule,
+    HttpModule,
     ReactiveFormsModule,
     MaterialModule,
     FirebaseModule,
@@ -45,16 +41,20 @@ const modules: any[] = [
     DropZoneDirective,
     DropZoneComponent,
     UploadFileComponent,
-    HttpModule
+    TimestampPickerComponent,
+    TimestampPickerDialogComponent
   ],
   declarations: [
     TimestampDatePipe,
     DropZoneDirective,
     DropZoneComponent,
-    UploadFileComponent
+    UploadFileComponent,
+    TimestampPickerComponent,
+    TimestampPickerDialogComponent
   ],
   entryComponents: [
-    DropZoneComponent
+    DropZoneComponent,
+    TimestampPickerDialogComponent
   ]
 })
 export class SharedModule {

@@ -18,7 +18,7 @@ export class CreateCursoComponent implements OnInit {
 
   public cursoFormGroup: FormGroup;
   public types: Observable<BannerCurso[]>;
-  private shouldUpdate: boolean = false;
+  public shouldUpdate: boolean = false;
   private cursoID: string = null;
 
   constructor(

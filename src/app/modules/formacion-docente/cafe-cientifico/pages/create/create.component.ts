@@ -14,7 +14,7 @@ import { CafeCientificoService } from '../../cafe-cientifico.service';
 export class CreateComponent implements OnInit {
 
   public encuentroFormGroup: FormGroup = null;
-  private shouldUpdate: boolean = false;
+  public shouldUpdate: boolean = false;
   private encuentroID: string = null;
   constructor(
     private _formBuilder: FormBuilder,

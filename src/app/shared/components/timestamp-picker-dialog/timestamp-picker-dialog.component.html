@@ -1,0 +1,22 @@
+<h1 mat-dialog-title>Seleccionar fecha</h1>
+<div mat-dialog-content>
+  <mat-form-field appearance="outline"
+                  class="full-width"
+                  [formGroup]="dateForm">
+    <input matInput
+           type="date"
+           formControlName="date"
+           required>
+  </mat-form-field>
+</div>
+
+<!-- actions -->
+<div mat-dialog-actions>
+  <button mat-button
+          (click)="onNoClick()">Cancelar</button>
+  <div class="spacer"></div>
+  <button mat-raised-button
+          color="primary"
+          [mat-dialog-close]="formatTimestamp()"
+          cdkFocusInitial>Ok</button>
+</div>

@@ -1,5 +1,5 @@
 <form [formGroup]="cursoFormGroup">
-  <mat-vertical-stepper [linear]="true"
+  <mat-vertical-stepper [linear]="!shouldUpdate"
                         #stepper>
     <!-- Name -->
     <mat-step>
@@ -78,17 +78,8 @@
     <!-- date -->
     <mat-step>
       <ng-template matStepLabel>Fecha del Curso</ng-template>
-      <mat-form-field appearance="outline"
-                      class="full-width">
-        <mat-label>Fecha</mat-label>
-        <input matInput
-               type="date"
-               formControlName="date"
-               required>
-        <mat-error *ngIf="date.hasError('required')">
-          La fecha debe ser <strong>valida</strong>
-        </mat-error>
-      </mat-form-field>
+      <id-timestamp-picker errorMessage="La fecha es requerida"
+                           [formControlChild]="date"></id-timestamp-picker>
       <div class="button-row">
         <button mat-button
                 matStepperPrevious>Anterior</button>
@@ -146,15 +137,10 @@
     <!-- postulations -->
     <mat-step>
       <ng-template matStepLabel>Postulaciones</ng-template>
+      <!-- date -->
+      <!-- TODO: fix problem, inside form -->
+      <id-timestamp-picker [formControlChild]="postulationDate"></id-timestamp-picker>
       <form formGroupName="postulation">
-        <!-- date -->
-        <mat-form-field appearance="outline"
-                        class="full-width">
-          <mat-label>Fecha de finalización para postulaciones</mat-label>
-          <input matInput
-                 type="date"
-                 formControlName="date">
-        </mat-form-field>
         <!-- link -->
         <mat-form-field appearance="outline"
                         class="full-width">

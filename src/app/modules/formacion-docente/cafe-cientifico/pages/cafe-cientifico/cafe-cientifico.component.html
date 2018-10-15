@@ -25,7 +25,7 @@
     <!-- expanded content -->
     <ng-template matExpansionPanelContent>
       <p *ngIf="encuentro.creator"><b>Autor:</b> {{encuentro.creator}}</p>
-      <p *ngIf="encuentro.creator"><b>Fecha:</b> {{encuentro.date}}</p>
+      <p *ngIf="encuentro.creator"><b>Fecha:</b> {{encuentro.date|timestampDate}}</p>
       <p *ngIf="encuentro.guests"><b>Invitados:</b> {{encuentro.guests.length}}</p>
       <p *ngIf="encuentro.description">{{encuentro.description}}</p>
       <!-- options -->
