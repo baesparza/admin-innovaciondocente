@@ -106,7 +106,7 @@ export class CreateCursoComponent implements OnInit {
       this.cursoFormGroup.controls['name'].setValue(curso.name);
       this.cursoFormGroup.controls['description'].setValue(curso.description);
       this.cursoFormGroup.controls['img'].setValue(curso.img);
-      this.cursoFormGroup.controls['date'].setValue(curso.date);
+      this.cursoFormGroup.controls['date'].setValue(new Date(curso.date['seconds'] * 1000));
       this.cursoFormGroup.controls['instructors'].setValue(curso.instructors);
       this.cursoFormGroup.controls['schedule'].setValue(curso.schedule);
       this.cursoFormGroup.controls['place'].setValue(curso.place);
@@ -114,7 +114,7 @@ export class CreateCursoComponent implements OnInit {
       this.cursoFormGroup.controls['addressedTo'].setValue(curso.addressedTo);
       this.cursoFormGroup.controls['downloadableContent'].setValue(curso.downloadableContent);
 
-      postulation.controls['date'].setValue(curso.postulation.date);
+      if (curso.postulation.date) postulation.controls['date'].setValue(new Date(curso.postulation.date['seconds'] * 1000));
       postulation.controls['link'].setValue(curso.postulation.link);
       postulation.controls['message'].setValue(curso.postulation.message);
 

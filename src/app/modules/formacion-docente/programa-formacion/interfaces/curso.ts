@@ -9,7 +9,7 @@ export interface Curso extends DefaultInterface {
   name: string,
   description: string,
   img: string,
-  date: string,
+  date: Date,
   instructors: Instructor[],
   postulation: Postulation,
   duration: Duration,
