@@ -54,8 +54,9 @@ export class CreateComponent implements OnInit {
       this.encuentroFormGroup.controls['img'].setValue(encuentro.img);
       this.encuentroFormGroup.controls['description'].setValue(encuentro.description);
       this.encuentroFormGroup.controls['guests'].setValue(encuentro.guests);
-      this.encuentroFormGroup.controls['date'].setValue(encuentro.date);
-      this.encuentroFormGroup.controls['postulations'].setValue(encuentro.postulations);
+      this.encuentroFormGroup.controls['date'].setValue(new Date(encuentro.date['seconds'] * 1000));
+      this.encuentroFormGroup.controls['postulations'].setValue(new Date(encuentro.postulations['seconds'] * 1000));
+
     } catch (error) {
       this._snackBar.open('Ha ocurrido un error al cargar el encuentro.', null, { duration: 5000, });
       this._location.back();

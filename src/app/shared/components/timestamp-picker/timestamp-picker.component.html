@@ -1,7 +1,6 @@
-<p *ngIf="formControlChild.value">{{formControlChild.value|timestampDate}}</p>
+<p *ngIf="formControlChild.value">{{formControlChild.value | date}}</p>
 <mat-error *ngIf="formControlChild.hasError('required')">
   {{errorMessage}}
 </mat-error>
-<button mat-stroked-button
-        color="primary"
-        (click)="openDialog()">Seleccionar fecha</button>
+<button mat-stroked-button color="primary" (click)="openDialog()" style="margin-bottom: 15px">Seleccionar fecha</button>
+
