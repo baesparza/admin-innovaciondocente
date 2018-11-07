@@ -1,3 +1,79 @@
-<p>
-  create-proyecto works!
-</p>
+<form [formGroup]="proyectoFormGroup">
+  <mat-vertical-stepper [linear]="!shouldUpdate"
+                        class="mat-elevation-z8"
+                        #stepper>
+    <!-- name -->
+    <mat-step>
+      <ng-template matStepLabel>Nombre del Proyecto</ng-template>
+      <mat-form-field appearance="outline"
+                      class="full-width">
+        <mat-label>Nombre</mat-label>
+        <input matInput
+               type="text"
+               formControlName="name"
+               required>
+        <mat-error *ngIf="name.hasError('required')">
+          El nombre es <strong>requerido</strong>
+        </mat-error>
+      </mat-form-field>
+      <div class="button-row">
+        <button mat-raised-button
+                color="primary"
+                matStepperNext>Siguiente</button>
+      </div>
+    </mat-step>
+
+    <!-- Teachers -->
+    <mat-step>
+      <ng-template matStepLabel>Docentes participantes
+        </ng-template>
+      <div formArrayName="teachers">
+        <div *ngFor="let teacher of teachers.controls; let i=index"
+             [formGroupName]="i">
+          <!-- name -->
+          <mat-form-field appearance="outline"
+                          class="full-width">
+            <mat-label>Nombre del Docente</mat-label>
+            <input matInput
+                   type="text"
+                   formControlName="name"
+                   required>
+            <mat-error *ngIf="teacherName(i).hasError('required')">
+              El nombre es <strong>requerido</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="button-row">
+        <button mat-button
+                color="warn"
+                (click)="removeTeacher()">Eliminar ultimo Docente</button>
+        <button mat-button
+                color="primary"
+                (click)="addTeacher()">Añadir Docente</button>
+      </div>
+      <div class="button-row">
+        <button mat-button
+                matStepperPrevious>Anterior</button>
+        <button mat-raised-button
+                color="primary"
+                matStepperNext>Siguiente</button>
+      </div>
+    </mat-step>
+
+    <!-- final part -->
+    <mat-step>
+      <ng-template matStepLabel>Finalizar</ng-template>
+      <p>
+        Presiona guardar para continuar, y regresar a la pagina anterior
+      </p>
+      <div class="button-row">
+        <button mat-button
+                matStepperPrevious>Anterior</button>
+        <button mat-raised-button
+                color="primary"
+                (click)="submit()">Guardar</button>
+      </div>
+    </mat-step>
+  </mat-vertical-stepper>
+</form>
