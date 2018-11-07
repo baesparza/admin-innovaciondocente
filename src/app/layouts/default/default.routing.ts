@@ -21,6 +21,10 @@ const routes: Routes = [
         canActivate: [AdminGuard]
       },
       {
+        path: 'innovacion-docente/proyectos-innovacion',
+        loadChildren: '../../modules/innovacion-docente/proyectos-innovacion/proyectos-innovacion.module#ProyectosInnovacionModule',
+      },
+      {
         path: 'formacion-docente/cafe-cientifico',
         loadChildren: '../../modules/formacion-docente/cafe-cientifico/cafe-cientifico.module#CafeCientificoModule',
       },
