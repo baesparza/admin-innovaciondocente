@@ -15,6 +15,7 @@ export class CreateProyectoComponent implements OnInit {
   public proyectoFormGroup: FormGroup = null;
   public shouldUpdate: boolean = false;
   private proyectoID: string = null;
+  public submitCallback: Function;
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -31,6 +32,9 @@ export class CreateProyectoComponent implements OnInit {
 
     if (this.proyectoID !== undefined)
       this.loadData();
+
+    //
+    this.submitCallback = this.submit.bind(this);
   }
 
   private buildForm(): void {
@@ -74,7 +78,10 @@ export class CreateProyectoComponent implements OnInit {
   }
 
   public async submit(): Promise<void> {
+    console.log('Saving');
+
     // validate forms
+    this._snackBar.open('La forma es invalida', null, { duration: 5000, });
     if (this.proyectoFormGroup.invalid) {
       this._snackBar.open('La forma es invalida', null, { duration: 5000, });
       return;
@@ -116,6 +123,11 @@ export class CreateProyectoComponent implements OnInit {
   public removeDocument(): void {
     this.documents.removeAt(-1);
   };
+
+  public getUploadPath() {
+    return `/innovacion-docente/proyectos-innovacion/${this.name.value}`;
+  }
+
 
   /* GETTES */
   get name() { return this.proyectoFormGroup.get('name'); }
