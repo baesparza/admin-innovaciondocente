@@ -19,7 +19,8 @@ import {
   MatSelectModule,
   MatTabsModule,
   MatDialogModule,
-  MatProgressBarModule
+  MatProgressBarModule,
+  MatCheckboxModule
 } from '@angular/material';
 
 const modules: any[] = [
@@ -42,7 +43,8 @@ const modules: any[] = [
   MatSelectModule,
   MatTabsModule,
   MatDialogModule,
-  MatProgressBarModule
+  MatProgressBarModule,
+  MatCheckboxModule
 ];
 
 @NgModule({

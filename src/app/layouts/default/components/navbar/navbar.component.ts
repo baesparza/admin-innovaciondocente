@@ -28,17 +28,16 @@ export class NavbarComponent {
     {
       name: 'Innovación Docente',
       children: [
-        { name: 'Proyectos Actuales' },
+        { name: 'Proyectos Innovación', goto: ['/', 'innovacion-docente', 'proyectos-innovacion'] },
         { name: 'Convocatorias' },
-        { name: 'Buenas Prácticas' },
       ]
     },
     {
       name: 'Formación Docente',
       children: [
-        { name: 'Programa Formacion', goto: ['/', 'formacion-docente', 'programa-formacion'] },
+        { name: 'Programa Formación', goto: ['/', 'formacion-docente', 'programa-formacion'] },
         { name: 'Cafe Cientifico', goto: ['/', 'formacion-docente', 'cafe-cientifico'] },
-        { name: 'Jornadas de Reflexion' },
+        { name: 'Jornadas de Reflexión' },
       ]
     },
     {

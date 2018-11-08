@@ -1,0 +1,158 @@
+<form [formGroup]="proyectoFormGroup">
+  <mat-vertical-stepper [linear]="!shouldUpdate"
+                        class="mat-elevation-z8"
+                        #stepper>
+    <!-- name -->
+    <mat-step>
+      <ng-template matStepLabel>Nombre del Proyecto</ng-template>
+      <mat-form-field appearance="outline"
+                      class="full-width">
+        <mat-label>Nombre</mat-label>
+        <input matInput
+               type="text"
+               formControlName="name"
+               required>
+        <mat-error *ngIf="name.hasError('required')">
+          El nombre es <strong>requerido</strong>
+        </mat-error>
+      </mat-form-field>
+      <id-stepper-form [canBack]="false"></id-stepper-form>
+    </mat-step>
+
+    <!-- imagen -->
+    <mat-step>
+      <ng-template matStepLabel>Imagen del Proyecto</ng-template>
+      <id-upload-file [path]="getUploadPath"
+                      type="imagen"
+                      label="Url imagen"
+                      errorMessage="La imagen es requerida"
+                      [formControlChild]="img"
+                      required></id-upload-file>
+      <id-stepper-form></id-stepper-form>
+    </mat-step>
+
+    <!-- Area -->
+    <mat-step>
+      <ng-template matStepLabel>Área</ng-template>
+      <p><b>Recomendación:</b> Seleccione al menos uno</p>
+      <form formGroupName="area">
+        <section class="checkbox-section">
+          <mat-checkbox color="primary"
+                        formControlName="tecnica"
+                        class="margin-right">Área Técnica</mat-checkbox>
+          <mat-checkbox color="primary"
+                        formControlName="biologica"
+                        class="margin-right">Área Biológica y Biomédica</mat-checkbox>
+          <mat-checkbox color="primary"
+                        formControlName="administrativa"
+                        class="margin-right">Área Administrativa</mat-checkbox>
+          <mat-checkbox color="primary"
+                        formControlName="sociohumanistica"
+                        class="margin-right">Área Sociohumanística</mat-checkbox>
+        </section>
+      </form>
+      <id-stepper-form></id-stepper-form>
+    </mat-step>
+
+    <!-- certification -->
+    <mat-step>
+      <ng-template matStepLabel>Titulacion</ng-template>
+      <mat-form-field appearance="outline"
+                      class="full-width">
+        <mat-label>Nombre o Nombres de la titulacion</mat-label>
+        <input matInput
+               type="text"
+               formControlName="certification"
+               required>
+        <mat-error *ngIf="certification.hasError('required')">
+          La titulacion es <strong>requerida</strong>
+        </mat-error>
+      </mat-form-field>
+      <id-stepper-form></id-stepper-form>
+    </mat-step>
+
+    <!-- type -->
+    <mat-step>
+      <ng-template matStepLabel>Tipo de Proyecto</ng-template>
+      <mat-form-field appearance="outline"
+                      class="full-width">
+        <mat-select [formControl]="type">
+          <mat-option>--</mat-option>
+          <mat-option value="proyecto-actual">Proyecto Actual</mat-option>
+          <mat-option value="buena-practica">Buena Practica</mat-option>
+        </mat-select>
+        <mat-error *ngIf="type.hasError('required')">
+          Seleccione un tipo valido
+        </mat-error>
+      </mat-form-field>
+      <id-stepper-form></id-stepper-form>
+    </mat-step>
+
+    <!-- Teachers -->
+    <mat-step>
+      <ng-template matStepLabel>Docentes participantes
+      </ng-template>
+      <div formArrayName="teachers">
+        <div *ngFor="let teacher of teachers.controls; let i=index"
+             [formGroupName]="i">
+          <!-- name -->
+          <mat-form-field appearance="outline"
+                          class="full-width">
+            <mat-label>Nombre del Docente</mat-label>
+            <input matInput
+                   type="text"
+                   formControlName="name"
+                   required>
+            <mat-error *ngIf="teacherName(i).hasError('required')">
+              El nombre es <strong>requerido</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="button-row">
+        <button mat-button
+                color="warn"
+                (click)="removeTeacher()">Eliminar ultimo Docente</button>
+        <button mat-button
+                color="primary"
+                (click)="addTeacher()">Añadir Docente</button>
+      </div>
+      <id-stepper-form></id-stepper-form>
+    </mat-step>
+
+    <!-- Documents -->
+    <mat-step>
+      <ng-template matStepLabel>Archivos Descargables
+      </ng-template>
+      <div formArrayName="documents">
+        <div *ngFor="let document of documents.controls; let i=index"
+             [formGroupName]="i">
+          <id-upload-file label="Contenido descargable"
+                          [path]="getUploadPath"
+                          errorMessage="El archivo es requerido"
+                          [formControlChild]="documentUrl(i)"
+                          required></id-upload-file>
+        </div>
+      </div>
+      <div class="button-row">
+        <button mat-button
+                color="warn"
+                (click)="removeDocument()">Eliminar ultimo Documento</button>
+        <button mat-button
+                color="primary"
+                (click)="addDocument()">Añadir Documento</button>
+      </div>
+      <id-stepper-form></id-stepper-form>
+    </mat-step>
+
+    <!-- final part -->
+    <mat-step>
+      <ng-template matStepLabel>Finalizar</ng-template>
+      <p>
+        Presiona guardar para continuar, y regresar a la pagina anterior
+      </p>
+      <id-stepper-form continueMessage="Guardar"
+                       [continue]="submitCallback"></id-stepper-form>
+    </mat-step>
+  </mat-vertical-stepper>
+</form>

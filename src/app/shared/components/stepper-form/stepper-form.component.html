@@ -1,0 +1,25 @@
+<div class="button-row">
+  <ng-container *ngIf="canBack && back == null; else elseTemplate">
+    <button mat-button
+            matStepperPrevious>{{backMessage}}</button>
+  </ng-container>
+  <ng-template #elseTemplate>
+    <button mat-button
+            *ngIf="back != null"
+            (click)="back()">{{backMessage}}</button>
+  </ng-template>
+
+  <ng-container *ngIf="canContinue && continue == null; else elseTemplate">
+    <button mat-raised-button
+            color="primary"
+            matStepperNext>{{continueMessage}}</button>
+  </ng-container>
+  <ng-template #elseTemplate>
+    <button mat-raised-button
+            *ngIf="continue != null"
+            color="primary"
+            (click)="continue()">{{continueMessage}}</button>
+  </ng-template>
+
+
+</div>

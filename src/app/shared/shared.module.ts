@@ -22,6 +22,7 @@ import { RoleService } from './services/role.service';
 import { HttpModule } from '@angular/http';
 import { TimestampPickerComponent } from './components/timestamp-picker/timestamp-picker.component';
 import { TimestampPickerDialogComponent } from './components/timestamp-picker-dialog/timestamp-picker-dialog.component';
+import { StepperFormComponent } from './components/stepper-form/stepper-form.component';
 
 @NgModule({
   imports: [
@@ -42,7 +43,8 @@ import { TimestampPickerDialogComponent } from './components/timestamp-picker-di
     DropZoneComponent,
     UploadFileComponent,
     TimestampPickerComponent,
-    TimestampPickerDialogComponent
+    TimestampPickerDialogComponent,
+    StepperFormComponent
   ],
   declarations: [
     TimestampDatePipe,
@@ -50,7 +52,8 @@ import { TimestampPickerDialogComponent } from './components/timestamp-picker-di
     DropZoneComponent,
     UploadFileComponent,
     TimestampPickerComponent,
-    TimestampPickerDialogComponent
+    TimestampPickerDialogComponent,
+    StepperFormComponent
   ],
   entryComponents: [
     DropZoneComponent,

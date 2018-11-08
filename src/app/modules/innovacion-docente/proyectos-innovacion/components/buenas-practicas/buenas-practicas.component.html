@@ -1,0 +1,54 @@
+<mat-accordion>
+  <mat-expansion-panel expanded="true">
+    <mat-expansion-panel-header>
+      <!-- title -->
+      <mat-panel-title>Nuevo Proyecto</mat-panel-title>
+    </mat-expansion-panel-header>
+    <!-- content -->
+    <ng-template matExpansionPanelContent>
+      <p>Ir al formulario para crear un Nuevo Proyecto</p>
+      <!-- options -->
+      <mat-action-row>
+        <a mat-raised-button
+           color="primary"
+           routerLink="create"
+           *ngIf="_role.canCreate">Nuevo</a>
+      </mat-action-row>
+    </ng-template>
+  </mat-expansion-panel>
+  <mat-expansion-panel *ngFor="let proyecto of proyectos | async">
+    <!-- visible content -->
+    <mat-expansion-panel-header>
+      <mat-panel-title>{{proyecto.name}}</mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <!-- expanded content -->
+    <ng-template matExpansionPanelContent>
+      <p><b>Area:</b></p>
+      <ul>
+        <li *ngIf="proyecto.area.tecnica">Área Técnica</li>
+        <li *ngIf="proyecto.area.biologica">Área Biológica y Biomédica</li>
+        <li *ngIf="proyecto.area.administrativa">Área Administrativa</li>
+        <li *ngIf="proyecto.area.sociohumanistica">Área Sociohumanística</li>
+      </ul>
+      <p><b>Titulacion:</b> {{proyecto.certification}}</p>
+      <p *ngIf="proyecto.teachers"><b>Docentes:</b></p>
+      <ul>
+        <li *ngFor="let teacher of proyecto.teachers">{{teacher.name}}</li>
+      </ul>
+
+      <!-- options -->
+      <mat-action-row>
+        <button mat-button
+                color="warn"
+                (click)="delete(proyecto.id)"
+                *ngIf="_role.canDelete">Eliminar</button>
+        <button mat-button
+                [routerLink]="['create']"
+                [queryParams]="{'id':proyecto.id}"
+                color="primary"
+                *ngIf="_role.canEdit">Editar</button>
+      </mat-action-row>
+    </ng-template>
+  </mat-expansion-panel>
+</mat-accordion>
