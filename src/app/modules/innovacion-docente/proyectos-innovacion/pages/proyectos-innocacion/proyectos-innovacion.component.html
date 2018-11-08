@@ -1,6 +1,12 @@
-<p>
-  proyectos-innocacion works!
-</p>
-<button mat-raised-button
-        [routerLink]="['create']"
-        color="primary">Nuevo Proyecto</button>
+<mat-tab-group>
+  <mat-tab label="Proyectos Actuales">
+    <ng-template matTabContent>
+      <id-proyectos-actuales></id-proyectos-actuales>
+    </ng-template>
+  </mat-tab>
+  <mat-tab label="Buenas Practicas">
+    <ng-template matTabContent>
+      <id-buenas-practicas></id-buenas-practicas>
+    </ng-template>
+  </mat-tab>
+</mat-tab-group>

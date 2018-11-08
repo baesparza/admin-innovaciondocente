@@ -84,7 +84,7 @@ export class CreateProyectoComponent implements OnInit {
       this.proyectoFormGroup.get('area').get('sociohumanistica').setValue(proyecto.area.sociohumanistica);
     } catch (error) {
       this._snackBar.open('Ha ocurrido un error al cargar el proyecto.', null, { duration: 5000, });
-      // this._location.back();
+      this._location.back();
     }
   }
 
@@ -102,7 +102,7 @@ export class CreateProyectoComponent implements OnInit {
       else
         await this._proyectosInnovacionService.addProyecto(this.proyectoFormGroup.value);
       this._snackBar.open('Se guardaron los cambios correctamente', null, { duration: 5000, });
-      // this._location.back();
+      this._location.back();
     } catch (error) {
       this._snackBar.open('Ocurrido un error al guardar, por favor vuelve a intentarlo', null, { duration: 5000, });
     }
