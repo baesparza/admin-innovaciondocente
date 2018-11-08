@@ -43,9 +43,14 @@ export class CreateProyectoComponent implements OnInit {
       img: [null, Validators.required],
       infographics: [null, Validators.required],
       titulation: [null, Validators.required],
-      area: [null, Validators.required],
       teachers: this._formBuilder.array([]),
       documents: this._formBuilder.array([]),
+      area: this._formBuilder.group({
+        tecnica: false,
+        administrativa: false,
+        biologica: false,
+        sociohumanistica: false,
+      }),
     });
   }
 
@@ -79,9 +84,9 @@ export class CreateProyectoComponent implements OnInit {
 
   public async submit(): Promise<void> {
     console.log('Saving');
+    console.log(this.proyectoFormGroup.value);
 
     // validate forms
-    this._snackBar.open('La forma es invalida', null, { duration: 5000, });
     if (this.proyectoFormGroup.invalid) {
       this._snackBar.open('La forma es invalida', null, { duration: 5000, });
       return;
@@ -132,7 +137,6 @@ export class CreateProyectoComponent implements OnInit {
   /* GETTES */
   get name() { return this.proyectoFormGroup.get('name'); }
   get img() { return this.proyectoFormGroup.get('img'); }
-  get infographics() { return this.proyectoFormGroup.get('infographics'); }
   get titulation() { return this.proyectoFormGroup.get('titulation'); }
   get area() { return this.proyectoFormGroup.get('area'); }
   get teachers() { return this.proyectoFormGroup.get('teachers') as FormArray; }

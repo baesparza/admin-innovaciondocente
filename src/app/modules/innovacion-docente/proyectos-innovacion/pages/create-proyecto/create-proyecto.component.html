@@ -31,15 +31,26 @@
       <id-stepper-form></id-stepper-form>
     </mat-step>
 
-    <!-- infographics -->
+    <!-- Area -->
     <mat-step>
-      <ng-template matStepLabel>Infografia del Proyecto</ng-template>
-      <id-upload-file [path]="getUploadPath"
-                      type="imagen"
-                      label="Url infografia"
-                      errorMessage="La infografia es requerida"
-                      [formControlChild]="infographics"
-                      required></id-upload-file>
+      <ng-template matStepLabel>Área</ng-template>
+      <p><b>Recomendación:</b> Seleccione al menos uno</p>
+      <form formGroupName="area">
+        <section class="checkbox-section">
+          <mat-checkbox color="primary"
+                        formControlName="tecnica"
+                        class="margin-right">Área Técnica</mat-checkbox>
+          <mat-checkbox color="primary"
+                        formControlName="biologica"
+                        class="margin-right">Área Biológica y Biomédica</mat-checkbox>
+          <mat-checkbox color="primary"
+                        formControlName="administrativa"
+                        class="margin-right">Área Administrativa</mat-checkbox>
+          <mat-checkbox color="primary"
+                        formControlName="sociohumanistica"
+                        class="margin-right">Área Sociohumanística</mat-checkbox>
+        </section>
+      </form>
       <id-stepper-form></id-stepper-form>
     </mat-step>
 
@@ -48,7 +59,7 @@
       <ng-template matStepLabel>Titulacion</ng-template>
       <mat-form-field appearance="outline"
                       class="full-width">
-        <mat-label>Nombre</mat-label>
+        <mat-label>Nombre o Nombres de la titulacion</mat-label>
         <input matInput
                type="text"
                formControlName="name"
@@ -59,10 +70,6 @@
       </mat-form-field>
       <id-stepper-form></id-stepper-form>
     </mat-step>
-
-    <!--
-      TODO: add area checkbox
-     -->
 
     <!-- Teachers -->
     <mat-step>
