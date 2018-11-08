@@ -54,7 +54,7 @@
       <id-stepper-form></id-stepper-form>
     </mat-step>
 
-    <!-- titulation -->
+    <!-- certification -->
     <mat-step>
       <ng-template matStepLabel>Titulacion</ng-template>
       <mat-form-field appearance="outline"
@@ -62,10 +62,27 @@
         <mat-label>Nombre o Nombres de la titulacion</mat-label>
         <input matInput
                type="text"
-               formControlName="name"
+               formControlName="certification"
                required>
-        <mat-error *ngIf="titulation.hasError('required')">
+        <mat-error *ngIf="certification.hasError('required')">
           La titulacion es <strong>requerida</strong>
+        </mat-error>
+      </mat-form-field>
+      <id-stepper-form></id-stepper-form>
+    </mat-step>
+
+    <!-- type -->
+    <mat-step>
+      <ng-template matStepLabel>Tipo de Proyecto</ng-template>
+      <mat-form-field appearance="outline"
+                      class="full-width">
+        <mat-select [formControl]="type">
+          <mat-option>--</mat-option>
+          <mat-option value="proyecto-actual">Proyecto Actual</mat-option>
+          <mat-option value="buena-practica">Buena Practica</mat-option>
+        </mat-select>
+        <mat-error *ngIf="type.hasError('required')">
+          Seleccione un tipo valido
         </mat-error>
       </mat-form-field>
       <id-stepper-form></id-stepper-form>

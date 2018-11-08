@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { ProyectosInnovacionService } from '../../proyectos-innovacion.service';
+import { Proyecto } from '../../interfaces/proyecto';
 
 @Component({
   selector: 'id-create-proyecto',
@@ -33,7 +34,6 @@ export class CreateProyectoComponent implements OnInit {
     if (this.proyectoID !== undefined)
       this.loadData();
 
-    //
     this.submitCallback = this.submit.bind(this);
   }
 
@@ -41,8 +41,8 @@ export class CreateProyectoComponent implements OnInit {
     this.proyectoFormGroup = this._formBuilder.group({
       name: [null, Validators.required],
       img: [null, Validators.required],
-      infographics: [null, Validators.required],
-      titulation: [null, Validators.required],
+      certification: [null, Validators.required],
+      type: [null, Validators.required],
       teachers: this._formBuilder.array([]),
       documents: this._formBuilder.array([]),
       area: this._formBuilder.group({
@@ -56,36 +56,39 @@ export class CreateProyectoComponent implements OnInit {
 
   private async  loadData(): Promise<void> {
     try {
-      // const doc = await this._cafeCientificoService.getEncuentroData(this.encuentroID);
+      const doc = await this._proyectosInnovacionService.getProyectoData(this.proyectoID);
 
-      // if (!doc.exists) {
-      //   this._snackBar.open('Este encuentro no se encuentra disponible.', null, { duration: 5000, });
-      //   return;
-      // }
-      // const encuentro: Encuentro = doc.data() as Encuentro;
-      // this.shouldUpdate = true;
+      if (!doc.exists) {
+        this._snackBar.open('Este proyecto no se encuentra disponible.', null, { duration: 5000, });
+        return;
+      }
+      const proyecto: Proyecto = doc.data() as Proyecto;
+      this.shouldUpdate = true;
 
-      // // create guests as needed
-      // for (let index = 0; index < encuentro.guests.length; index++)
-      //   this.addGuest();
+      // create documents as needed
+      for (let index = 0; index < proyecto.documents.length; index++)
+        this.addDocument();
+      // create teachers as needed
+      for (let index = 0; index < proyecto.teachers.length; index++)
+        this.addTeacher();
 
-      // this.encuentroFormGroup.controls['name'].setValue(encuentro.name);
-      // this.encuentroFormGroup.controls['img'].setValue(encuentro.img);
-      // this.encuentroFormGroup.controls['description'].setValue(encuentro.description);
-      // this.encuentroFormGroup.controls['guests'].setValue(encuentro.guests);
-      // this.encuentroFormGroup.controls['date'].setValue(new Date(encuentro.date['seconds'] * 1000));
-      // this.encuentroFormGroup.controls['postulations'].setValue(new Date(encuentro.postulations['seconds'] * 1000));
-
+      this.proyectoFormGroup.controls['name'].setValue(proyecto.name);
+      this.proyectoFormGroup.controls['img'].setValue(proyecto.img);
+      this.proyectoFormGroup.controls['certification'].setValue(proyecto.certification);
+      this.proyectoFormGroup.controls['type'].setValue(proyecto.type);
+      this.proyectoFormGroup.controls['teachers'].setValue(proyecto.teachers);
+      this.proyectoFormGroup.controls['documents'].setValue(proyecto.documents);
+      this.proyectoFormGroup.get('area').get('administrativa').setValue(proyecto.area.administrativa);
+      this.proyectoFormGroup.get('area').get('tecnica').setValue(proyecto.area.administrativa);
+      this.proyectoFormGroup.get('area').get('biologica').setValue(proyecto.area.biologica);
+      this.proyectoFormGroup.get('area').get('sociohumanistica').setValue(proyecto.area.sociohumanistica);
     } catch (error) {
-      this._snackBar.open('Ha ocurrido un error al cargar el encuentro.', null, { duration: 5000, });
-      this._location.back();
+      this._snackBar.open('Ha ocurrido un error al cargar el proyecto.', null, { duration: 5000, });
+      // this._location.back();
     }
   }
 
   public async submit(): Promise<void> {
-    console.log('Saving');
-    console.log(this.proyectoFormGroup.value);
-
     // validate forms
     if (this.proyectoFormGroup.invalid) {
       this._snackBar.open('La forma es invalida', null, { duration: 5000, });
@@ -94,11 +97,11 @@ export class CreateProyectoComponent implements OnInit {
 
     // add or update
     try {
-      // if (this.shouldUpdate)
-      //   await this._cafeCientificoService.updateEncuentro(this.encuentroID, this.encuentroFormGroup.value);
-      // else
-      //   await this._cafeCientificoService.addEncuentro(this.encuentroFormGroup.value);
-      // this._snackBar.open('Se guardaron los cambios correctamente', null, { duration: 5000, });
+      if (this.shouldUpdate)
+        await this._proyectosInnovacionService.updateProyecto(this.proyectoID, this.proyectoFormGroup.value);
+      else
+        await this._proyectosInnovacionService.addProyecto(this.proyectoFormGroup.value);
+      this._snackBar.open('Se guardaron los cambios correctamente', null, { duration: 5000, });
       // this._location.back();
     } catch (error) {
       this._snackBar.open('Ocurrido un error al guardar, por favor vuelve a intentarlo', null, { duration: 5000, });
@@ -133,12 +136,12 @@ export class CreateProyectoComponent implements OnInit {
     return `/innovacion-docente/proyectos-innovacion/${this.name.value}`;
   }
 
-
   /* GETTES */
   get name() { return this.proyectoFormGroup.get('name'); }
   get img() { return this.proyectoFormGroup.get('img'); }
-  get titulation() { return this.proyectoFormGroup.get('titulation'); }
+  get certification() { return this.proyectoFormGroup.get('certification'); }
   get area() { return this.proyectoFormGroup.get('area'); }
+  get type() { return this.proyectoFormGroup.get('type'); }
   get teachers() { return this.proyectoFormGroup.get('teachers') as FormArray; }
   teacherName(i: number) { return this.teachers.controls[i].get('name'); }
   get documents() { return this.proyectoFormGroup.get('documents') as FormArray; }
