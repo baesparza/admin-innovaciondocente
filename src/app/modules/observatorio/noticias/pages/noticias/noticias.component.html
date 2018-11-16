@@ -25,7 +25,7 @@
     <!-- expanded content -->
     <ng-template matExpansionPanelContent>
       <p *ngIf="noticia.creator"><b>Autor:</b> {{noticia.creator}}</p>
-      <p *ngIf="noticia.creator"><b>Ultima Edicion:</b> {{noticia.edited|timestampDate}}</p>
+      <p *ngIf="noticia.created"><b>Ultima Edicion:</b> {{noticia.edited|timestampDate}}</p>
       <p *ngIf="noticia.description">{{noticia.description}}</p>
       <!-- options -->
       <mat-action-row>
