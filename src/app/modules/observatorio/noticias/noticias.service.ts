@@ -6,7 +6,7 @@ import { Noticia } from './interfaces/noticias';
 @Injectable()
 export class NoticiasService {
 
-  private noticiasCollection: AngularFirestoreCollection<Noticia>;
+  public noticiasCollection: AngularFirestoreCollection<Noticia>;
 
   constructor(
     private _af: AngularFirestore,

@@ -1,7 +1,44 @@
-<p>
-  noticias works!
-</p>
-<a mat-raised-button
-   color="primary"
-   routerLink="nuevo-noticia"
-   class="new-btn">Nueva Noticia</a>
+<mat-accordion>
+  <mat-expansion-panel expanded="true">
+    <mat-expansion-panel-header>
+      <!-- title -->
+      <mat-panel-title>Nueva Noticia</mat-panel-title>
+    </mat-expansion-panel-header>
+    <!-- content -->
+    <ng-template matExpansionPanelContent>
+      <p>Ir al formulario para crear una Nueva Noticia</p>
+      <!-- options -->
+      <mat-action-row>
+        <a mat-raised-button
+           color="primary"
+           routerLink="nuevo-noticia"
+           *ngIf="_role.canCreate">Nuevo</a>
+      </mat-action-row>
+    </ng-template>
+  </mat-expansion-panel>
+  <mat-expansion-panel *ngFor="let noticia of noticias | async">
+    <!-- visible content -->
+    <mat-expansion-panel-header>
+      <mat-panel-title>{{noticia.name}}</mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <!-- expanded content -->
+    <ng-template matExpansionPanelContent>
+      <p *ngIf="noticia.creator"><b>Autor:</b> {{noticia.creator}}</p>
+      <p *ngIf="noticia.creator"><b>Ultima Edicion:</b> {{noticia.edited|timestampDate}}</p>
+      <p *ngIf="noticia.description">{{noticia.description}}</p>
+      <!-- options -->
+      <mat-action-row>
+        <button mat-button
+                color="warn"
+                (click)="delete(noticia.id)"
+                *ngIf="_role.canDelete">Eliminar</button>
+        <button mat-button
+                [routerLink]="['nuevo-noticia']"
+                [queryParams]="{'id':noticia.id}"
+                color="primary"
+                *ngIf="_role.canEdit">Editar</button>
+      </mat-action-row>
+    </ng-template>
+  </mat-expansion-panel>
+</mat-accordion>
