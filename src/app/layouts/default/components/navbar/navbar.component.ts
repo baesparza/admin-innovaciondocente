@@ -44,7 +44,7 @@ export class NavbarComponent {
       name: 'Observatorio',
       children: [
         { name: 'EduTendencias', goto: ['/', 'observatorio', 'edutendencias'] },
-        { name: 'Noticias' },
+        { name: 'Noticias', goto: ['/', 'observatorio', 'noticias'] },
       ]
     }
 
