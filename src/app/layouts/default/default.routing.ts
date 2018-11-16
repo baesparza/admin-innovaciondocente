@@ -36,6 +36,10 @@ const routes: Routes = [
         path: 'observatorio/edutendencias',
         loadChildren: '../../modules/observatorio/edutendencias/edutendencias.module#EdutendenciasModule',
       },
+      {
+        path: 'observatorio/noticias',
+        loadChildren: '../../modules/observatorio/noticias/noticias.module#NoticiasModule',
+      },
     ]
   }
 ];

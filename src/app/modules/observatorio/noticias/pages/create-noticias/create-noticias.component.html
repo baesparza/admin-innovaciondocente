@@ -1,0 +1,79 @@
+<form [formGroup]="noticiaFormGroup">
+  <mat-vertical-stepper [linear]="!shouldUpdate"
+                        class="mat-elevation-z8"
+                        #stepper>
+    <!-- name -->
+    <mat-step>
+      <ng-template matStepLabel>Nombre de la Noticia</ng-template>
+      <mat-form-field appearance="outline"
+                      class="full-width">
+        <mat-label>Nombre</mat-label>
+        <input matInput
+               type="text"
+               formControlName="name"
+               required>
+        <mat-error *ngIf="name.hasError('required')">
+          El nombre es <strong>requerido</strong>
+        </mat-error>
+      </mat-form-field>
+      <id-stepper-form [canBack]="false"></id-stepper-form>
+    </mat-step>
+
+    <!-- imagen -->
+    <mat-step>
+      <ng-template matStepLabel>Imagen de la Noticia</ng-template>
+      <id-upload-file [path]="getUploadPath"
+                      type="imagen"
+                      label="Url imagen"
+                      errorMessage="La imagen es requerida"
+                      [formControlChild]="img"
+                      required></id-upload-file>
+      <id-stepper-form></id-stepper-form>
+    </mat-step>
+
+    <!-- description -->
+    <mat-step>
+      <ng-template matStepLabel>Descripcion</ng-template>
+      <mat-form-field appearance="outline"
+                      class="full-width">
+        <mat-label>Descripcion</mat-label>
+        <textarea matInput
+                  type="text"
+                  formControlName="description"
+                  required></textarea>
+        <mat-error *ngIf="description.hasError('required')">
+          La descripcion es <strong>requerida</strong>
+        </mat-error>
+      </mat-form-field>
+      <id-stepper-form></id-stepper-form>
+    </mat-step>
+
+    <!-- html -->
+    <mat-step>
+      <ng-template matStepLabel>Contenido</ng-template>
+      <mat-form-field appearance="outline"
+                      class="full-width">
+        <mat-label>HTML</mat-label>
+        <textarea matInput
+                  class="code"
+                  type="text"
+                  formControlName="html"
+                  required></textarea>
+        <mat-error *ngIf="html.hasError('required')">
+          El contenido es <strong>requerido</strong>
+        </mat-error>
+      </mat-form-field>
+      <id-stepper-form></id-stepper-form>
+    </mat-step>
+
+    <!-- final part -->
+    <mat-step>
+      <ng-template matStepLabel>Finalizar</ng-template>
+      <p>
+        Presiona guardar para continuar, y regresar a la pagina anterior
+      </p>
+      <id-stepper-form continueMessage="Guardar"
+                       [continue]="submitCallback"></id-stepper-form>
+    </mat-step>
+  </mat-vertical-stepper>
+</form>
