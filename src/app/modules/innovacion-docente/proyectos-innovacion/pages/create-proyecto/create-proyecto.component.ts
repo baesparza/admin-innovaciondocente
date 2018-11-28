@@ -70,7 +70,6 @@ export class CreateProyectoComponent implements OnInit {
       }
       const proyecto: Proyecto = doc.data() as Proyecto;
       this.shouldUpdate = true;
-      console.log(proyecto);
 
       // create documents as needed
       for (let index = 0; index < proyecto.documents.length; index++)
@@ -100,9 +99,8 @@ export class CreateProyectoComponent implements OnInit {
       this.proyectoFormGroup.get('area').get('biologica').setValue(proyecto.area.biologica);
       this.proyectoFormGroup.get('area').get('sociohumanistica').setValue(proyecto.area.sociohumanistica);
     } catch (error) {
-      console.log(error);
       this._snackBar.open('Ha ocurrido un error al cargar el proyecto.', null, { duration: 5000, });
-      // this._location.back();
+      this._location.back();
     }
   }
 
