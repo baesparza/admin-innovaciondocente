@@ -4,7 +4,7 @@
                         #stepper>
     <!-- name -->
     <mat-step>
-      <ng-template matStepLabel>Nombre del Proyecto</ng-template>
+      <ng-template matStepLabel>Nombre de la propuesta</ng-template>
       <mat-form-field appearance="outline"
                       class="full-width">
         <mat-label>Nombre</mat-label>
@@ -13,21 +13,72 @@
                formControlName="name"
                required>
         <mat-error *ngIf="name.hasError('required')">
-          El nombre es <strong>requerido</strong>
+          El nombre es requerido
         </mat-error>
       </mat-form-field>
       <id-stepper-form [canBack]="false"></id-stepper-form>
+    </mat-step>
+
+    <!-- coordinator -->
+    <mat-step>
+      <ng-template matStepLabel>Coordinador de la propuesta</ng-template>
+      <mat-form-field appearance="outline"
+                      class="full-width">
+        <mat-label>Nombre</mat-label>
+        <input matInput
+               type="text"
+               formControlName="coordinator"
+               required>
+        <mat-error *ngIf="coordinator.hasError('required')">
+          El nombre del cordinador es requerido
+        </mat-error>
+      </mat-form-field>
+      <id-stepper-form></id-stepper-form>
+    </mat-step>
+
+    <!-- Modality -->
+    <mat-step>
+      <ng-template matStepLabel>Modalidad</ng-template>
+      <mat-form-field appearance="outline"
+                      class="full-width">
+        <mat-label>Modalidad</mat-label>
+        <input matInput
+               type="text"
+               formControlName="modality">
+      </mat-form-field>
+      <id-stepper-form></id-stepper-form>
     </mat-step>
 
     <!-- imagen -->
     <mat-step>
       <ng-template matStepLabel>Imagen del Proyecto</ng-template>
       <id-upload-file [path]="getUploadPath"
-                      type="imagen"
+                      type="img"
                       label="Url imagen"
-                      errorMessage="La imagen es requerida"
-                      [formControlChild]="img"
-                      required></id-upload-file>
+                      [formControlChild]="img"></id-upload-file>
+      <id-stepper-form></id-stepper-form>
+    </mat-step>
+
+    <!-- infografic -->
+    <mat-step>
+      <ng-template matStepLabel>Infografia del Proyecto</ng-template>
+      <id-upload-file [path]="getUploadPath"
+                      type="infografic"
+                      label="Url Infografia"
+                      [formControlChild]="infografic"></id-upload-file>
+      <id-stepper-form></id-stepper-form>
+    </mat-step>
+
+    <!-- videoID -->
+    <mat-step>
+      <ng-template matStepLabel>VideoID</ng-template>
+      <mat-form-field appearance="outline"
+                      class="full-width">
+        <mat-label>Id del video</mat-label>
+        <input matInput
+               type="text"
+               formControlName="videoID">
+      </mat-form-field>
       <id-stepper-form></id-stepper-form>
     </mat-step>
 
@@ -54,22 +105,32 @@
       <id-stepper-form></id-stepper-form>
     </mat-step>
 
-    <!-- certification -->
+    <!-- subject -->
     <mat-step>
-      <ng-template matStepLabel>Titulacion</ng-template>
+      <ng-template matStepLabel>Asignatura</ng-template>
       <mat-form-field appearance="outline"
                       class="full-width">
-        <mat-label>Nombre o Nombres de la titulacion</mat-label>
+        <mat-label>Asignatura</mat-label>
         <input matInput
                type="text"
-               formControlName="certification"
-               required>
-        <mat-error *ngIf="certification.hasError('required')">
-          La titulacion es <strong>requerida</strong>
-        </mat-error>
+               formControlName="subject">
       </mat-form-field>
       <id-stepper-form></id-stepper-form>
     </mat-step>
+
+    <!-- strategicLine -->
+    <mat-step>
+      <ng-template matStepLabel>Línea estratégica que se desarrollará en la propuesta</ng-template>
+      <mat-form-field appearance="outline"
+                      class="full-width">
+        <mat-label>Línea estratégica</mat-label>
+        <input matInput
+               type="text"
+               formControlName="strategicLine">
+      </mat-form-field>
+      <id-stepper-form></id-stepper-form>
+    </mat-step>
+
 
     <!-- type -->
     <mat-step>
@@ -88,23 +149,22 @@
       <id-stepper-form></id-stepper-form>
     </mat-step>
 
-    <!-- Teachers -->
+    <!-- period -->
     <mat-step>
-      <ng-template matStepLabel>Docentes participantes
-      </ng-template>
-      <div formArrayName="teachers">
-        <div *ngFor="let teacher of teachers.controls; let i=index"
+      <ng-template matStepLabel>Período académico de ejecución.</ng-template>
+      <div formArrayName="periods">
+        <div *ngFor="let period of periods.controls; let i=index"
              [formGroupName]="i">
-          <!-- name -->
+          <!-- period name -->
           <mat-form-field appearance="outline"
                           class="full-width">
-            <mat-label>Nombre del Docente</mat-label>
+            <mat-label>Nombre del Periodo</mat-label>
             <input matInput
                    type="text"
                    formControlName="name"
                    required>
-            <mat-error *ngIf="teacherName(i).hasError('required')">
-              El nombre es <strong>requerido</strong>
+            <mat-error *ngIf="periodName(i).hasError('required')">
+              El periodo es requerido
             </mat-error>
           </mat-form-field>
         </div>
@@ -112,10 +172,68 @@
       <div class="button-row">
         <button mat-button
                 color="warn"
-                (click)="removeTeacher()">Eliminar ultimo Docente</button>
+                (click)="removePeriod()">Eliminar ultimo Periodo</button>
         <button mat-button
                 color="primary"
-                (click)="addTeacher()">Añadir Docente</button>
+                (click)="addPeriod()">Añadir Periodo</button>
+      </div>
+      <id-stepper-form></id-stepper-form>
+    </mat-step>
+
+    <!-- participants -->
+    <mat-step>
+      <ng-template matStepLabel>Datos de los docentes que participan en la propuesta</ng-template>
+      <div formArrayName="participants">
+        <div *ngFor="let participant of participants.controls; let i=index"
+             [formGroupName]="i">
+          <!-- participant name -->
+          <mat-form-field appearance="outline"
+                          class="full-width">
+            <mat-label>Nombre del Docente</mat-label>
+            <input matInput
+                   type="text"
+                   formControlName="name"
+                   required>
+            <mat-error *ngIf="participantName(i).hasError('required')">
+              El nombre es requerido
+            </mat-error>
+          </mat-form-field>
+
+          <!-- participant department -->
+          <mat-form-field appearance="outline"
+                          class="full-width">
+            <mat-label>Departamento del Docente</mat-label>
+            <input matInput
+                   type="text"
+                   formControlName="department">
+          </mat-form-field>
+
+          <!-- participant subject -->
+          <mat-form-field appearance="outline"
+                          class="full-width">
+            <mat-label>Asignatura del Docente</mat-label>
+            <input matInput
+                   type="text"
+                   formControlName="subject">
+          </mat-form-field>
+
+          <!-- participant department -->
+          <mat-form-field appearance="outline"
+                          class="full-width">
+            <mat-label>Correo Electrónico del Docente</mat-label>
+            <input matInput
+                   type="text"
+                   formControlName="email">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="button-row">
+        <button mat-button
+                color="warn"
+                (click)="removeParticipant()">Eliminar ultimo Docente</button>
+        <button mat-button
+                color="primary"
+                (click)="addParticipant()">Añadir Docente</button>
       </div>
       <id-stepper-form></id-stepper-form>
     </mat-step>

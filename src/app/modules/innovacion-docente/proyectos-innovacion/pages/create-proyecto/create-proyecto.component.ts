@@ -41,22 +41,22 @@ export class CreateProyectoComponent implements OnInit {
     this.proyectoFormGroup = this._formBuilder.group({
       name: [null, Validators.required],
       coordinator: [null, Validators.required],
-      modality: [null, Validators.required],
-      participants: this._formBuilder.array([]),
-      strategicLine: [null, Validators.required],
-      type: [null, Validators.required],
-      period: this._formBuilder.array([]),
-      subject: [null, Validators.required],
-      img: [null, Validators.required],
-      infografic: [null, Validators.required],
-      videoID: [null, Validators.required],
-      documents: this._formBuilder.array([]),
+      modality: [null],
+      img: [null],
+      infografic: [null],
+      videoID: [null],
       area: this._formBuilder.group({
         tecnica: false,
         administrativa: false,
         biologica: false,
         sociohumanistica: false,
       }),
+      subject: [null],
+      strategicLine: [null],
+      type: [null, Validators.required],
+      periods: this._formBuilder.array([]),
+      participants: this._formBuilder.array([]),
+      documents: this._formBuilder.array([]),
     });
   }
 
@@ -77,10 +77,10 @@ export class CreateProyectoComponent implements OnInit {
         this.addDocument();
       // create participants as needed
       for (let index = 0; index < proyecto.participants.length; index++)
-        this.addParticipants();
+        this.addParticipant();
       // create participants as needed
       for (let index = 0; index < proyecto.period.length; index++)
-        this.addPeriods();
+        this.addPeriod();
 
       this.proyectoFormGroup.controls['name'].setValue(proyecto.name);
       this.proyectoFormGroup.controls['coordinator'].setValue(proyecto.coordinator);
@@ -100,8 +100,9 @@ export class CreateProyectoComponent implements OnInit {
       this.proyectoFormGroup.get('area').get('biologica').setValue(proyecto.area.biologica);
       this.proyectoFormGroup.get('area').get('sociohumanistica').setValue(proyecto.area.sociohumanistica);
     } catch (error) {
+      console.log(error);
       this._snackBar.open('Ha ocurrido un error al cargar el proyecto.', null, { duration: 5000, });
-      this._location.back();
+      // this._location.back();
     }
   }
 
@@ -125,29 +126,29 @@ export class CreateProyectoComponent implements OnInit {
     }
   }
 
-  public addParticipants(): void {
+  public addParticipant(): void {
     this.participants.push(
       this._formBuilder.group({
         name: [null, Validators.required],
+        department: [null],
+        subject: [null],
+        email: [null],
       })
     );
   };
 
-  public removeParticipants(): void {
+  public removeParticipant(): void {
     this.participants.removeAt(-1);
   };
-  public addPeriods(): void {
+  public addPeriod(): void {
     this.periods.push(
       this._formBuilder.group({
         name: [null, Validators.required],
-        department: [null, Validators.required],
-        subject: [null, Validators.required],
-        mail: [null, Validators.required],
       })
     );
   };
 
-  public removePeriods(): void {
+  public removePeriod(): void {
     this.periods.removeAt(-1);
   };
 
@@ -169,13 +170,18 @@ export class CreateProyectoComponent implements OnInit {
 
   /* GETTES */
   get name() { return this.proyectoFormGroup.get('name'); }
-  get img() { return this.proyectoFormGroup.get('img'); }
-  get certification() { return this.proyectoFormGroup.get('certification'); }
+  get coordinator() { return this.proyectoFormGroup.get('coordinator'); }
   get area() { return this.proyectoFormGroup.get('area'); }
+  get img() { return this.proyectoFormGroup.get('img'); }
+  get infografic() { return this.proyectoFormGroup.get('infografic'); }
   get type() { return this.proyectoFormGroup.get('type'); }
+
   get participants() { return this.proyectoFormGroup.get('participants') as FormArray; }
-  teacherName(i: number) { return this.participants.controls[i].get('name'); }
+  participantName(i: number) { return this.participants.controls[i].get('name'); }
+  
+  get periods() { return this.proyectoFormGroup.get('periods') as FormArray; }
+  periodName(i: number) { return this.periods.controls[i].get('name'); }
+
   get documents() { return this.proyectoFormGroup.get('documents') as FormArray; }
-  get periods() { return this.proyectoFormGroup.get('period') as FormArray; }
   documentUrl(i: number) { return this.documents.controls[i].get('url'); }
 }
