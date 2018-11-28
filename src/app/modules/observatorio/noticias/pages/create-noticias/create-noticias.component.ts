@@ -3,6 +3,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
+import { NoticiasService } from '../../noticias.service';
+import { Noticia } from '../../interfaces/noticias';
 
 @Component({
   selector: 'id-create-noticias',
@@ -21,6 +23,7 @@ export class CreateNoticiasComponent implements OnInit {
     private _snackBar: MatSnackBar,
     private _location: Location,
     private _route: ActivatedRoute,
+    private _noticiasService: NoticiasService
   ) { }
 
   ngOnInit() {
@@ -43,42 +46,27 @@ export class CreateNoticiasComponent implements OnInit {
   }
 
   private async  loadData(): Promise<void> {
-    // try {
-    //   const doc = await this._proyectosInnovacionService.getProyectoData(this.proyectoID);
+    try {
+      const doc = await this._noticiasService.getNoticiaData(this.noticiaID);
 
-    //   if (!doc.exists) {
-    //     this._snackBar.open('Este proyecto no se encuentra disponible.', null, { duration: 5000, });
-    //     return;
-    //   }
-    //   const proyecto: Proyecto = doc.data() as Proyecto;
-    //   this.shouldUpdate = true;
+      if (!doc.exists) {
+        this._snackBar.open('Este proyecto no se encuentra disponible.', null, { duration: 5000, });
+        return;
+      }
+      const noticia: Noticia = doc.data() as Noticia;
+      this.shouldUpdate = true;
 
-    //   // create documents as needed
-    //   for (let index = 0; index < proyecto.documents.length; index++)
-    //     this.addDocument();
-    //   // create teachers as needed
-    //   for (let index = 0; index < proyecto.teachers.length; index++)
-    //     this.addTeacher();
-
-    //   this.proyectoFormGroup.controls['name'].setValue(proyecto.name);
-    //   this.proyectoFormGroup.controls['img'].setValue(proyecto.img);
-    //   this.proyectoFormGroup.controls['certification'].setValue(proyecto.certification);
-    //   this.proyectoFormGroup.controls['type'].setValue(proyecto.type);
-    //   this.proyectoFormGroup.controls['teachers'].setValue(proyecto.teachers);
-    //   this.proyectoFormGroup.controls['documents'].setValue(proyecto.documents);
-    //   this.proyectoFormGroup.get('area').get('administrativa').setValue(proyecto.area.administrativa);
-    //   this.proyectoFormGroup.get('area').get('tecnica').setValue(proyecto.area.administrativa);
-    //   this.proyectoFormGroup.get('area').get('biologica').setValue(proyecto.area.biologica);
-    //   this.proyectoFormGroup.get('area').get('sociohumanistica').setValue(proyecto.area.sociohumanistica);
-    // } catch (error) {
-    //   this._snackBar.open('Ha ocurrido un error al cargar el proyecto.', null, { duration: 5000, });
-    // this._location.back();
-    // }
+      this.noticiaFormGroup.controls['name'].setValue(noticia.name);
+      this.noticiaFormGroup.controls['img'].setValue(noticia.img);
+      this.noticiaFormGroup.controls['description'].setValue(noticia.description);
+      this.noticiaFormGroup.controls['html'].setValue(noticia.html);
+    } catch (error) {
+      this._snackBar.open('Ha ocurrido un error al cargar el proyecto.', null, { duration: 5000, });
+      this._location.back();
+    }
   }
 
   public async submit(): Promise<void> {
-    console.log(this.noticiaFormGroup.value);
-
     // validate forms
     if (this.noticiaFormGroup.invalid) {
       this._snackBar.open('La forma es invalida', null, { duration: 5000, });
@@ -86,16 +74,16 @@ export class CreateNoticiasComponent implements OnInit {
     }
 
     // add or update
-    // try {
-    //   if (this.shouldUpdate)
-    //     await this._proyectosInnovacionService.updateProyecto(this.proyectoID, this.proyectoFormGroup.value);
-    //   else
-    //     await this._proyectosInnovacionService.addProyecto(this.proyectoFormGroup.value);
-    //   this._snackBar.open('Se guardaron los cambios correctamente', null, { duration: 5000, });
-    //   this._location.back();
-    // } catch (error) {
-    //   this._snackBar.open('Ocurrido un error al guardar, por favor vuelve a intentarlo', null, { duration: 5000, });
-    // }
+    try {
+      if (this.shouldUpdate)
+        await this._noticiasService.updateNoticia(this.noticiaID, this.noticiaFormGroup.value);
+      else
+        await this._noticiasService.addNoticia(this.noticiaFormGroup.value);
+      this._snackBar.open('Se guardaron los cambios correctamente', null, { duration: 5000, });
+      this._location.back();
+    } catch (error) {
+      this._snackBar.open('Ocurrido un error al guardar, por favor vuelve a intentarlo', null, { duration: 5000, });
+    }
   }
 
   public getUploadPath() {

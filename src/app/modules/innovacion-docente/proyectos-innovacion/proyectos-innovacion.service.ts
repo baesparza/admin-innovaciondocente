@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { AuthService } from 'src/app/shared/services/auth.service';
-import { Http } from '@angular/http';
 import { Proyecto } from './interfaces/proyecto';
 
 @Injectable()
@@ -15,7 +14,6 @@ export class ProyectosInnovacionService {
   constructor(
     private _afs: AngularFirestore,
     private _auth: AuthService,
-    public _http: Http
   ) {
     this.proyectosInnovacionDocument = this._afs.collection('innovacion-docente').doc('proyectos-innovacion');
     this.proyectosCollection = this.proyectosInnovacionDocument.collection('proyectos', ref => ref.orderBy('created', 'desc'));
