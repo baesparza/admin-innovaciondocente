@@ -40,21 +40,27 @@ export class CreateProyectoComponent implements OnInit {
   private buildForm(): void {
     this.proyectoFormGroup = this._formBuilder.group({
       name: [null, Validators.required],
-      img: [null, Validators.required],
-      certification: [null, Validators.required],
-      type: [null, Validators.required],
-      teachers: this._formBuilder.array([]),
-      documents: this._formBuilder.array([]),
+      coordinator: [null, Validators.required],
+      modality: [null],
+      img: [null],
+      infografic: [null],
+      videoID: [null],
       area: this._formBuilder.group({
         tecnica: false,
         administrativa: false,
         biologica: false,
         sociohumanistica: false,
       }),
+      subject: [null],
+      strategicLine: [null],
+      type: [null, Validators.required],
+      periods: this._formBuilder.array([]),
+      participants: this._formBuilder.array([]),
+      documents: this._formBuilder.array([]),
     });
   }
 
-  private async  loadData(): Promise<void> {
+  private async loadData(): Promise<void> {
     try {
       const doc = await this._proyectosInnovacionService.getProyectoData(this.proyectoID);
 
@@ -68,16 +74,27 @@ export class CreateProyectoComponent implements OnInit {
       // create documents as needed
       for (let index = 0; index < proyecto.documents.length; index++)
         this.addDocument();
-      // create teachers as needed
-      for (let index = 0; index < proyecto.teachers.length; index++)
-        this.addTeacher();
+      // create participants as needed
+      for (let index = 0; index < proyecto.participants.length; index++)
+        this.addParticipant();
+      // create participants as needed
+      for (let index = 0; index < proyecto.periods.length; index++)
+        this.addPeriod();
 
       this.proyectoFormGroup.controls['name'].setValue(proyecto.name);
-      this.proyectoFormGroup.controls['img'].setValue(proyecto.img);
-      this.proyectoFormGroup.controls['certification'].setValue(proyecto.certification);
+      this.proyectoFormGroup.controls['coordinator'].setValue(proyecto.coordinator);
+      this.proyectoFormGroup.controls['modality'].setValue(proyecto.modality);
+      this.proyectoFormGroup.controls['strategicLine'].setValue(proyecto.strategicLine);
       this.proyectoFormGroup.controls['type'].setValue(proyecto.type);
-      this.proyectoFormGroup.controls['teachers'].setValue(proyecto.teachers);
+      this.proyectoFormGroup.controls['subject'].setValue(proyecto.subject);
+
+      this.proyectoFormGroup.controls['img'].setValue(proyecto.img);
+      this.proyectoFormGroup.controls['infografic'].setValue(proyecto.infografic);
+      this.proyectoFormGroup.controls['videoID'].setValue(proyecto.videoID);
       this.proyectoFormGroup.controls['documents'].setValue(proyecto.documents);
+      this.proyectoFormGroup.controls['periods'].setValue(proyecto.periods);
+
+      this.proyectoFormGroup.controls['participants'].setValue(proyecto.participants);
       this.proyectoFormGroup.get('area').get('administrativa').setValue(proyecto.area.administrativa);
       this.proyectoFormGroup.get('area').get('tecnica').setValue(proyecto.area.administrativa);
       this.proyectoFormGroup.get('area').get('biologica').setValue(proyecto.area.biologica);
@@ -108,16 +125,30 @@ export class CreateProyectoComponent implements OnInit {
     }
   }
 
-  public addTeacher(): void {
-    this.teachers.push(
+  public addParticipant(): void {
+    this.participants.push(
+      this._formBuilder.group({
+        name: [null, Validators.required],
+        department: [null],
+        subject: [null],
+        email: [null],
+      })
+    );
+  };
+
+  public removeParticipant(): void {
+    this.participants.removeAt(-1);
+  };
+  public addPeriod(): void {
+    this.periods.push(
       this._formBuilder.group({
         name: [null, Validators.required],
       })
     );
   };
 
-  public removeTeacher(): void {
-    this.teachers.removeAt(-1);
+  public removePeriod(): void {
+    this.periods.removeAt(-1);
   };
 
   public addDocument(): void {
@@ -138,12 +169,18 @@ export class CreateProyectoComponent implements OnInit {
 
   /* GETTES */
   get name() { return this.proyectoFormGroup.get('name'); }
-  get img() { return this.proyectoFormGroup.get('img'); }
-  get certification() { return this.proyectoFormGroup.get('certification'); }
+  get coordinator() { return this.proyectoFormGroup.get('coordinator'); }
   get area() { return this.proyectoFormGroup.get('area'); }
+  get img() { return this.proyectoFormGroup.get('img'); }
+  get infografic() { return this.proyectoFormGroup.get('infografic'); }
   get type() { return this.proyectoFormGroup.get('type'); }
-  get teachers() { return this.proyectoFormGroup.get('teachers') as FormArray; }
-  teacherName(i: number) { return this.teachers.controls[i].get('name'); }
+
+  get participants() { return this.proyectoFormGroup.get('participants') as FormArray; }
+  participantName(i: number) { return this.participants.controls[i].get('name'); }
+
+  get periods() { return this.proyectoFormGroup.get('periods') as FormArray; }
+  periodName(i: number) { return this.periods.controls[i].get('name'); }
+
   get documents() { return this.proyectoFormGroup.get('documents') as FormArray; }
   documentUrl(i: number) { return this.documents.controls[i].get('url'); }
 }
