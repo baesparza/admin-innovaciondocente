@@ -78,7 +78,7 @@ export class CreateProyectoComponent implements OnInit {
       for (let index = 0; index < proyecto.participants.length; index++)
         this.addParticipant();
       // create participants as needed
-      for (let index = 0; index < proyecto.period.length; index++)
+      for (let index = 0; index < proyecto.periods.length; index++)
         this.addPeriod();
 
       this.proyectoFormGroup.controls['name'].setValue(proyecto.name);
@@ -92,6 +92,7 @@ export class CreateProyectoComponent implements OnInit {
       this.proyectoFormGroup.controls['infografic'].setValue(proyecto.infografic);
       this.proyectoFormGroup.controls['videoID'].setValue(proyecto.videoID);
       this.proyectoFormGroup.controls['documents'].setValue(proyecto.documents);
+      this.proyectoFormGroup.controls['periods'].setValue(proyecto.periods);
 
       this.proyectoFormGroup.controls['participants'].setValue(proyecto.participants);
       this.proyectoFormGroup.get('area').get('administrativa').setValue(proyecto.area.administrativa);
@@ -176,7 +177,7 @@ export class CreateProyectoComponent implements OnInit {
 
   get participants() { return this.proyectoFormGroup.get('participants') as FormArray; }
   participantName(i: number) { return this.participants.controls[i].get('name'); }
-  
+
   get periods() { return this.proyectoFormGroup.get('periods') as FormArray; }
   periodName(i: number) { return this.periods.controls[i].get('name'); }
 

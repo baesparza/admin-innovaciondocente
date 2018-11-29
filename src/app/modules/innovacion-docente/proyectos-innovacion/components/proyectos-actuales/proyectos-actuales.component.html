@@ -24,18 +24,24 @@
 
     <!-- expanded content -->
     <ng-template matExpansionPanelContent>
-      <!-- <p><b>Area:</b></p>
+      <p><b>Coordinador: </b>{{proyecto.coordinator}}</p>
+      <p *ngIf="proyecto.modality"><b>Modalidad : </b>{{proyecto.modality}}</p>
+      <p *ngIf="proyecto.strategicLine"><b>Línea estratégica que se desarrollará en la propuesta : </b>{{proyecto.strategicLine}}</p>
+      <p><b>Participantes: </b></p>
+      <ul>
+        <li *ngFor="let participant of proyecto.participants">{{participant.name}}</li>
+      </ul>
+      <p><b>Area:</b></p>
       <ul>
         <li *ngIf="proyecto.area.tecnica">Área Técnica</li>
         <li *ngIf="proyecto.area.biologica">Área Biológica y Biomédica</li>
         <li *ngIf="proyecto.area.administrativa">Área Administrativa</li>
         <li *ngIf="proyecto.area.sociohumanistica">Área Sociohumanística</li>
       </ul>
-      <p><b>Titulacion:</b> {{proyecto.certification}}</p>
-      <p *ngIf="proyecto.teachers"><b>Docentes:</b></p>
+      <p><b>Período académico de ejecución:</b></p>
       <ul>
-        <li *ngFor="let teacher of proyecto.teachers">{{teacher.name}}</li>
-      </ul> -->
+        <li *ngFor="let period of proyecto.periods">{{period.name}}</li>
+      </ul>
 
       <!-- options -->
       <mat-action-row>

@@ -7,7 +7,7 @@ export interface Proyecto extends DefaultInterface {
   participants: Participant[]; // participantes
   strategicLine: string; // linea estrategica
   type: String; // tipo de propuesta
-  period: string[]; // periodo
+  periods: string[]; // periodo
   subject: string; // asignatura
 
   // other data
