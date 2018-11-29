@@ -15,6 +15,7 @@ export class ProyectosInnovacionComponent implements OnInit {
   ngOnInit() {
   }
 
+  get proyectos() { return this._proyectosInnovacionService.proyectosCollection };
   get proyectosActuales() { return this._proyectosInnovacionService.proyectosActualesCollection };
   get buenasPracticas() { return this._proyectosInnovacionService.buenasPracticasCollection };
 

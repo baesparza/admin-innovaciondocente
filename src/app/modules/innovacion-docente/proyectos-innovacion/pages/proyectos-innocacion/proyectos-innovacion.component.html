@@ -1,4 +1,9 @@
 <mat-tab-group>
+  <mat-tab label="Todos los Proyectos">
+    <ng-template matTabContent>
+      <id-proyectos-actuales [proyectosCollection]="proyectos"></id-proyectos-actuales>
+    </ng-template>
+  </mat-tab>
   <mat-tab label="Proyectos Actuales">
     <ng-template matTabContent>
       <id-proyectos-actuales [proyectosCollection]="proyectosActuales"></id-proyectos-actuales>

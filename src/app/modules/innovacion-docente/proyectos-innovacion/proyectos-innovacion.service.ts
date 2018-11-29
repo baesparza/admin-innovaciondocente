@@ -16,9 +16,9 @@ export class ProyectosInnovacionService {
     private _auth: AuthService,
   ) {
     this.proyectosInnovacionDocument = this._afs.collection('innovacion-docente').doc('proyectos-innovacion');
-    this.proyectosCollection = this.proyectosInnovacionDocument.collection('proyectos', ref => ref.orderBy('created', 'desc'));
-    this.proyectosActualesCollection = this.proyectosInnovacionDocument.collection('proyectos', ref => ref.orderBy('created', 'desc').where('type', '==', 'proyecto-actual'));
-    this.buenasPracticasCollection = this.proyectosInnovacionDocument.collection('proyectos', ref => ref.orderBy('created', 'desc').where('type', '==', 'buena-practica'));
+    this.proyectosCollection = this.proyectosInnovacionDocument.collection('proyectos', ref => ref.orderBy('name'));
+    this.proyectosActualesCollection = this.proyectosInnovacionDocument.collection('proyectos', ref => ref.orderBy('name').where('type', '==', 'proyecto-actual'));
+    this.buenasPracticasCollection = this.proyectosInnovacionDocument.collection('proyectos', ref => ref.orderBy('name').where('type', '==', 'buena-practica'));
   }
 
   public getProyectoData(id: string): Promise<firebase.firestore.DocumentSnapshot> {
