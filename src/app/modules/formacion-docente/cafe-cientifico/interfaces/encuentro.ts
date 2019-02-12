@@ -7,7 +7,7 @@ export interface Encuentro extends DefaultInterface {
   name: string,
   date: Date,
   postulations: string,
-  guests: Guest[]
+  guests: Guest[],
+  banner: string,
+  participation: string
 }
-
-
