@@ -163,7 +163,7 @@ export class CreateProyectoComponent implements OnInit {
     this.documents.removeAt(-1);
   };
 
-  public getUploadPath() {
+  get getUploadPath() {
     return `/innovacion-docente/proyectos-innovacion/${this.name.value}`;
   }
 
