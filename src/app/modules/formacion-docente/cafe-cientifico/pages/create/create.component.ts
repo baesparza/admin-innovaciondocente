@@ -53,11 +53,16 @@ export class CreateComponent implements OnInit {
       this.encuentroFormGroup.controls['name'].setValue(encuentro.name);
       this.encuentroFormGroup.controls['img'].setValue(encuentro.img);
       this.encuentroFormGroup.controls['description'].setValue(encuentro.description);
+      this.encuentroFormGroup.controls['participation'].setValue(encuentro.participation);
+      this.encuentroFormGroup.controls['banner'].setValue(encuentro.banner);
       this.encuentroFormGroup.controls['guests'].setValue(encuentro.guests);
       this.encuentroFormGroup.controls['date'].setValue(new Date(encuentro.date['seconds'] * 1000));
-      this.encuentroFormGroup.controls['postulations'].setValue(new Date(encuentro.postulations['seconds'] * 1000));
+      if (encuentro.postulations)
+        this.encuentroFormGroup.controls['postulations'].setValue(new Date(encuentro.postulations['seconds'] * 1000));
 
     } catch (error) {
+      console.log(error);
+
       this._snackBar.open('Ha ocurrido un error al cargar el encuentro.', null, { duration: 5000, });
       this._location.back();
     }
@@ -70,8 +75,10 @@ export class CreateComponent implements OnInit {
     this.encuentroFormGroup = this._formBuilder.group({
       name: [null, Validators.required],
       img: [null, Validators.required],
+      banner: [null],
+      participation: [null],
       date: [null, Validators.required],
-      postulations: [null, Validators.required],
+      postulations: [null],
       description: [null, [Validators.required, Validators.minLength(20)]],
       guests: this._formBuilder.array([]),
     });
@@ -123,6 +130,8 @@ export class CreateComponent implements OnInit {
   ////////////getters/////////////
   get name() { return this.encuentroFormGroup.get('name'); }
   get img() { return this.encuentroFormGroup.get('img'); }
+  get participation() { return this.encuentroFormGroup.get('participation'); }
+  get banner() { return this.encuentroFormGroup.get('banner'); }
   get description() { return this.encuentroFormGroup.get('description'); }
   get guests() { return this.encuentroFormGroup.get('guests') as FormArray; }
   guestName(i: number) { return this.guests.controls[i].get('name'); }

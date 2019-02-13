@@ -42,6 +42,22 @@
                 matStepperNext>Siguiente</button>
       </div>
     </mat-step>
+    <!-- Banner Part -->
+    <mat-step>
+      <ng-template matStepLabel>Banner del Encuentro</ng-template>
+      <!-- url img -->
+      <id-upload-file [path]="uploadPath"
+                      type="imagen"
+                      label="Url del Banner"
+                      [formControlChild]="banner"></id-upload-file>
+      <div class="button-row">
+        <button mat-button
+                matStepperPrevious>Anterior</button>
+        <button mat-raised-button
+                color="primary"
+                matStepperNext>Siguiente</button>
+      </div>
+    </mat-step>
 
     <!-- Date part-->
     <mat-step>
@@ -138,6 +154,26 @@
                 color="primary"
                 (click)="addGuest()">Añadir Invitado</button>
       </div>
+      <div class="button-row">
+        <button mat-button
+                matStepperPrevious>Anterior</button>
+        <button mat-raised-button
+                color="primary"
+                matStepperNext>Siguiente</button>
+      </div>
+    </mat-step>
+
+    <!-- Participation -->
+    <mat-step>
+      <ng-template matStepLabel>Participante del Encuentro</ng-template>
+      <!-- name -->
+      <mat-form-field appearance="outline"
+                      class="full-width">
+        <mat-label>Participa</mat-label>
+        <input matInput
+               type="text"
+               formControlName="participation">
+      </mat-form-field>
       <div class="button-row">
         <button mat-button
                 matStepperPrevious>Anterior</button>
