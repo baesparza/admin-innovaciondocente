@@ -31,11 +31,7 @@
         <textarea matInput
                   type="text"
                   class="big-text-area"
-                  formControlName="description"
-                  required></textarea>
-        <mat-error *ngIf="description.hasError('required')">
-          La descripción es <strong>requerida</strong>
-        </mat-error>
+                  formControlName="description"></textarea>
         <mat-error *ngIf="description.hasError('minlength')">
           La descripción necesita al menos <strong>{{description.errors.minlength.requiredLength}}
             caracteres</strong>
@@ -78,8 +74,11 @@
     <!-- date -->
     <mat-step>
       <ng-template matStepLabel>Fecha del Curso</ng-template>
+      <h4>Fecha Inicio</h4>
       <id-timestamp-picker errorMessage="La fecha es requerida"
                            [formControlChild]="date"></id-timestamp-picker>
+      <h4>Fecha Finalizacion <small>(Opcional)</small></h4>
+      <id-timestamp-picker [formControlChild]="endDate"></id-timestamp-picker>
       <div class="button-row">
         <button mat-button
                 matStepperPrevious>Anterior</button>

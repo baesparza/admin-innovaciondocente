@@ -45,9 +45,10 @@ export class CreateCursoComponent implements OnInit {
   private buildForm() {
     this.cursoFormGroup = this._formBuilder.group({
       name: [null, Validators.required],
-      description: [null, [Validators.required, Validators.minLength(15)]],
+      description: [null, Validators.minLength(15)],
       img: [null, Validators.required],
       date: [null, Validators.required],
+      endDate: [null],
       instructors: this._formBuilder.array([]),
       postulation: this._formBuilder.group({
         date: null,
@@ -107,6 +108,8 @@ export class CreateCursoComponent implements OnInit {
       this.cursoFormGroup.controls['description'].setValue(curso.description);
       this.cursoFormGroup.controls['img'].setValue(curso.img);
       this.cursoFormGroup.controls['date'].setValue(new Date(curso.date['seconds'] * 1000));
+      if (curso.endDate)
+        this.cursoFormGroup.controls['endDate'].setValue(new Date(curso.endDate['seconds'] * 1000));
       this.cursoFormGroup.controls['instructors'].setValue(curso.instructors);
       this.cursoFormGroup.controls['schedule'].setValue(curso.schedule);
       this.cursoFormGroup.controls['place'].setValue(curso.place);
@@ -187,6 +190,7 @@ export class CreateCursoComponent implements OnInit {
   get description() { return this.cursoFormGroup.get('description') }
   get img() { return this.cursoFormGroup.get('img') }
   get date() { return this.cursoFormGroup.get('date') }
+  get endDate() { return this.cursoFormGroup.get('endDate') }
   get duration() { return this.cursoFormGroup.get('duration') }
   get instructors() { return this.cursoFormGroup.get('instructors') as FormArray }
   instructorName(i: number) { return this.instructors.controls[i].get('name'); }
