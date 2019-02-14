@@ -79,7 +79,7 @@ export class CreateComponent implements OnInit {
       participation: [null],
       date: [null, Validators.required],
       postulations: [null],
-      description: [null, [Validators.required, Validators.minLength(20)]],
+      description: [null, Validators.minLength(20)],
       guests: this._formBuilder.array([]),
     });
   }
