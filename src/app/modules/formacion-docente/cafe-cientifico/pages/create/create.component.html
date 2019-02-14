@@ -95,10 +95,7 @@
                   type="text"
                   class="big-text-area"
                   formControlName="description"
-                  required></textarea>
-        <mat-error *ngIf="description.hasError('required')">
-          La descripción es <strong>requerida</strong>
-        </mat-error>
+                  ></textarea>
         <mat-error *ngIf="description.hasError('minlength')">
           La descripción necesita al menos <strong>{{description.errors.minlength.requiredLength}}
             caracteres</strong>

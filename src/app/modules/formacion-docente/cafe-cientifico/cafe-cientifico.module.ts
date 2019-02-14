@@ -7,6 +7,7 @@ import { CafeCientificoRoutingModule } from './cafe-cientifico.routing';
 import { CreateComponent } from './pages/create/create.component';
 import { CafeCientificoService } from './cafe-cientifico.service';
 import { CafeCientificoComponent } from './pages/cafe-cientifico/cafe-cientifico.component';
+import { InscriptionsComponent } from './pages/inscriptions/inscriptions.component';
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ import { CafeCientificoComponent } from './pages/cafe-cientifico/cafe-cientifico
   ],
   declarations: [
     CafeCientificoComponent,
-    CreateComponent
+    CreateComponent,
+    InscriptionsComponent
   ]
 })
 export class CafeCientificoModule { }
