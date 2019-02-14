@@ -15,7 +15,6 @@ export class CafeCientificoComponent {
 
   public encuentros: Observable<Encuentro[]>;
 
-
   constructor(
     private _snackBar: MatSnackBar,
     private _cafeCientificoService: CafeCientificoService,

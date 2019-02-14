@@ -39,6 +39,10 @@
                 [queryParams]="{'id':encuentro.id}"
                 color="primary"
                 *ngIf="_role.canEdit">Editar</button>
+        <button mat-button
+                [routerLink]="['inscriptions', encuentro.id]"
+                color="acent"
+                *ngIf="_role.canEdit">Inscripciones</button>
       </mat-action-row>
     </ng-template>
   </mat-expansion-panel>

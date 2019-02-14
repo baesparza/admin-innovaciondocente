@@ -32,7 +32,7 @@ export class CursosComponent implements OnInit {
         return { id, ...data };
       }))
     ).subscribe(val => {
-      this.cursosSource = new MatTableDataSource(val)
+      this.cursosSource = new MatTableDataSource(val);
       this.cursosSource.paginator = this.paginator;
     });
   }
