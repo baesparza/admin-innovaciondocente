@@ -4,6 +4,7 @@ import { CafeCientificoService } from '../../cafe-cientifico.service';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { MatTableDataSource } from '@angular/material';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'id-inscriptions',
@@ -28,6 +29,7 @@ export class InscriptionsComponent implements OnInit {
   constructor(
     private _route: ActivatedRoute,
     private _cafeCientificoService: CafeCientificoService,
+    private http: HttpClient
   ) { }
 
   ngOnInit() {
@@ -44,4 +46,14 @@ export class InscriptionsComponent implements OnInit {
     });
   }
 
+  downloadSVG() {
+    const url = 'https://us-central1-innovaciondocente-utpl.cloudfunctions.net/inscriptionCSV';
+    let body = new URLSearchParams();
+    body.set('encuentroID', this.encuentroID);
+
+    let options = {
+      headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
+    };
+    this.http.post(url, body, options).subscribe(res => console.log(res));
+  }
 }
