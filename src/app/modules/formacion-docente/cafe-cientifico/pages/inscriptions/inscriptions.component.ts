@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CafeCientificoService } from '../../cafe-cientifico.service';
 import { map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
 import { MatTableDataSource } from '@angular/material';
 
 @Component({
@@ -28,6 +27,7 @@ export class InscriptionsComponent implements OnInit {
   constructor(
     private _route: ActivatedRoute,
     private _cafeCientificoService: CafeCientificoService,
+
   ) { }
 
   ngOnInit() {
@@ -44,4 +44,14 @@ export class InscriptionsComponent implements OnInit {
     });
   }
 
+  async downloadSVG() {
+    try {
+      let csv = await this._cafeCientificoService.getInscripciones({ encuentroID: this.encuentroID }).toPromise();
+      let csvContent = "data:text/csv;charset=utf-8," + csv;
+      let encodeUri = encodeURI(csvContent);
+      window.open(encodeUri);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 }

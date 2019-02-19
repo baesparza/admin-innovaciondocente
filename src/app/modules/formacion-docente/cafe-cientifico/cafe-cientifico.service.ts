@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { AngularFirestoreCollection, AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Encuentro } from './interfaces/encuentro';
+import { Observable } from 'rxjs';
+import { AngularFireFunctions } from '@angular/fire/functions';
 
 @Injectable()
 export class CafeCientificoService {
@@ -12,6 +14,7 @@ export class CafeCientificoService {
   constructor(
     private _afs: AngularFirestore,
     private _auth: AuthService,
+    private _angularFireFunctions: AngularFireFunctions,
   ) {
     // ref to firestore collection
     this.encuentrosCollection = this._afs.collection('formacion-docente/cafe-cientifico/encuentros', ref => ref.orderBy('date', 'desc'));
@@ -59,5 +62,11 @@ export class CafeCientificoService {
       edited: new Date(),
       editor: this._auth.userId
     });
+  }
+
+  public getInscripciones(data: any): Observable<any>{
+
+    const callable = this._angularFireFunctions.httpsCallable('inscriptionCSV');
+    return callable(data);
   }
 }
