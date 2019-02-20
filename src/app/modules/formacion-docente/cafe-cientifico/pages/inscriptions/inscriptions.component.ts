@@ -10,7 +10,6 @@ import { MatTableDataSource } from '@angular/material';
   styleUrls: ['./inscriptions.component.scss']
 })
 export class InscriptionsComponent implements OnInit {
-
   private encuentroID: string = null;
   public displayedColumns: String[] = [
     'id',
@@ -21,34 +20,55 @@ export class InscriptionsComponent implements OnInit {
     'telefono',
     'titulacion',
     'universidad',
-    'whatsapp',
+    'whatsapp'
   ];
   public inscriptionsSource: MatTableDataSource<any> = new MatTableDataSource([]);
   constructor(
     private _route: ActivatedRoute,
-    private _cafeCientificoService: CafeCientificoService,
-
-  ) { }
+    private _cafeCientificoService: CafeCientificoService
+  ) {}
 
   ngOnInit() {
     this.encuentroID = this._route.snapshot.params.id;
-    this._cafeCientificoService.encuentrosCollection.doc(this.encuentroID).collection('inscripciones').snapshotChanges().pipe(
-      map(doc => doc.map((d) => {
+    this._cafeCientificoService.encuentrosCollection
+      .doc(this.encuentroID)
+      .collection('inscripciones', ref => ref.orderBy('email', 'desc'))
+      .snapshotChanges()
+      .pipe(
+        map((doc) =>
+          doc.map(d => {
+           return d.payload.doc.data();
+          })
+        )
+      )
+      .subscribe(val => {
+        const filterArray = [];
+        // run throught all elements finding repeated documents
+        let index = 0;
+        for (let i = 0; i < val.length; i++) {
+          let canBeAdded = true;
+          for (let j = 0; j < filterArray.length; j++) {
+            // search if already exist
+            if (val[i]['email'] === filterArray[j]['email']) {
+              canBeAdded = false;
+            }
+          }
+          if (canBeAdded) {
+            filterArray.push({ id: ++index, ...val[i] });
+          }
+        }
 
-        const data = d.payload.doc.data();
-        const id = d.payload.doc.id;
-        return { id, ...data };
-      }))
-    ).subscribe((val) => {
-      this.inscriptionsSource = new MatTableDataSource(val);
-    });
+        this.inscriptionsSource = new MatTableDataSource(filterArray);
+      });
   }
 
   async downloadSVG() {
     try {
-      let csv = await this._cafeCientificoService.getInscripciones({ encuentroID: this.encuentroID }).toPromise();
-      let csvContent = "data:text/csv;charset=utf-8," + csv;
-      let encodeUri = encodeURI(csvContent);
+      const csv = await this._cafeCientificoService
+        .getInscripciones({ encuentroID: this.encuentroID })
+        .toPromise();
+      const csvContent = 'data:text/csv;charset=utf-8,' + csv;
+      const encodeUri = encodeURI(csvContent);
       window.open(encodeUri);
     } catch (error) {
       console.error(error);
